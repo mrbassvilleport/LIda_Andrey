@@ -1664,6 +1664,7 @@
     function initMap(route) {
         if (map) map.remove();
         map = L.map('modalMap', { scrollWheelZoom: false }).setView(route.mapCenter, route.mapZoom);
+        map.attributionControl.setPrefix(false);
         
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://carto.com/">CARTO</a>'
