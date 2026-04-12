@@ -345,6 +345,270 @@
             position: relative;
         }
 
+        .place-body {
+            display: grid;
+            gap: 1.5rem;
+            min-width: 0;
+        }
+
+        .place-copy {
+            min-width: 0;
+        }
+
+        .place-gallery {
+            position: relative;
+        }
+
+        .place-gallery-shell {
+            position: relative;
+            padding: 0.8rem;
+            border-radius: 1.45rem;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 242, 230, 0.9));
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .place-gallery-shell::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at top right, rgba(0, 51, 153, 0.08), transparent 30%),
+                linear-gradient(145deg, rgba(255, 255, 255, 0.25), transparent 55%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .place-gallery-stage {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            border-radius: 1.05rem;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(0, 32, 104, 0.12), rgba(159, 64, 45, 0.18));
+        }
+
+        .place-gallery-stage::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 28%, rgba(10, 14, 24, 0.14));
+            pointer-events: none;
+        }
+
+        .place-gallery-slides {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .place-gallery-slide,
+        .place-gallery-skeleton {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transform: scale(1.04);
+            transition:
+                opacity 0.55s ease,
+                transform 0.9s var(--ease-soft);
+        }
+
+        .place-gallery-slide.is-active,
+        .place-gallery-skeleton.is-active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .place-gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .place-gallery-skeleton {
+            background:
+                linear-gradient(120deg, rgba(255, 255, 255, 0.08) 20%, rgba(255, 255, 255, 0.42) 38%, rgba(255, 255, 255, 0.1) 56%),
+                linear-gradient(135deg, rgba(0, 32, 104, 0.18), rgba(159, 64, 45, 0.18));
+            background-size: 220% 100%, 100% 100%;
+            animation: shimmerSlide 1.8s ease-in-out infinite;
+        }
+
+        .place-gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2.4rem;
+            height: 2.4rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(252, 249, 241, 0.86);
+            color: var(--azulejo-blue);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 10px 22px rgba(0, 32, 104, 0.14);
+            transition:
+                transform 0.35s var(--ease-swift),
+                background-color 0.35s ease,
+                opacity 0.35s ease;
+            z-index: 3;
+        }
+
+        .place-gallery-nav:hover {
+            background: rgba(255, 255, 255, 0.98);
+            transform: translateY(-50%) scale(1.04);
+        }
+
+        .place-gallery-nav[hidden] {
+            display: none;
+        }
+
+        .place-gallery-nav.prev {
+            left: 0.85rem;
+        }
+
+        .place-gallery-nav.next {
+            right: 0.85rem;
+        }
+
+        .place-gallery-badge,
+        .place-gallery-status {
+            position: absolute;
+            z-index: 3;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(14px);
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(0, 32, 104, 0.8);
+        }
+
+        .place-gallery-badge {
+            top: 0.85rem;
+            left: 0.85rem;
+        }
+
+        .place-gallery-status {
+            right: 0.85rem;
+            bottom: 0.85rem;
+        }
+
+        .place-gallery-preview {
+            display: flex;
+            gap: 0.65rem;
+            overflow-x: auto;
+            padding: 0.85rem 0.1rem 0.1rem;
+            scrollbar-width: none;
+        }
+
+        .place-gallery-preview::-webkit-scrollbar {
+            display: none;
+        }
+
+        .place-gallery-thumb,
+        .place-gallery-thumb-skeleton {
+            position: relative;
+            flex: 0 0 5.25rem;
+            aspect-ratio: 5 / 4;
+            border-radius: 0.85rem;
+            overflow: hidden;
+            border: 1px solid rgba(0, 32, 104, 0.08);
+            background: rgba(255, 255, 255, 0.75);
+            cursor: pointer;
+            transition:
+                transform 0.35s var(--ease-soft),
+                opacity 0.35s ease,
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
+        }
+
+        .place-gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .place-gallery-thumb::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.18));
+            opacity: 0.65;
+            transition: opacity 0.35s ease;
+        }
+
+        .place-gallery-thumb:hover,
+        .place-gallery-thumb.is-active {
+            transform: translateY(-2px);
+            opacity: 1;
+            box-shadow: 0 14px 28px rgba(0, 32, 104, 0.14);
+            border-color: rgba(159, 64, 45, 0.24);
+        }
+
+        .place-gallery-thumb.is-active::after,
+        .place-gallery-thumb:hover::after {
+            opacity: 0.18;
+        }
+
+        .place-gallery-thumb:not(.is-active) {
+            opacity: 0.72;
+        }
+
+        .place-gallery-thumb-skeleton {
+            background:
+                linear-gradient(120deg, rgba(255, 255, 255, 0.08) 20%, rgba(255, 255, 255, 0.42) 38%, rgba(255, 255, 255, 0.1) 56%),
+                linear-gradient(135deg, rgba(0, 32, 104, 0.1), rgba(159, 64, 45, 0.1));
+            background-size: 220% 100%, 100% 100%;
+            animation: shimmerSlide 1.8s ease-in-out infinite;
+        }
+
+        .place-gallery-credit {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.8rem;
+            padding: 0.75rem 0.15rem 0;
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(0, 32, 104, 0.5);
+        }
+
+        .place-gallery-empty {
+            display: grid;
+            place-items: center;
+            width: 100%;
+            height: 100%;
+            padding: 1.4rem;
+            text-align: center;
+            background:
+                linear-gradient(135deg, rgba(0, 32, 104, 0.18), rgba(159, 64, 45, 0.16)),
+                radial-gradient(circle at top, rgba(255, 255, 255, 0.24), transparent 36%);
+            color: white;
+        }
+
+        .place-gallery-empty strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: 'Noto Serif', serif;
+            font-size: 1.2rem;
+            line-height: 1.2;
+        }
+
+        .place-gallery-empty span {
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.76);
+        }
+
         .place-step {
             transition:
                 transform 0.45s var(--ease-soft),
@@ -356,6 +620,14 @@
             transform: scale(1.06);
             box-shadow: 0 12px 30px rgba(0, 32, 104, 0.12);
             border-color: rgba(159, 64, 45, 0.18);
+        }
+
+        @media (min-width: 1024px) {
+            .place-body {
+                grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+                align-items: start;
+                gap: 2rem;
+            }
         }
 
         @keyframes fadeUpSoft {
@@ -418,6 +690,15 @@
             }
         }
 
+        @keyframes shimmerSlide {
+            0% {
+                background-position: 120% 0, 0 0;
+            }
+            100% {
+                background-position: -120% 0, 0 0;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             html {
                 scroll-behavior: auto;
@@ -435,7 +716,11 @@
             .route-card,
             .modal-rise,
             .modal-place,
-            .manuscript-divider {
+            .manuscript-divider,
+            .place-gallery-slide,
+            .place-gallery-skeleton,
+            .place-gallery-thumb,
+            .place-gallery-thumb-skeleton {
                 opacity: 1 !important;
                 transform: none !important;
                 filter: none !important;
@@ -531,65 +816,136 @@
     const routes = [
         {
             id: 1,
-            title: "Исторический центр Лиссабона",
-            subtitle: "Пешая прогулка по сердцу столицы",
-            duration: "4–5 часов",
-            distance: "~5 км",
-            difficulty: "Средняя (холмы!)",
-            category: "Seven Hills",
-            tip: "Наденьте удобную обувь — Лиссабон город на семи холмах! Возьмите воду и солнцезащитный крем. Лучшее время — утро или предзакатные часы, когда свет особенно красив.",
+            title: "От Парка Наций к вечерней Байше",
+            subtitle: "Набережная, панорама Лиссабона, азиатский обед и прогулка к Тежу",
+            duration: "7–8 часов",
+            distance: "~6,5 км",
+            difficulty: "Лёгкая / средняя",
+            category: "River to Baixa",
+            tip: "Маршрут лучше строить так: 1,5–2 часа на спокойную прогулку по Parque das Nações, затем такси до Miradouro da Senhora do Monte, чтобы не тратить силы на крутой подъём. Дальше центр удобно пройти пешком: от смотровой до Praça do Comércio получится около 4 км с обедом, остановками на фото и мягким спуском вниз. Если захотите зайти внутрь Convento do Carmo или задержитесь на ужин у реки, день легко растянется до 8,5–9 часов.",
             image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA3FwyksFHZ5nCPcfehPaIeDjScTtcapjq5g5CzUjwDcNHRlQ6ZXKAUYkTNgfDdyU1T457q3N8JhC_MjyvHri8HJf0XcMmNxIdt3fUPWXPMXCVKEFtol5Vo4fWyazG9ITCcZyX-FmKMkeNzl2LwXhD_UbkXKEccTZ99GFaig7JRTM2qoN-SNRg8GkB6CoVfx1oLIJB6wDVNjo56WMfRxBZ0_hLFmw8D_GfdNPzvFE3ye9zeJidIAuofDkSULVZ_tgCCkTw9TI1goeM",
             ready: true,
-            mapCenter: [38.7115, -9.1355],
-            mapZoom: 15,
+            mapCenter: [38.7320, -9.1200],
+            mapZoom: 13,
             places: [
                 {
-                    name: "Praça do Comércio",
-                    nameRu: "Торговая площадь",
-                    coords: [38.7075, -9.1364],
-                    description: "Главная площадь Лиссабона, открытая к реке Тежу. Раньше здесь стоял королевский дворец, разрушенный землетрясением 1755 года. Сегодня это величественное пространство с жёлтыми аркадами — идеальное начало прогулки.",
-                    wikiUrl: "https://ru.wikipedia.org/wiki/Торговая_площадь_(Лиссабон)",
-                    mapsQuery: "Praça+do+Comércio+Lisbon"
+                    name: "Parque das Nações",
+                    nameRu: "Парк Наций",
+                    coords: [38.7683, -9.0978],
+                    description: "Современный район Лиссабона, выросший на месте Expo ’98. Здесь приятно начать день без спешки: широкая набережная Тежу, сады, современная архитектура, вид на мост Васко да Гама и ощущение совсем другого, более просторного Лиссабона.",
+                    galleryFiles: [
+                        "File:2025-03-26 09-16-47 PT Lisbon JHe N9 (55087550860).jpg",
+                        "File:2025-03-26 09-14-29 PT Lisbon JHe N9 (55077505797).jpg",
+                        "File:Jardins Tropicais I.jpg",
+                        "File:- 249 - POSTAIS DE LISBOA - I - PARQUE DAS NAÇÕES - LISBOA - PORTUGAL (5121476932).jpg"
+                    ],
+                    galleryCategories: ["Parque das Nações"],
+                    galleryKeywords: ["parque", "nações", "nacoes", "oriente", "vasco"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Parque_das_Na%C3%A7%C3%B5es",
+                    mapsQuery: "Parque+das+Nacoes+Lisbon"
                 },
                 {
-                    name: "Arco da Rua Augusta",
-                    nameRu: "Триумфальная арка Руа Аугушта",
-                    coords: [38.7087, -9.1368],
-                    description: "Монументальная арка на северной стороне Торговой площади. Наверху — смотровая площадка с панорамой на площадь и реку. Стоит подняться!",
-                    wikiUrl: "https://ru.wikipedia.org/wiki/Арка_улицы_Аугушта",
-                    mapsQuery: "Arco+da+Rua+Augusta+Lisbon"
+                    name: "Miradouro da Senhora do Monte",
+                    nameRu: "Смотровая Senhora do Monte",
+                    coords: [38.7189, -9.1328],
+                    description: "Одна из лучших обзорных точек Лиссабона. Отсюда город раскрывается как на ладони: замок São Jorge, крыши Байши, река и дальние холмы. После поездки на такси сюда удобно начать пеший спуск в центр.",
+                    galleryFiles: [
+                        "File:Miradouro da Senhora do Monte.jpg",
+                        "File:Miradouro da Senhora do Monte (38530147244).jpg",
+                        "File:Miradouro da Senhora do Monte (52527496260).png",
+                        "File:F29A5132 (8405557803).jpg"
+                    ],
+                    galleryCategories: ["Miradouro da Senhora do Monte", "Views from Miradouro de Nossa Senhora do Monte"],
+                    galleryKeywords: ["senhora", "monte", "miradouro", "graça", "graca"],
+                    sourceLabel: "Visit Lisboa Blog",
+                    sourceUrl: "https://www.visitlisboablog.pt/2025/06/os-10-melhores-miradouros-de-lisboa.html",
+                    mapsQuery: "Miradouro+da+Senhora+do+Monte+Lisbon"
                 },
                 {
-                    name: "Elevador de Santa Justa",
-                    nameRu: "Лифт Санта-Жушта",
-                    coords: [38.7121, -9.1393],
-                    description: "Знаменитый неоготический подъёмник 1902 года, спроектированный учеником Гюстава Эйфеля. Соединяет нижний город Байша с верхним кварталом Ларгу-ду-Карму.",
-                    wikiUrl: "https://ru.wikipedia.org/wiki/Подъёмник_Санта-Жушта",
-                    mapsQuery: "Elevador+de+Santa+Justa+Lisbon"
+                    name: "Mercado Oriental Martim Moniz",
+                    nameRu: "Mercado Oriental в Мартин Мониш",
+                    coords: [38.7149, -9.1368],
+                    description: "Хорошая точка для обеда после смотровой. Это азиатский маркет и фуд-корт в одном из самых мультикультурных уголков центра: здесь легко взять горячий суп, перевести дух и снова отправиться гулять уже по классическому Лиссабону.",
+                    galleryFiles: [
+                        "File:2016-10-24 Lissabon 6306 (30904550196).jpg",
+                        "File:2016-10-24 Lissabon 6307 (30823982322).jpg",
+                        "File:2016-10-24 Lissabon 6308 (30852216891).jpg",
+                        "File:Abendstimmung (45519928292).jpg"
+                    ],
+                    galleryCategories: ["Largo Martim Moniz", "Martim Moniz (Lisbon Metro)"],
+                    galleryKeywords: ["martim", "moniz", "largo", "praça", "metro"],
+                    sourceLabel: "Apple Maps",
+                    sourceUrl: "https://maps.apple.com/place?place-id=IFF8014BFAB3C8D45",
+                    mapsQuery: "Mercado+Oriental+Martim+Moniz+Lisbon"
                 },
                 {
                     name: "Praça do Rossio",
                     nameRu: "Площадь Россиу",
-                    coords: [38.7139, -9.1395],
-                    description: "Сердце Лиссабона с XIII века. Волнистая мозаика мостовой из чёрного и белого известняка — визитная карточка площади.",
-                    wikiUrl: "https://ru.wikipedia.org/wiki/Россиу",
+                    coords: [38.7138, -9.1394],
+                    description: "Одна из главных городских площадей, где особенно чувствуется ритм центра. Волнистая мостовая, фонтаны, фасады XIX века и постоянное движение делают Россиу хорошим переходом от обеда к более исторической части прогулки.",
+                    galleryFiles: [
+                        "File:Rossio Square (38143017794).jpg",
+                        "File:Rossio Square (28948185498).jpg",
+                        "File:Rossio Square, Lisbon.JPG",
+                        "File:Rossio square.JPG"
+                    ],
+                    galleryCategories: ["Praça de D. Pedro IV (Lisbon)", "Rossio Square"],
+                    galleryKeywords: ["rossio", "pedro", "dom", "square", "praça"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://ru.wikipedia.org/wiki/%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%83",
                     mapsQuery: "Praça+do+Rossio+Lisbon"
                 },
                 {
-                    name: "Castelo de São Jorge",
-                    nameRu: "Замок Святого Георгия",
-                    coords: [38.7139, -9.1335],
-                    description: "Древняя крепость на вершине холма с лучшей панорамой Лиссабона. Замок помнит финикийцев, римлян и мавров.",
-                    wikiUrl: "https://ru.wikipedia.org/wiki/Замок_Сан-Жоржи",
-                    mapsQuery: "Castelo+de+São+Jorge+Lisbon"
+                    name: "Convento do Carmo",
+                    nameRu: "Кармелитский монастырь",
+                    coords: [38.7121, -9.1405],
+                    description: "Готические руины монастыря Карму — одно из самых выразительных мест в центре. Открытые к небу своды напоминают о землетрясении 1755 года и дают редкое ощущение, что история Лиссабона здесь буквально видна в камне.",
+                    galleryFiles: [
+                        "File:2019 - Lisbon 100.A7R07941 1 (49673734323).jpg",
+                        "File:Carmo Convent, Lisbon (11977296016).jpg",
+                        "File:20121027 0651 Lisbon 16.jpg",
+                        "File:-268 – POSTAIS DE LISBOA – VIII - RUINAS DA IGREJA E DO CONVENTO DO CARMO - LISBOA – PORTUGAL (5227342600).jpg"
+                    ],
+                    galleryCategories: ["Convento do Carmo de Lisboa"],
+                    galleryKeywords: ["carmo", "convento", "convent", "ruínas", "ruinas"],
+                    sourceLabel: "Museu do Carmo",
+                    sourceUrl: "https://www.museuarqueologicodocarmo.pt/",
+                    mapsQuery: "Convento+do+Carmo+Lisbon"
                 },
                 {
-                    name: "Alfama",
-                    nameRu: "Алфама",
-                    coords: [38.7108, -9.1300],
-                    description: "Старейший район Лиссабона. Лабиринт узких улочек, лестниц и крошечных площадей, где живёт настоящее фаду.",
-                    wikiUrl: "https://ru.wikipedia.org/wiki/Алфама",
-                    mapsQuery: "Alfama+Lisbon"
+                    name: "Rua Augusta",
+                    nameRu: "Руа Аугушта",
+                    coords: [38.7101, -9.1372],
+                    description: "Самая туристическая, но при этом очень живая ось Байши: уличные музыканты, витрины, старые фасады и поток людей, который медленно несёт вас к реке. Здесь хорошо не спешить и просто смотреть по сторонам.",
+                    galleryFiles: [
+                        "File:20200205 Lisbon 7026 (49657693828).jpg",
+                        "File:20200205 Lisbon 7027 (49658235211).jpg",
+                        "File:20200205 R.Augusta 7096 (49658493002).jpg",
+                        "File:Rua Augusta, Lisbon.jpg"
+                    ],
+                    galleryCategories: ["Rua Augusta (Lisbon)", "Rua Augusta Arch"],
+                    galleryKeywords: ["augusta", "rua", "arch", "arco", "lisbon"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Rua_Augusta_Arch",
+                    mapsQuery: "Rua+Augusta+Lisbon"
+                },
+                {
+                    name: "Praça do Comércio",
+                    nameRu: "Площадь Коммерции",
+                    coords: [38.7077, -9.1366],
+                    description: "Финал маршрута у воды. Просторная парадная площадь, открытая к Тежу, даёт красивое ощущение завершения дня: можно гулять под аркадами, спуститься ближе к реке и уже на месте выбрать, где остаться на ужин.",
+                    galleryFiles: [
+                        "File:Praça do Comércio, Lisbon (52317329176).jpg",
+                        "File:Praça do Comércio, Lisbon (52317640368).jpg",
+                        "File:Praça do Comércio, Lisbon (52316531352).jpg",
+                        "File:Praça do Comércio, Lisbon (52316535697).jpg"
+                    ],
+                    galleryCategories: ["Views of Praça do Comércio", "Praça do Comércio"],
+                    galleryKeywords: ["comércio", "comercio", "praça", "square", "terreiro"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://ru.wikipedia.org/wiki/%D0%A2%D0%BE%D1%80%D0%B3%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C_(%D0%9B%D0%B8%D1%81%D1%81%D0%B0%D0%B1%D0%BE%D0%BD)",
+                    mapsQuery: "Praça+do+Comércio+Lisbon"
                 }
             ]
         },
@@ -678,6 +1034,298 @@
         }
     });
 
+    const galleryPhotoCache = new Map();
+
+    function escapeHtml(value = '') {
+        return value
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function renderGalleryShell(routeId, placeIndex, place) {
+        return `
+            <div class="place-gallery" data-gallery-root data-route-id="${routeId}" data-place-index="${placeIndex}">
+                <div class="place-gallery-shell">
+                    <div class="place-gallery-stage">
+                        <div class="place-gallery-slides">
+                            <div class="place-gallery-skeleton is-active"></div>
+                            <div class="place-gallery-skeleton"></div>
+                            <div class="place-gallery-skeleton"></div>
+                        </div>
+                        <span class="place-gallery-badge">Фото локации</span>
+                        <span class="place-gallery-status">Загрузка...</span>
+                        <button type="button" class="place-gallery-nav prev" data-gallery-prev hidden aria-label="Предыдущее фото для ${escapeHtml(place.nameRu)}">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        <button type="button" class="place-gallery-nav next" data-gallery-next hidden aria-label="Следующее фото для ${escapeHtml(place.nameRu)}">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                    <div class="place-gallery-preview">
+                        <div class="place-gallery-thumb-skeleton"></div>
+                        <div class="place-gallery-thumb-skeleton"></div>
+                        <div class="place-gallery-thumb-skeleton"></div>
+                        <div class="place-gallery-thumb-skeleton"></div>
+                    </div>
+                    <div class="place-gallery-credit">
+                        <span>${place.nameRu}</span>
+                        <span>${place.galleryFiles?.length ? 'Подборка редактора' : 'Wikimedia Commons'}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function buildCommonsApiUrl(params) {
+        const searchParams = new URLSearchParams({
+            action: 'query',
+            format: 'json',
+            formatversion: '2',
+            origin: '*',
+            ...params,
+        });
+
+        return `https://commons.wikimedia.org/w/api.php?${searchParams.toString()}`;
+    }
+
+    function isUsableCommonsPhoto(page) {
+        const info = page.imageinfo?.[0];
+        const title = (page.title || '').toLowerCase();
+
+        if (!info || !(info.mime || '').startsWith('image/')) return false;
+        if (!info.thumburl && !info.url) return false;
+        if (/\.(svg|gif|tif|tiff|pdf)$/i.test(page.title || '')) return false;
+        if (/(map|plan|scheme|logo|flag|coat of arms|locator|icon|symbol|seal)/i.test(title)) return false;
+
+        return true;
+    }
+
+    function scoreCommonsPhoto(page, keywords = []) {
+        const info = page.imageinfo?.[0] || {};
+        const title = (page.title || '').toLowerCase();
+        const width = info.thumbwidth || info.width || 0;
+        const height = info.thumbheight || info.height || 0;
+        const ratio = width && height ? width / height : 1;
+        let score = width + height;
+
+        if (ratio > 0.9 && ratio < 2.2) score += 900;
+        if (/panorama|sunset|night|view|lisbon|lisboa|tejo|tagus|rossio|augusta|carmo|parque/.test(title)) score += 700;
+        if (/cropped|poster|detail|drawing|logo|map/.test(title)) score -= 1800;
+        keywords.forEach((keyword) => {
+            if (title.includes(keyword.toLowerCase())) {
+                score += 1100;
+            }
+        });
+
+        return score;
+    }
+
+    async function fetchCommonsCategoryPhotos(categoryTitle, limit = 4, keywords = []) {
+        const response = await fetch(buildCommonsApiUrl({
+            generator: 'categorymembers',
+            gcmtitle: `Category:${categoryTitle}`,
+            gcmtype: 'file',
+            gcmlimit: '12',
+            prop: 'imageinfo',
+            iiprop: 'url|mime|size',
+            iiurlwidth: '1600',
+        }));
+
+        if (!response.ok) {
+            throw new Error(`Failed to load gallery for category ${categoryTitle}`);
+        }
+
+        const data = await response.json();
+        const pages = data.query?.pages || [];
+
+        return pages
+            .filter(isUsableCommonsPhoto)
+            .sort((a, b) => scoreCommonsPhoto(b, keywords) - scoreCommonsPhoto(a, keywords))
+            .map((page) => {
+                const info = page.imageinfo[0];
+                return {
+                    src: info.thumburl || info.url,
+                    alt: page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
+                };
+            })
+            .slice(0, limit);
+    }
+
+    async function fetchCommonsFiles(fileTitles = []) {
+        if (!fileTitles.length) return [];
+
+        const response = await fetch(buildCommonsApiUrl({
+            titles: fileTitles.join('|'),
+            prop: 'imageinfo',
+            iiprop: 'url|mime|size',
+            iiurlwidth: '1600',
+            redirects: '1',
+        }));
+
+        if (!response.ok) {
+            throw new Error('Failed to load curated gallery files');
+        }
+
+        const data = await response.json();
+        const pages = data.query?.pages || [];
+        const pageMap = new Map(
+            pages
+                .filter((page) => !page.missing)
+                .map((page) => [(page.title || '').toLowerCase(), page])
+        );
+
+        return fileTitles
+            .map((title) => pageMap.get(title.toLowerCase()))
+            .filter(Boolean)
+            .filter(isUsableCommonsPhoto)
+            .map((page) => {
+                const info = page.imageinfo[0];
+                return {
+                    src: info.thumburl || info.url,
+                    alt: page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
+                };
+            });
+    }
+
+    async function getPlaceGalleryPhotos(place) {
+        const fileList = place.galleryFiles || [];
+        const categoryList = place.galleryCategories || [];
+        const keywords = place.galleryKeywords || [];
+        const cacheKey = `${fileList.join('|')}::${categoryList.join('|')}::${keywords.join('|')}`;
+
+        if (!cacheKey) return [];
+        if (galleryPhotoCache.has(cacheKey)) return galleryPhotoCache.get(cacheKey);
+
+        const loader = (async () => {
+            const collected = [];
+            const seen = new Set();
+
+            if (fileList.length) {
+                try {
+                    const curatedPhotos = await fetchCommonsFiles(fileList);
+                    curatedPhotos.forEach((photo) => {
+                        if (!seen.has(photo.src) && collected.length < 4) {
+                            seen.add(photo.src);
+                            collected.push(photo);
+                        }
+                    });
+                } catch (error) {
+                    console.warn('Gallery file selection failed', place.nameRu, error);
+                }
+            }
+
+            for (const category of categoryList) {
+                try {
+                    const photos = await fetchCommonsCategoryPhotos(category, 6, keywords);
+                    photos.forEach((photo) => {
+                        if (!seen.has(photo.src) && collected.length < 4) {
+                            seen.add(photo.src);
+                            collected.push(photo);
+                        }
+                    });
+                } catch (error) {
+                    console.warn('Gallery category failed', category, error);
+                }
+
+                if (collected.length >= 4) break;
+            }
+
+            return collected.slice(0, 4);
+        })();
+
+        galleryPhotoCache.set(cacheKey, loader);
+        return loader;
+    }
+
+    function renderGalleryFallback(root, place) {
+        const stage = root.querySelector('.place-gallery-slides');
+        const preview = root.querySelector('.place-gallery-preview');
+        const status = root.querySelector('.place-gallery-status');
+
+        stage.innerHTML = `
+            <div class="place-gallery-empty">
+                <div>
+                    <strong>${escapeHtml(place.nameRu)}</strong>
+                    <span>Фотографии можно будет догрузить позже, но описание и точка на карте уже готовы.</span>
+                </div>
+            </div>
+        `;
+        preview.innerHTML = '';
+        status.textContent = 'Фото позже';
+    }
+
+    function mountPlaceGallery(root, place, photos) {
+        if (!root) return;
+
+        const stage = root.querySelector('.place-gallery-slides');
+        const preview = root.querySelector('.place-gallery-preview');
+        const status = root.querySelector('.place-gallery-status');
+        const prevButton = root.querySelector('[data-gallery-prev]');
+        const nextButton = root.querySelector('[data-gallery-next]');
+
+        if (!photos.length) {
+            renderGalleryFallback(root, place);
+            return;
+        }
+
+        let currentIndex = 0;
+
+        stage.innerHTML = photos.map((photo, index) => `
+            <figure class="place-gallery-slide${index === 0 ? ' is-active' : ''}">
+                <img src="${photo.src}" alt="${escapeHtml(place.nameRu)} — фото ${index + 1}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+            </figure>
+        `).join('');
+
+        preview.innerHTML = photos.map((photo, index) => `
+            <button type="button" class="place-gallery-thumb${index === 0 ? ' is-active' : ''}" data-gallery-thumb="${index}" aria-label="Показать фото ${index + 1} для ${escapeHtml(place.nameRu)}">
+                <img src="${photo.src}" alt="${escapeHtml(place.nameRu)} — превью ${index + 1}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+            </button>
+        `).join('');
+
+        const slides = Array.from(stage.querySelectorAll('.place-gallery-slide'));
+        const thumbs = Array.from(preview.querySelectorAll('.place-gallery-thumb'));
+
+        function updateGallery(nextIndex) {
+            currentIndex = (nextIndex + photos.length) % photos.length;
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('is-active', index === currentIndex);
+            });
+            thumbs.forEach((thumb, index) => {
+                thumb.classList.toggle('is-active', index === currentIndex);
+            });
+            status.textContent = `${currentIndex + 1} / ${photos.length}`;
+        }
+
+        status.textContent = `1 / ${photos.length}`;
+
+        if (photos.length > 1) {
+            prevButton.hidden = false;
+            nextButton.hidden = false;
+            prevButton.addEventListener('click', () => updateGallery(currentIndex - 1));
+            nextButton.addEventListener('click', () => updateGallery(currentIndex + 1));
+        }
+
+        thumbs.forEach((thumb) => {
+            thumb.addEventListener('click', () => {
+                updateGallery(Number(thumb.dataset.galleryThumb));
+            });
+        });
+    }
+
+    async function hydratePlaceGalleries(route) {
+        const galleryRoots = Array.from(modalContent.querySelectorAll('[data-gallery-root]'));
+
+        await Promise.all(galleryRoots.map(async (root) => {
+            const placeIndex = Number(root.dataset.placeIndex);
+            const place = route.places[placeIndex];
+            const photos = await getPlaceGalleryPhotos(place);
+            mountPlaceGallery(root, place, photos);
+        }));
+    }
+
     const overlay = document.getElementById('modalOverlay');
     const panel = document.getElementById('modalPanel');
     const closeBtn = document.getElementById('modalCloseBtn');
@@ -717,21 +1365,24 @@
                         <div class="place-step hidden md:flex absolute left-0 -translate-x-1/2 w-12 h-12 rounded-full bg-white border border-primary/5 items-center justify-center font-serif font-bold text-secondary z-10 shadow-sm">
                             ${i + 1}
                         </div>
-                        <div class="md:pl-16 space-y-4">
-                            <div>
-                                <h4 class="text-2xl font-serif font-bold text-primary">${place.name}</h4>
-                                <p class="text-secondary font-serif italic text-lg">${place.nameRu}</p>
-                            </div>
-                            <p class="text-on-surface-variant leading-relaxed font-body">${place.description}</p>
-                            <div class="flex gap-4 pt-2">
-                                <a href="${place.wikiUrl}" target="_blank" class="text-[10px] font-bold uppercase tracking-widest text-primary/60 hover:text-secondary transition-all flex items-center gap-1">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg>
-                                    Wikipedia
-                                </a>
-                                <a href="https://maps.google.com/?q=${place.mapsQuery}" target="_blank" class="text-[10px] font-bold uppercase tracking-widest text-primary/60 hover:text-secondary transition-all flex items-center gap-1">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                    Maps
-                                </a>
+                        <div class="place-body md:pl-16">
+                            ${renderGalleryShell(route.id, i, place)}
+                            <div class="place-copy space-y-4">
+                                <div>
+                                    <h4 class="text-2xl font-serif font-bold text-primary">${place.name}</h4>
+                                    <p class="text-secondary font-serif italic text-lg">${place.nameRu}</p>
+                                </div>
+                                <p class="text-on-surface-variant leading-relaxed font-body">${place.description}</p>
+                                <div class="flex gap-4 pt-2 flex-wrap">
+                                    <a href="${place.sourceUrl || place.wikiUrl}" target="_blank" class="text-[10px] font-bold uppercase tracking-widest text-primary/60 hover:text-secondary transition-all flex items-center gap-1">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg>
+                                        ${place.sourceLabel || 'Wikipedia'}
+                                    </a>
+                                    <a href="https://maps.google.com/?q=${place.mapsQuery}" target="_blank" class="text-[10px] font-bold uppercase tracking-widest text-primary/60 hover:text-secondary transition-all flex items-center gap-1">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                        Maps
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -749,6 +1400,8 @@
                 <p class="text-on-surface-variant italic font-serif leading-relaxed">${route.tip}</p>
             </div>
         `;
+
+        hydratePlaceGalleries(route);
 
         overlay.classList.remove('invisible');
         requestAnimationFrame(() => {
