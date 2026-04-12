@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx playbooks:*)",
+      "Read(//c/Users/mrbas/.claude/skills/**)",
+      "Read(//c/Users/mrbas/.claude/**)"
+    ]
+  }
+}
