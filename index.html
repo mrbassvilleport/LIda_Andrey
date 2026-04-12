@@ -971,6 +971,281 @@
         }
     ];
 
+    const routeTwo = routes.find((route) => route.id === 2);
+    if (routeTwo) {
+        Object.assign(routeTwo, {
+            title: "От Тежу к Атлантике",
+            subtitle: "Белем, устрицы, панорама Cristo Rei и вечер на Капарике",
+            duration: "8–9 часов",
+            distance: "~7,5 км",
+            difficulty: "Лёгкая / долгая",
+            category: "Tagus to Atlantic",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Monument_of_the_Discoveries%2C_Sunset_on_Tagus_River%2C_Padr%C3%A3o_dos_Descobrimentos_%E2%80%A2_Monument_of_the_Discoveries_%2850656270833%29.jpg/1280px-Monument_of_the_Discoveries%2C_Sunset_on_Tagus_River%2C_Padr%C3%A3o_dos_Descobrimentos_%E2%80%A2_Monument_of_the_Discoveries_%2850656270833%29.jpg",
+            ready: true,
+            mapCenter: [38.687, -9.186],
+            mapZoom: 11,
+            tip: "Лучше выехать из Parque das Nações в первой половине дня: переезд на такси до района MAAT обычно занимает около 25–35 минут. Пешая часть в Белеме очень комфортная и почти плоская: от MAAT через Jerónimos, Ostras Sobre Rodas, Torre de Belém и до Champalimaud удобно закладывать 3,5–4,5 часа вместе с остановками и обедом. Затем такси до Cristo Rei обычно занимает 20–25 минут, и ещё около 20–25 минут — до Costa da Caparica. По состоянию на 12 апреля 2026 года официальная страница Torre de Belém помечает башню как закрытую на работы по реабилитации, поэтому я считаю её как красивую внешнюю остановку; если к вашей поездке она откроется, просто добавьте ещё 30–45 минут на вход.",
+            places: [
+                {
+                    name: "Parque das Nações",
+                    nameRu: "Парк Наций",
+                    coords: [38.7683, -9.0978],
+                    description: "Хорошее спокойное начало дня: просторная набережная, современная архитектура и совсем другое настроение Лиссабона — воздушное и светлое. Здесь удобно позавтракать, немного пройтись вдоль Тежу и без спешки собраться на длинный маршрут.",
+                    galleryFiles: [
+                        "File:2025-03-26 09-16-47 PT Lisbon JHe N9 (55087550860).jpg",
+                        "File:2025-03-26 09-14-29 PT Lisbon JHe N9 (55077505797).jpg",
+                        "File:Jardins Tropicais I.jpg",
+                        "File:- 249 - POSTAIS DE LISBOA - I - PARQUE DAS NAÇÕES - LISBOA - PORTUGAL (5121476932).jpg"
+                    ],
+                    galleryCategories: ["Parque das Nações"],
+                    galleryKeywords: ["parque", "nações", "nacoes", "oriente", "vasco"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Parque_das_Na%C3%A7%C3%B5es",
+                    mapsQuery: "Parque+das+Nacoes+Lisbon"
+                },
+                {
+                    name: "MAAT",
+                    nameRu: "MAAT и набережная Белема",
+                    coords: [38.6959, -9.1947],
+                    description: "Современный музей на самом краю воды, который хорош не только выставками, но и самим маршрутом вокруг: волнообразная крыша-смотровая, плитка, отражения Тежу и длинный красивый променад в сторону Белема. Это один из самых приятных пешеходных отрезков всего дня.",
+                    galleryFiles: [
+                        "File:MAAT - The Museum of Art, Architecture and Technology (33806650751).jpg",
+                        "File:Panorama view of the outside of MAAT museum in Lisbon.jpg",
+                        "File:View from the MAAT Rooftop Toward Ponte 25 de Abril and the Lisbon Waterfront (54702003134).jpg",
+                        "File:MAAT, Lisbon (45898187305).jpg"
+                    ],
+                    galleryCategories: ["Museum of Art, Architecture and Technology", "Belém, Lisbon", "Tagus River in Lisbon"],
+                    galleryKeywords: ["maat", "museum", "belem", "lisbon", "riverfront"],
+                    sourceLabel: "MAAT",
+                    sourceUrl: "https://www.maat.pt/en/about",
+                    mapsQuery: "MAAT+Lisbon"
+                },
+                {
+                    name: "Mosteiro dos Jerónimos",
+                    nameRu: "Монастырь Жеронимуш",
+                    coords: [38.6979, -9.2066],
+                    description: "Один из главных символов португальской эпохи открытий и один из самых красивых памятников страны. Даже если смотреть только снаружи, монастырь производит сильное впечатление: резной камень, длинный фасад и ощущение большого имперского Белема.",
+                    galleryFiles: [
+                        "File:Jerónimos Monastery in Belém, Lisbon, 20250604 1342 9260.jpg",
+                        "File:Jerónimos Monastery in Belém, Lisbon, 20250604 1340 9252.jpg",
+                        "File:Jerónimos Monastery in Belém, Lisbon, 20250604 1343 9263.jpg",
+                        "File:Cloister of the Jerónimos Monastery in Belém, Lisbon, 20250604 1316 9216.jpg"
+                    ],
+                    galleryCategories: ["Mosteiro dos Jerónimos", "Jerónimos Monastery", "Belém, Lisbon"],
+                    galleryKeywords: ["jeronimos", "mosteiro", "monastery", "belem", "manueline"],
+                    sourceLabel: "Museus e Monumentos",
+                    sourceUrl: "https://www.museusemonumentos.pt/en/museus-e-monumentos/jeronimos-monastery",
+                    mapsQuery: "Mosteiro+dos+Jeronimos+Lisbon"
+                },
+                {
+                    name: "Restaurante Ostras Sobre Rodas (Belém)",
+                    nameRu: "Ostras Sobre Rodas",
+                    coords: [38.6937, -9.2052],
+                    description: "Красивая гастрономическая пауза прямо у воды. Формат здесь скорее лёгкий и атмосферный: свежие устрицы, бокал вина и вид на Тежу, так что остановка ощущается как часть прогулки, а не как отдельный тяжёлый обед.",
+                    galleryFiles: [
+                        "File:Padrão dos Descobrimentos ao Crepúsculo 01.jpg",
+                        "File:Monument of the Discoveries in Belém, Lisbon, 20250604 1939 9562.jpg",
+                        "File:Belém (49190844852).jpg",
+                        "File:Plate of oysters with lemon.jpg"
+                    ],
+                    galleryCategories: ["Belém, Lisbon", "Padrão dos Descobrimentos", "Oysters on the half shell"],
+                    galleryKeywords: ["belem", "river", "oyster", "brasília", "lisbon"],
+                    sourceLabel: "OSR",
+                    sourceUrl: "https://ostrassobrerodas.pt/",
+                    mapsQuery: "Ostras+Sobre+Rodas+Belem+Lisbon"
+                },
+                {
+                    name: "Torre de Belém",
+                    nameRu: "Башня Белен",
+                    coords: [38.6916, -9.2159],
+                    description: "Один из самых узнаваемых силуэтов Лиссабона и важный памятник эпохи мореплавателей. Сейчас её стоит воспринимать прежде всего как сильную визуальную точку на берегу: башня очень красиво смотрится снаружи на фоне воды и света.",
+                    galleryFiles: [
+                        "File:Torre Belém April 2009-4a.jpg",
+                        "File:Belem Tower - April 2019 (2).jpg",
+                        "File:Torre de Belém, Lisboa, Portugal, 2012-05-12, DD 16.JPG",
+                        "File:Torre de Belém por Rodrigo Tetsuo Argenton (2).jpg"
+                    ],
+                    galleryCategories: ["Belém Tower", "Torre de Belém", "Belém, Lisbon"],
+                    galleryKeywords: ["belem", "tower", "torre", "lisbon", "tagus"],
+                    sourceLabel: "Museus e Monumentos",
+                    sourceUrl: "https://www.museusemonumentos.pt/pt/museus-e-monumentos/belem-tower",
+                    mapsQuery: "Torre+de+Belem+Lisbon"
+                },
+                {
+                    name: "Champalimaud Foundation",
+                    nameRu: "Фонд Шампалимо",
+                    coords: [38.6912, -9.2187],
+                    description: "Очень эффектный финал белемской части: футуристический научный центр с открытыми террасами, амфитеатром и отличным видом на реку и мост. Здесь приятно сделать короткую паузу перед переездом на другой берег.",
+                    galleryFiles: [
+                        "File:Fundação Champalimaud por do sol.jpg",
+                        "File:Fundação Champalimaud - Lisboa - Portugal (11993140913).jpg",
+                        "File:Fundação Champalimaud - Lisboa - Portugal (12643323254).jpg",
+                        "File:Fundação Champalimaud - Lisboa - Portugal (14881569376).jpg"
+                    ],
+                    galleryCategories: ["Champalimaud Foundation", "Champalimaud Centre for the Unknown", "Belém, Lisbon"],
+                    galleryKeywords: ["champalimaud", "foundation", "unknown", "belem", "lisbon"],
+                    sourceLabel: "Visit Lisboa",
+                    sourceUrl: "https://www.visitlisboa.com/en/places/champalimaud-centre-for-the-unknown-1",
+                    mapsQuery: "Champalimaud+Foundation+Lisbon"
+                },
+                {
+                    name: "Santuário de Cristo Rei",
+                    nameRu: "Санктуарий Cristo Rei",
+                    coords: [38.6797, -9.1714],
+                    description: "Одна из лучших обзорных точек на весь Лиссабон, мост 25 de Abril и устье Тежу. После речной прогулки этот подъём даёт совершенно другой масштаб дня: вы видите уже весь путь, город и воду сразу.",
+                    galleryFiles: [
+                        "File:Cristo Rei, Lisboa, Portugal, 2012-05-12, DD 01.JPG",
+                        "File:Cristo Rei - Lissabon View - 1.jpg",
+                        "File:Cristo Rei - Ponte 25 de Abril.jpg",
+                        "File:Statue of Sacred Heart of Jesus Christ, Almada, Portugal, 20250604 1923 9481.jpg"
+                    ],
+                    galleryCategories: ["Cristo Rei (Almada)", "Santuário de Cristo Rei", "Almada"],
+                    galleryKeywords: ["cristo", "rei", "almada", "bridge", "lisbon"],
+                    sourceLabel: "Cristo Rei",
+                    sourceUrl: "https://cristorei.pt/",
+                    mapsQuery: "Santuario+de+Cristo+Rei+Almada"
+                },
+                {
+                    name: "Costa da Caparica",
+                    nameRu: "Пляж Капарика",
+                    coords: [38.6428, -9.2368],
+                    description: "Мягкий атлантический финал маршрута. После города и монументов здесь всё становится проще: длинный песок, океан, ветер, серф-настроение и возможность уже без программы просто гулять вдоль воды столько, сколько захочется.",
+                    galleryFiles: [
+                        "File:Caparica December 2011-1a.jpg",
+                        "File:Caparica December 2012-4.jpg",
+                        "File:Caparica January 2013-4.jpg",
+                        "File:Jules walking on beach promenade, Costa da Caparica, Portugal julesvernex2.jpg"
+                    ],
+                    galleryCategories: ["Costa da Caparica", "Beaches of Costa da Caparica", "Atlantic Ocean in Portugal"],
+                    galleryKeywords: ["caparica", "beach", "atlantic", "sand", "ocean"],
+                    sourceLabel: "Visit Lisboa",
+                    sourceUrl: "https://www.visitlisboa.com/en/places/beaches-of-costa-da-caparica",
+                    mapsQuery: "Costa+da+Caparica+Beach"
+                }
+            ]
+        });
+    }
+
+    const routeThree = routes.find((route) => route.id === 3);
+    if (routeThree) {
+        Object.assign(routeThree, {
+            title: "Синтра и край света",
+            subtitle: "Вила, Регалейра, Seteais и ветер Cabo da Roca",
+            duration: "10–11 часов",
+            distance: "~6,5 км",
+            difficulty: "Средняя (склоны и лестницы)",
+            category: "Romantic Sintra",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Sintra_palaces_in_the_midst_of_nature.jpg/1280px-Sintra_palaces_in_the_midst_of_nature.jpg",
+            ready: true,
+            mapCenter: [38.7918, -9.4435],
+            mapZoom: 11,
+            tip: "Маршрут получается полноценным day trip. Из Parque das Nações удобно выйти через Oriente: на путь до вокзала и поезд CP до Sintra закладывайте примерно 55–70 минут от двери до двери; сам участок Oriente–Sintra здесь дан как моя практическая оценка около 45–55 минут по городской линии CP. В самой Синтре я бы оставил день прогулочным: старый центр, Palácio Nacional de Sintra, затем Quinta da Regaleira и подъём к Seteais. По состоянию на 12 апреля 2026 года официальный сайт Parques de Sintra указывает для Palácio Nacional de Sintra часы 09:30–18:30 с последним входом в 18:00, а сайт Regaleira — 10:00–19:30 с последним входом в 17:30, поэтому в спокойный день лучше выбирать максимум один полноценный интерьер, а не пытаться брать все дворцы подряд. На Cabo da Roca сейчас ведут линии Carris Metropolitana 1253 и 1624; на практике закладывайте около 45–50 минут на автобус из Синтры и обязательно сверяйте рейс в день поездки. Если захотите добавить ещё и Pena, день станет заметно плотнее и ближе к 11–12 часам.",
+            places: [
+                {
+                    name: "Parque das Nações",
+                    nameRu: "Парк Наций",
+                    coords: [38.7683, -9.0978],
+                    description: "Спокойный старт перед выездом из города. Здесь можно без спешки выпить кофе у Тежу, чуть пройтись по набережной и потом быстро уйти на Oriente, не тратя энергию на длинное утро в центре Лиссабона.",
+                    galleryFiles: [
+                        "File:2025-03-26 09-16-47 PT Lisbon JHe N9 (55087550860).jpg",
+                        "File:2025-03-26 09-14-29 PT Lisbon JHe N9 (55077505797).jpg",
+                        "File:Jardins Tropicais I.jpg",
+                        "File:- 249 - POSTAIS DE LISBOA - I - PARQUE DAS NAÇÕES - LISBOA - PORTUGAL (5121476932).jpg"
+                    ],
+                    galleryCategories: ["Parque das Nações"],
+                    galleryKeywords: ["parque", "nações", "nacoes", "oriente", "vasco"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Parque_das_Na%C3%A7%C3%B5es",
+                    mapsQuery: "Parque+das+Nacoes+Lisbon"
+                },
+                {
+                    name: "Vila de Sintra e Volta do Duche",
+                    nameRu: "Вила Синтры и Volta do Duche",
+                    coords: [38.7979, -9.3897],
+                    description: "От станции приятно идти в исторический центр не по спешной дороге, а через зелёную и чуть сказочную сторону города: аллеи, каменные стены, влажный воздух Серры и старые улочки, где уже чувствуется вся синтрийская атмосфера. Это та часть дня, где лучше не торопиться и просто идти по городу.",
+                    galleryFiles: [
+                        "File:Sintra, part of the historic centre.jpg",
+                        "File:Sintra Portugal (15984252730).jpg",
+                        "File:Sintra (53564255651).jpg"
+                    ],
+                    galleryCategories: ["Sintra", "Historic centre of Sintra"],
+                    galleryKeywords: ["sintra", "historic", "centre", "villa", "duche"],
+                    sourceLabel: "CP",
+                    sourceUrl: "https://www.cp.pt/passageiros/en/how-to-travel/For-leisure/circuits/lisboa-sintra",
+                    mapsQuery: "Sintra+historic+centre"
+                },
+                {
+                    name: "Palácio Nacional de Sintra",
+                    nameRu: "Национальный дворец Синтры",
+                    coords: [38.7975, -9.3904],
+                    description: "Самый удобный дворец для мягкого маршрута по Синтре: он стоит прямо в сердце вилы, так что не требует отдельного подъёма или автобуса. Даже если ограничиться внешним осмотром и внутренним двором, он хорошо даёт ощущение старой королевской Синтры.",
+                    galleryFiles: [
+                        "File:Palacio Sintra February 2015-13a.jpg",
+                        "File:Palacio Nacional, Sintra, Portugal, 2019-05-25, DD 07.jpg",
+                        "File:Palacio Nacional, Sintra, Portugal, 2019-05-25, DD 03.jpg",
+                        "File:Palacio Nacional, Sintra, Portugal, 2022-07-25, DD 19.jpg"
+                    ],
+                    galleryCategories: ["National Palace of Sintra", "Palácio Nacional de Sintra"],
+                    galleryKeywords: ["sintra", "national", "palace", "palacio"],
+                    sourceLabel: "Parques de Sintra",
+                    sourceUrl: "https://www.parquesdesintra.pt/en/parks-monuments/national-palace-of-sintra/",
+                    mapsQuery: "National+Palace+of+Sintra"
+                },
+                {
+                    name: "Quinta da Regaleira",
+                    nameRu: "Кинта да Регалейра",
+                    coords: [38.7966, -9.3950],
+                    description: "Самая атмосферная точка маршрута: не столько про музей, сколько про настроение, символы, сад, башенки и странную романтическую театральность. Если заходить только в одно большое место в Синтре, я бы выбирал именно Regaleira.",
+                    galleryFiles: [
+                        "File:Quinta da Regaleira, Sintra, Portugal, 2019-05-25, DD 46.jpg",
+                        "File:Quinta da Regaleira, Sintra, Portugal, 2019-05-25, DD 48.jpg",
+                        "File:Quinta da Regaleira, Sintra, Portugal, 2019-05-25, DD 47.jpg",
+                        "File:Quinta da Regaleira, Sintra, Portugal, 2022-07-25, DD 15.jpg"
+                    ],
+                    galleryCategories: ["Quinta da Regaleira"],
+                    galleryKeywords: ["regaleira", "sintra", "quinta", "garden", "palace"],
+                    sourceLabel: "Regaleira",
+                    sourceUrl: "https://www.regaleira.pt/en",
+                    mapsQuery: "Quinta+da+Regaleira"
+                },
+                {
+                    name: "Palácio e Miradouro de Seteais",
+                    nameRu: "Seteais и вид к океану",
+                    coords: [38.7908, -9.3974],
+                    description: "Очень приятное продолжение после Regaleira: дорога между дворцами, арка Seteais и одна из тех точек, где Синтра вдруг раскрывается в сторону света и дальнего океана. Здесь хорошо перевести дух перед автобусом к мысу.",
+                    galleryFiles: [
+                        "File:Seteais façade.JPG",
+                        "File:Palácio de Seteais, Sintra, Portugal.JPG",
+                        "File:View to the ocean from the Palácio de Seteais. Sintra, Portugal.jpg",
+                        "File:Triumphal arch, Palácio de Seteais, Sintra, 2010.jpg"
+                    ],
+                    galleryCategories: ["Seteais Palace", "Palácio de Seteais"],
+                    galleryKeywords: ["seteais", "sintra", "palacio", "viewpoint", "arch"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Seteais_Palace",
+                    mapsQuery: "Palacio+de+Seteais+Sintra"
+                },
+                {
+                    name: "Cabo da Roca",
+                    nameRu: "Мыс Рока",
+                    coords: [38.7805, -9.4989],
+                    description: "Финал дня у самого края материковой Европы. Здесь важнее не галочка в списке, а сама прогулка вдоль обрыва: ветер, трава, серые скалы, океан и ощущение, что день закончился в совершенно другом мире, чем начался утром у Тежу.",
+                    galleryFiles: [
+                        "File:Cabo da Roca - Cape Roca.JPG",
+                        "File:Monument of Cabo da Roca, Portugal, 20250606 1518 0251.jpg",
+                        "File:Cliffs at Cabo da Roca, Portugal, 20250606 1522 0263.jpg",
+                        "File:Cliffs at Cabo da Roca, Portugal, 20250606 1530 0295.jpg"
+                    ],
+                    galleryCategories: ["Cabo da Roca"],
+                    galleryKeywords: ["cabo", "roca", "cape", "cliffs", "ocean"],
+                    sourceLabel: "AleksBlog",
+                    sourceUrl: "https://aleksblog.com/sintra-cape-roca/",
+                    mapsQuery: "Cabo+da+Roca"
+                }
+            ]
+        });
+    }
+
     const grid = document.getElementById('routesGrid');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealObserver = prefersReducedMotion ? null : new IntersectionObserver((entries) => {
