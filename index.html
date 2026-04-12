@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Португалия — Маршруты для Лиды и Андрея</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        /* ═══════════════════════════════════════════
+           CSS VARIABLES
+           ═══════════════════════════════════════════ */
+        :root {
+            --azulejo-deep: #0F3460;
+            --azulejo-mid: #1B4F72;
+            --azulejo-light: #5B8FB9;
+            --azulejo-pale: #B8D4E8;
+            --sand-lightest: #FFFCF5;
+            --sand-light: #FDF8F0;
+            --sand-mid: #F0E2CC;
+            --sand-warm: #E8D5B5;
+            --terracotta: #C2703E;
+            --terracotta-light: #E89B6A;
+            --terracotta-dark: #8B4513;
+            --gold: #D4A853;
+            --gold-light: #E8C97A;
+            --wine: #6B2D3E;
+            --text-dark: #1A1208;
+            --text-mid: #5C4A32;
+            --text-light: #8A7560;
+            --font-display: 'Cormorant Garamond', 'Georgia', serif;
+            --font-body: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            --shadow-soft: 0 4px 20px rgba(15, 52, 96, 0.08);
+            --shadow-hover: 0 12px 40px rgba(15, 52, 96, 0.15);
+            --shadow-modal: 0 -8px 60px rgba(15, 52, 96, 0.2);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* ═══════════════════════════════════════════
+           RESET & BASE
+           ═══════════════════════════════════════════ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            color: var(--text-dark);
+            background: var(--sand-lightest);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Subtle grain texture overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
+        }
+
+        /* ═══════════════════════════════════════════
+           AZULEJO SVG PATTERN
+           ═══════════════════════════════════════════ */
+        .azulejo-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.08;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0L80 40L40 80L0 40Z' fill='none' stroke='white' stroke-width='0.8'/%3E%3Cpath d='M40 12L68 40L40 68L12 40Z' fill='none' stroke='white' stroke-width='0.5'/%3E%3Ccircle cx='40' cy='40' r='8' fill='none' stroke='white' stroke-width='0.5'/%3E%3Ccircle cx='40' cy='40' r='3' fill='white' fill-opacity='0.3'/%3E%3Ccircle cx='0' cy='0' r='5' fill='none' stroke='white' stroke-width='0.4'/%3E%3Ccircle cx='80' cy='0' r='5' fill='none' stroke='white' stroke-width='0.4'/%3E%3Ccircle cx='0' cy='80' r='5' fill='none' stroke='white' stroke-width='0.4'/%3E%3Ccircle cx='80' cy='80' r='5' fill='none' stroke='white' stroke-width='0.4'/%3E%3Cpath d='M40 0L40 12M68 40L80 40M40 68L40 80M12 40L0 40' stroke='white' stroke-width='0.3'/%3E%3C/svg%3E");
+            background-size: 80px 80px;
+            pointer-events: none;
+        }
+
+        /* ═══════════════════════════════════════════
+           HERO SECTION
+           ═══════════════════════════════════════════ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(160deg,
+                #D4A853 0%,
+                #C2703E 25%,
+                #8B4513 45%,
+                #1B4F72 70%,
+                #0F3460 100%
+            );
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 20%, rgba(212, 168, 83, 0.3) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(15, 52, 96, 0.4) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+            max-width: 700px;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: 0.85rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s 0.3s ease-out forwards;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-weight: 300;
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            line-height: 0.95;
+            color: #fff;
+            letter-spacing: -0.02em;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s 0.5s ease-out forwards;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--gold-light);
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-style: italic;
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 1.5rem;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s 0.7s ease-out forwards;
+        }
+
+        .hero-note {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 2rem;
+            line-height: 1.8;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s 0.9s ease-out forwards;
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s 1.2s ease-out forwards;
+            cursor: pointer;
+            transition: color var(--transition);
+        }
+
+        .hero-scroll:hover { color: rgba(255, 255, 255, 0.7); }
+
+        .hero-scroll .arrow {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        /* ═══════════════════════════════════════════
+           ROUTES SECTION
+           ═══════════════════════════════════════════ */
+        .routes-section {
+            position: relative;
+            padding: 6rem 2rem 8rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            color: var(--azulejo-deep);
+            line-height: 1.15;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 300;
+            font-size: 1.15rem;
+            color: var(--text-light);
+            margin-top: 0.75rem;
+        }
+
+        /* ═══════════════════════════════════════════
+           ROUTE CARDS GRID
+           ═══════════════════════════════════════════ */
+        .routes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .route-card {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: #fff;
+            box-shadow: var(--shadow-soft);
+            cursor: pointer;
+            transition: transform var(--transition), box-shadow var(--transition);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .route-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow var(--transition);
+        }
+
+        .route-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .route-card.coming-soon { cursor: default; }
+        .route-card.coming-soon:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .card-cover {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-cover-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.6s ease;
+        }
+
+        .route-card:hover .card-cover-bg {
+            transform: scale(1.05);
+        }
+
+        .card-cover .azulejo-pattern { opacity: 0.12; }
+
+        .card-number {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .card-badge.ready {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+        }
+
+        .card-badge.soon {
+            background: rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.4rem;
+            color: var(--azulejo-deep);
+            line-height: 1.25;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            font-size: 0.88rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--sand-mid);
+        }
+
+        .card-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .card-meta-item svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .coming-soon .card-body { opacity: 0.5; }
+
+        /* ═══════════════════════════════════════════
+           ROUTE DETAIL MODAL
+           ═══════════════════════════════════════════ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(15, 52, 96, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            max-height: 92vh;
+            background: var(--sand-lightest);
+            border-radius: 24px 24px 0 0;
+            box-shadow: var(--shadow-modal);
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-panel.open {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 2rem;
+            background: rgba(253, 248, 240, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--sand-mid);
+        }
+
+        .modal-close-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.15rem;
+            color: var(--azulejo-deep);
+        }
+
+        .modal-close-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--sand-warm);
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+            color: var(--text-mid);
+        }
+
+        .modal-close-btn:hover {
+            background: var(--azulejo-deep);
+            border-color: var(--azulejo-deep);
+            color: #fff;
+        }
+
+        .modal-map {
+            width: 100%;
+            height: 350px;
+            background: var(--sand-mid);
+        }
+
+        .modal-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 4rem;
+        }
+
+        .modal-route-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .modal-route-title {
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--azulejo-deep);
+            line-height: 1.2;
+        }
+
+        .modal-route-subtitle {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 300;
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        .modal-route-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stat svg { width: 18px; height: 18px; color: var(--terracotta); }
+
+        .stat-text {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-mid);
+        }
+
+        /* ═══════════════════════════════════════════
+           PLACES TIMELINE
+           ═══════════════════════════════════════════ */
+        .places-timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .places-timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--terracotta-light), var(--azulejo-pale), transparent);
+            border-radius: 1px;
+        }
+
+        .place-entry {
+            position: relative;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .place-entry.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .place-marker {
+            position: absolute;
+            left: -3rem;
+            top: 0.25rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--terracotta);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.85rem;
+            box-shadow: 0 3px 12px rgba(194, 112, 62, 0.35);
+            z-index: 1;
+        }
+
+        .place-name-pt {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--azulejo-deep);
+            line-height: 1.3;
+        }
+
+        .place-name-ru {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1rem;
+            color: var(--terracotta);
+            margin-top: 0.15rem;
+        }
+
+        .place-desc {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.75;
+            margin-top: 0.75rem;
+        }
+
+        .place-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        .place-link {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--azulejo-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: color var(--transition);
+        }
+
+        .place-link:hover { color: var(--azulejo-deep); }
+
+        .place-link svg { width: 14px; height: 14px; }
+
+        /* ═══════════════════════════════════════════
+           TIPS BOX
+           ═══════════════════════════════════════════ */
+        .tips-box {
+            margin-top: 3rem;
+            padding: 1.75rem;
+            background: linear-gradient(135deg, rgba(27, 79, 114, 0.04), rgba(212, 168, 83, 0.06));
+            border: 1px solid var(--sand-warm);
+            border-radius: var(--radius);
+        }
+
+        .tips-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--azulejo-deep);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tips-text {
+            font-size: 0.88rem;
+            color: var(--text-mid);
+            line-height: 1.75;
+        }
+
+        /* ═══════════════════════════════════════════
+           LEAFLET CUSTOM MARKERS
+           ═══════════════════════════════════════════ */
+        .custom-marker {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--terracotta);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.8rem;
+            box-shadow: 0 3px 10px rgba(194, 112, 62, 0.4);
+            border: 2px solid #fff;
+        }
+
+        .leaflet-popup-content-wrapper {
+            border-radius: var(--radius-sm) !important;
+            box-shadow: var(--shadow-soft) !important;
+            font-family: var(--font-body) !important;
+        }
+
+        .leaflet-popup-content {
+            margin: 0.75rem 1rem !important;
+            font-size: 0.85rem !important;
+            line-height: 1.5 !important;
+        }
+
+        .popup-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--azulejo-deep);
+        }
+
+        .popup-name-ru {
+            font-family: var(--font-display);
+            font-style: italic;
+            color: var(--terracotta);
+            font-size: 0.85rem;
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════ */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem 4rem;
+            border-top: 1px solid var(--sand-mid);
+        }
+
+        .footer-text {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .footer-heart {
+            display: inline-block;
+            color: var(--terracotta);
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        /* ═══════════════════════════════════════════
+           ANIMATIONS
+           ═══════════════════════════════════════════ */
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(1); }
+            50%      { opacity: 0.8; transform: scaleY(1.3); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.15); }
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .routes-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .routes-section {
+                padding: 4rem 1.25rem 6rem;
+            }
+
+            .modal-panel {
+                max-height: 95vh;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .modal-map { height: 260px; }
+
+            .modal-content { padding: 2rem 1.25rem 3rem; }
+
+            .modal-close { padding: 1rem 1.25rem; }
+
+            .modal-route-stats { gap: 0.75rem; }
+
+            .stat { padding: 0.4rem 0.75rem; }
+
+            .places-timeline { padding-left: 2.5rem; }
+
+            .place-marker { left: -2.5rem; }
+
+            .hero-note { font-size: 0.88rem; }
+        }
+
+        @media (max-width: 380px) {
+            .routes-grid { grid-template-columns: 1fr; }
+            .card-cover { height: 170px; }
+        }
+
+        /* ═══════════════════════════════════════════
+           UTILITY
+           ═══════════════════════════════════════════ */
+        .body-locked { overflow: hidden; }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero">
+        <div class="azulejo-pattern"></div>
+        <div class="hero-content">
+            <p class="hero-eyebrow">Добро пожаловать</p>
+            <h1 class="hero-title"><em>Португалия</em></h1>
+            <p class="hero-subtitle">Маршруты для Лиды и Андрея</p>
+            <p class="hero-note">
+                Мы подготовили для вас несколько маршрутов —<br>
+                выбирайте, что по душе, а мы составим вам компанию
+            </p>
+        </div>
+        <a class="hero-scroll" href="#routes">
+            <span>Маршруты</span>
+            <span class="arrow"></span>
+        </a>
+    </section>
+
+    <!-- ═══════════════ ROUTES ═══════════════ -->
+    <section class="routes-section" id="routes">
+        <div class="section-header">
+            <p class="section-label">На выбор</p>
+            <h2 class="section-title">Наши маршруты</h2>
+            <p class="section-subtitle">Нажмите на карточку, чтобы узнать подробности</p>
+        </div>
+        <div class="routes-grid" id="routesGrid">
+            <!-- Cards rendered by JS -->
+        </div>
+    </section>
+
+    <!-- ═══════════════ MODAL ═══════════════ -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal-panel" id="modalPanel">
+        <div class="modal-close">
+            <span class="modal-close-title" id="modalCloseTitle"></span>
+            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Закрыть">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="modal-map" id="modalMap"></div>
+        <div class="modal-content" id="modalContent">
+            <!-- Rendered by JS -->
+        </div>
+    </div>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="footer">
+        <p class="footer-text">С любовью из Лиссабона <span class="footer-heart">&hearts;</span></p>
+    </footer>
+
+    <!-- ═══════════════ SCRIPT ═══════════════ -->
+    <script>
+    /* ═══════════════════════════════════════════
+       ROUTE DATA
+       ═══════════════════════════════════════════ */
+    const routes = [
+        {
+            id: 1,
+            title: "Исторический центр Лиссабона",
+            subtitle: "Пешая прогулка по сердцу столицы",
+            duration: "4–5 часов",
+            distance: "~5 км",
+            difficulty: "Средняя (холмы!)",
+            tip: "Наденьте удобную обувь — Лиссабон город на семи холмах! Возьмите воду и солнцезащитный крем. Лучшее время — утро или предзакатные часы, когда свет особенно красив.",
+            coverGradient: "linear-gradient(145deg, #D4A853 0%, #C2703E 35%, #6B2D3E 65%, #1B4F72 100%)",
+            ready: true,
+            mapCenter: [38.7115, -9.1355],
+            mapZoom: 15,
+            places: [
+                {
+                    name: "Praça do Comércio",
+                    nameRu: "Торговая площадь",
+                    coords: [38.7075, -9.1364],
+                    description: "Главная площадь Лиссабона, открытая к реке Тежу. Раньше здесь стоял королевский дворец, разрушенный землетрясением 1755 года. Сегодня это величественное пространство с жёлтыми аркадами — идеальное начало прогулки. Подойдите к воде — оттуда открывается вид на мост 25 Апреля.",
+                    wikiUrl: "https://ru.wikipedia.org/wiki/%D0%A2%D0%BE%D1%80%D0%B3%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C_(%D0%9B%D0%B8%D1%81%D1%81%D0%B0%D0%B1%D0%BE%D0%BD)",
+                    mapsQuery: "Praça+do+Comércio+Lisbon"
+                },
+                {
+                    name: "Arco da Rua Augusta",
+                    nameRu: "Триумфальная арка Руа Аугушта",
+                    coords: [38.7087, -9.1368],
+                    description: "Монументальная арка на северной стороне Торговой площади. Наверху — смотровая площадка с панорамой на площадь и реку. Стоит подняться! Арка украшена скульптурами великих португальцев: Васко да Гама и маркиза Помбала.",
+                    wikiUrl: "https://ru.wikipedia.org/wiki/%D0%90%D1%80%D0%BA%D0%B0_%D1%83%D0%BB%D0%B8%D1%86%D1%8B_%D0%90%D1%83%D0%B3%D1%83%D1%88%D1%82%D0%B0",
+                    mapsQuery: "Arco+da+Rua+Augusta+Lisbon"
+                },
+                {
+                    name: "Elevador de Santa Justa",
+                    nameRu: "Лифт Санта-Жушта",
+                    coords: [38.7121, -9.1393],
+                    description: "Знаменитый неоготический подъёмник 1902 года, спроектированный учеником Гюстава Эйфеля. Соединяет нижний город Байша с верхним кварталом Ларгу-ду-Карму. С верхней площадки открывается потрясающий вид на город и замок Сан-Жоржи.",
+                    wikiUrl: "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%B4%D1%8A%D1%91%D0%BC%D0%BD%D0%B8%D0%BA_%D0%A1%D0%B0%D0%BD%D1%82%D0%B0-%D0%96%D1%83%D1%88%D1%82%D0%B0",
+                    mapsQuery: "Elevador+de+Santa+Justa+Lisbon"
+                },
+                {
+                    name: "Praça do Rossio",
+                    nameRu: "Площадь Россиу",
+                    coords: [38.7139, -9.1395],
+                    description: "Сердце Лиссабона с XIII века. Волнистая мозаика мостовой из чёрного и белого известняка — визитная карточка площади. Здесь стоит Национальный театр Доны Марии II и два бронзовых фонтана, привезённых из Парижа.",
+                    wikiUrl: "https://ru.wikipedia.org/wiki/%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%83",
+                    mapsQuery: "Praça+do+Rossio+Lisbon"
+                },
+                {
+                    name: "Castelo de São Jorge",
+                    nameRu: "Замок Святого Георгия",
+                    coords: [38.7139, -9.1335],
+                    description: "Древняя крепость на вершине холма с лучшей панорамой Лиссабона. Мавританские стены, павлины в садах, археологический музей. Замок помнит финикийцев, римлян, мавров и первых португальских королей. Отсюда виден весь город и река Тежу до горизонта.",
+                    wikiUrl: "https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%BC%D0%BE%D0%BA_%D0%A1%D0%B0%D0%BD-%D0%96%D0%BE%D1%80%D0%B6%D0%B8",
+                    mapsQuery: "Castelo+de+São+Jorge+Lisbon"
+                },
+                {
+                    name: "Alfama",
+                    nameRu: "Алфама",
+                    coords: [38.7108, -9.1300],
+                    description: "Старейший район Лиссабона, переживший великое землетрясение. Лабиринт узких улочек, лестниц, арок и крошечных площадей. Здесь живёт настоящее фаду — португальская музыка тоски и любви. Загляните в любой переулок — каждый ведёт к маленькому открытию.",
+                    wikiUrl: "https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D1%84%D0%B0%D0%BC%D0%B0",
+                    mapsQuery: "Alfama+Lisbon"
+                }
+            ]
+        },
+        {
+            id: 2,
+            title: "Белем — эпоха открытий",
+            subtitle: "По следам великих мореплавателей",
+            duration: "3–4 часа",
+            distance: "~3 км",
+            coverGradient: "linear-gradient(145deg, #B8D4E8 0%, #5B8FB9 35%, #1B4F72 65%, #0F3460 100%)",
+            ready: false
+        },
+        {
+            id: 3,
+            title: "Синтра — дворцы в облаках",
+            subtitle: "Сказочные замки в горах",
+            duration: "Целый день",
+            distance: "~8 км",
+            coverGradient: "linear-gradient(145deg, #8FBC8F 0%, #5F9EA0 35%, #2E4057 65%, #1a1a2e 100%)",
+            ready: false
+        },
+        {
+            id: 4,
+            title: "Порту и долина Дору",
+            subtitle: "Город портвейна и азулежу",
+            duration: "1–2 дня",
+            distance: "~6 км",
+            coverGradient: "linear-gradient(145deg, #D4A853 0%, #8B2252 35%, #6B2D3E 65%, #2C1810 100%)",
+            ready: false
+        },
+        {
+            id: 5,
+            title: "Кашкайш и побережье",
+            subtitle: "Океан, скалы и закаты",
+            duration: "5–6 часов",
+            distance: "~4 км",
+            coverGradient: "linear-gradient(145deg, #E89B6A 0%, #5B8FB9 35%, #1B6B8A 65%, #0F3460 100%)",
+            ready: false
+        }
+    ];
+
+    /* ═══════════════════════════════════════════
+       SVG ICONS
+       ═══════════════════════════════════════════ */
+    const icons = {
+        clock: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>`,
+        route: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/><path d="M3 12h18"/></svg>`,
+        walk: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="13" cy="4" r="1.5"/><path d="M7 21l3-7 2.5 2V21M14 14l2-3-3-3 1-3"/></svg>`,
+        map: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg>`,
+        wiki: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 4h3l5 13L16 4h3M12 4v2"/></svg>`,
+        external: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>`,
+        tip: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>`,
+        distance: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>`,
+    };
+
+    /* ═══════════════════════════════════════════
+       RENDER ROUTE CARDS
+       ═══════════════════════════════════════════ */
+    const grid = document.getElementById('routesGrid');
+
+    routes.forEach((route, index) => {
+        const card = document.createElement('div');
+        card.className = `route-card${route.ready ? '' : ' coming-soon'}`;
+        card.style.transitionDelay = `${index * 0.1}s`;
+
+        card.innerHTML = `
+            <div class="card-cover">
+                <div class="card-cover-bg" style="background: ${route.coverGradient}"></div>
+                <div class="azulejo-pattern"></div>
+                <span class="card-number">${route.id}</span>
+                <span class="card-badge ${route.ready ? 'ready' : 'soon'}">
+                    ${route.ready ? 'Готов' : 'Скоро'}
+                </span>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">${route.title}</h3>
+                <p class="card-desc">${route.subtitle}</p>
+                <div class="card-meta">
+                    <span class="card-meta-item">${icons.clock}<span>${route.duration}</span></span>
+                    ${route.distance ? `<span class="card-meta-item">${icons.distance}<span>${route.distance}</span></span>` : ''}
+                </div>
+            </div>
+        `;
+
+        if (route.ready) {
+            card.addEventListener('click', () => openRoute(route));
+        }
+
+        grid.appendChild(card);
+    });
+
+    /* ═══════════════════════════════════════════
+       MODAL MANAGEMENT
+       ═══════════════════════════════════════════ */
+    const overlay = document.getElementById('modalOverlay');
+    const panel = document.getElementById('modalPanel');
+    const closeBtn = document.getElementById('modalCloseBtn');
+    const modalCloseTitle = document.getElementById('modalCloseTitle');
+    const modalMapEl = document.getElementById('modalMap');
+    const modalContent = document.getElementById('modalContent');
+    let map = null;
+
+    function openRoute(route) {
+        document.body.classList.add('body-locked');
+        modalCloseTitle.textContent = route.title;
+
+        // Render content
+        modalContent.innerHTML = `
+            <div class="modal-route-header">
+                <h2 class="modal-route-title">${route.title}</h2>
+                <p class="modal-route-subtitle">${route.subtitle}</p>
+                <div class="modal-route-stats">
+                    <div class="stat">${icons.clock}<span class="stat-text">${route.duration}</span></div>
+                    <div class="stat">${icons.distance}<span class="stat-text">${route.distance}</span></div>
+                    ${route.difficulty ? `<div class="stat">${icons.walk}<span class="stat-text">${route.difficulty}</span></div>` : ''}
+                </div>
+            </div>
+            <div class="places-timeline" id="placesTimeline">
+                ${route.places.map((place, i) => `
+                    <div class="place-entry" style="transition-delay: ${i * 0.08}s">
+                        <div class="place-marker">${i + 1}</div>
+                        <div class="place-name-pt">${place.name}</div>
+                        <div class="place-name-ru">${place.nameRu}</div>
+                        <p class="place-desc">${place.description}</p>
+                        <div class="place-links">
+                            <a class="place-link" href="${place.wikiUrl}" target="_blank" rel="noopener">
+                                ${icons.wiki} Wikipedia
+                            </a>
+                            <a class="place-link" href="https://maps.google.com/?q=${place.mapsQuery}" target="_blank" rel="noopener">
+                                ${icons.external} Google Maps
+                            </a>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            ${route.tip ? `
+                <div class="tips-box">
+                    <div class="tips-title">${icons.tip} Полезные советы</div>
+                    <p class="tips-text">${route.tip}</p>
+                </div>
+            ` : ''}
+        `;
+
+        // Open modal
+        overlay.classList.add('open');
+        requestAnimationFrame(() => {
+            panel.classList.add('open');
+        });
+
+        // Initialize map after animation
+        setTimeout(() => {
+            initMap(route);
+            animatePlaces();
+        }, 400);
+    }
+
+    function closeRoute() {
+        panel.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.classList.remove('body-locked');
+
+        setTimeout(() => {
+            if (map) {
+                map.remove();
+                map = null;
+            }
+            modalContent.innerHTML = '';
+        }, 400);
+    }
+
+    closeBtn.addEventListener('click', closeRoute);
+    overlay.addEventListener('click', closeRoute);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeRoute();
+    });
+
+    /* ═══════════════════════════════════════════
+       MAP INITIALIZATION
+       ═══════════════════════════════════════════ */
+    function initMap(route) {
+        if (map) { map.remove(); map = null; }
+
+        map = L.map('modalMap', {
+            scrollWheelZoom: false,
+            zoomControl: true
+        }).setView(route.mapCenter, route.mapZoom);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Add markers with stagger
+        const coords = [];
+        route.places.forEach((place, i) => {
+            setTimeout(() => {
+                const markerIcon = L.divIcon({
+                    className: '',
+                    html: `<div class="custom-marker">${i + 1}</div>`,
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 15]
+                });
+
+                L.marker(place.coords, { icon: markerIcon })
+                    .addTo(map)
+                    .bindPopup(`
+                        <div class="popup-name">${place.name}</div>
+                        <div class="popup-name-ru">${place.nameRu}</div>
+                    `);
+            }, i * 120);
+
+            coords.push(place.coords);
+        });
+
+        // Draw route polyline
+        setTimeout(() => {
+            L.polyline(coords, {
+                color: '#C2703E',
+                weight: 3,
+                opacity: 0.6,
+                dashArray: '8, 8',
+                lineCap: 'round'
+            }).addTo(map);
+        }, route.places.length * 120);
+
+        // Fit bounds
+        setTimeout(() => {
+            map.fitBounds(coords, { padding: [40, 40] });
+        }, 100);
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL ANIMATIONS
+       ═══════════════════════════════════════════ */
+    function animatePlaces() {
+        const entries = document.querySelectorAll('.place-entry');
+        const observer = new IntersectionObserver((items) => {
+            items.forEach(item => {
+                if (item.isIntersecting) {
+                    item.target.classList.add('visible');
+                    observer.unobserve(item.target);
+                }
+            });
+        }, { threshold: 0.15, root: panel });
+
+        entries.forEach(entry => observer.observe(entry));
+
+        // Fallback: make all visible after a short delay
+        setTimeout(() => {
+            entries.forEach(e => e.classList.add('visible'));
+        }, 800);
+    }
+
+    // Cards entrance animation
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                cardObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.route-card').forEach(card => {
+        cardObserver.observe(card);
+    });
+    </script>
+</body>
+</html>
