@@ -399,7 +399,6 @@
         .place-gallery {
             position: relative;
             min-width: 0;
-            overflow: hidden;
         }
 
         .place-gallery-shell {
@@ -656,16 +655,7 @@
         }
 
         .place-step {
-            transition:
-                transform 0.45s var(--ease-soft),
-                box-shadow 0.45s var(--ease-soft),
-                border-color 0.35s ease;
-        }
-
-        .modal-place:hover .place-step {
-            transform: scale(1.06);
-            box-shadow: 0 12px 30px rgba(10, 22, 40, 0.12);
-            border-color: rgba(184, 149, 62, 0.3);
+            pointer-events: none;
         }
 
         @media (max-width: 640px) {
@@ -1704,7 +1694,7 @@
                 <div class="modal-rise absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-tertiary/20 via-tertiary/10 to-transparent hidden md:block" style="--delay: 260ms;"></div>
                 ${route.places.map((place, i) => `
                     <div class="modal-place flex flex-col md:flex-row gap-8 relative" style="--delay: ${340 + (i * 95)}ms;">
-                        <div class="place-step hidden md:flex absolute left-0 -translate-x-1/2 w-12 h-12 rounded-full bg-surface border-2 border-tertiary/25 items-center justify-center font-serif font-bold text-tertiary z-10 shadow-sm text-lg">
+                        <div class="place-step hidden md:flex absolute left-0 -translate-x-1/2 w-12 h-12 rounded-full bg-surface border-2 border-tertiary/25 items-center justify-center font-bold text-tertiary z-10 shadow-sm text-base leading-none">
                             ${i + 1}
                         </div>
                         <div class="place-body md:pl-16">
