@@ -4,6 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Португалия — Маршруты для Лиды и Андрея</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
@@ -358,6 +359,10 @@
             filter: blur(0);
         }
 
+        #modalStickyTop {
+            box-shadow: 0 8px 24px -4px rgba(10, 22, 40, 0.18), 0 2px 8px -2px rgba(10, 22, 40, 0.06);
+        }
+
         #modalMap {
             position: relative;
             z-index: 0;
@@ -368,7 +373,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(245, 240, 232, 0.3), transparent 24%, transparent 78%, rgba(245, 240, 232, 0.15));
+            background: linear-gradient(180deg, rgba(245, 240, 232, 0.25), transparent 20%, transparent 100%);
             pointer-events: none;
         }
 
@@ -858,13 +863,15 @@
 <!-- ═══════════════ MODAL ═══════════════ -->
 <div class="fixed inset-0 z-[100] opacity-0 invisible transition-all duration-500 bg-primary/40 backdrop-blur-md" id="modalOverlay"></div>
 <div class="fixed bottom-0 left-0 right-0 z-[101] max-h-[94vh] bg-surface rounded-t-3xl shadow-[0_-20px_50px_rgba(0,0,0,0.1)] translate-y-full transition-transform duration-500 ease-out overflow-y-auto azulejo-pattern" id="modalPanel">
-<div class="sticky top-0 z-[700] bg-surface/84 backdrop-blur-lg border-b border-tertiary/10 px-4 sm:px-8 py-4 flex justify-between items-center">
+<div class="sticky top-0 z-[700]" id="modalStickyTop">
+<div class="bg-surface/84 backdrop-blur-lg border-b border-tertiary/10 px-4 sm:px-8 py-4 flex justify-between items-center">
 <span class="font-serif italic font-bold text-primary text-lg" id="modalCloseTitle">Маршрут</span>
 <button class="w-10 h-10 rounded-full border border-primary/10 flex items-center justify-center hover:bg-primary hover:text-[#b8953e] transition-all group" id="modalCloseBtn">
 <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M18 6L6 18M6 6l12 12"></path></svg>
 </button>
 </div>
 <div class="w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[500px] bg-slate-200" id="modalMap"></div>
+</div>
 <div class="max-w-4xl mx-auto px-4 sm:px-8 py-10 sm:py-16" id="modalContent">
 <!-- Rendered by JS -->
 </div>
@@ -1758,6 +1765,10 @@
         if (map) map.remove();
         map = L.map('modalMap', { scrollWheelZoom: false }).setView(route.mapCenter, route.mapZoom);
         map.attributionControl.setPrefix(false);
+
+        // Enable scroll-wheel zoom on hover, disable on mouse leave
+        map.getContainer().addEventListener('mouseenter', () => map.scrollWheelZoom.enable());
+        map.getContainer().addEventListener('mouseleave', () => map.scrollWheelZoom.disable());
         
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://carto.com/">CARTO</a>'
