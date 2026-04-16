@@ -329,6 +329,9 @@
             animation: markerPulse 2.8s ease-in-out infinite;
         }
 
+        .popup-link { text-decoration: underline dotted rgba(184,149,62,0.5); text-underline-offset: 3px; }
+        .popup-link:hover { color: var(--gold); }
+
         .body-locked { overflow: hidden; }
 
         .manuscript-divider {
@@ -1693,7 +1696,7 @@
             <div class="space-y-16 relative">
                 <div class="modal-rise absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-tertiary/20 via-tertiary/10 to-transparent hidden md:block" style="--delay: 260ms;"></div>
                 ${route.places.map((place, i) => `
-                    <div class="modal-place flex flex-col md:flex-row gap-8 relative" style="--delay: ${340 + (i * 95)}ms;">
+                    <div id="place-${i}" class="modal-place flex flex-col md:flex-row gap-8 relative" style="--delay: ${340 + (i * 95)}ms;">
                         <div class="place-step hidden md:flex absolute left-0 -translate-x-1/2 w-12 h-12 rounded-full bg-surface border-2 border-tertiary/25 items-center justify-center font-bold text-tertiary z-10 shadow-sm text-base leading-none">
                             ${i + 1}
                         </div>
@@ -1767,12 +1770,27 @@
                 iconSize: [32, 32],
                 iconAnchor: [16, 16]
             });
-            L.marker(place.coords, { icon }).addTo(map).bindPopup(`<div class="font-serif font-bold">${place.nameRu}</div>`);
+            L.marker(place.coords, { icon }).addTo(map).bindPopup(`<div class="font-serif font-bold popup-link" style="cursor:pointer" data-place-index="${i}">${place.nameRu}</div>`);
             coords.push(place.coords);
         });
 
         L.polyline(coords, { color: '#b8953e', weight: 2.5, opacity: 0.45, dashArray: '8, 12' }).addTo(map);
         map.fitBounds(coords, { padding: [50, 50] });
+
+        map.on('popupopen', () => {
+            document.querySelectorAll('.popup-link').forEach(el => {
+                el.onclick = () => {
+                    const target = document.getElementById('place-' + el.dataset.placeIndex);
+                    if (target) {
+                        const header = panel.querySelector('.sticky');
+                        const offset = header ? header.offsetHeight + 20 : 20;
+                        const top = target.getBoundingClientRect().top + panel.scrollTop - panel.getBoundingClientRect().top - offset;
+                        panel.scrollTo({ top, behavior: 'smooth' });
+                    }
+                    map.closePopup();
+                };
+            });
+        });
     }
 
     function closeRoute() {
