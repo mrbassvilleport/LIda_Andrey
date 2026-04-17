@@ -3,13 +3,40 @@
 <html lang="ru"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="theme-color" content="#0a1628"/>
+<meta name="description" content="Персональные маршруты по Лиссабону, Белему и Синтре для Лиды и Андрея — с картами, галереями и советами по темпу прогулки."/>
 <title>Португалия — Маршруты для Лиды и Андрея</title>
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Португалия — Маршруты для Лиды и Андрея"/>
+<meta property="og:description" content="Рукописи путешествий по Лиссабону и Синтре — выбирайте, что по душе."/>
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/1/1d/The_rooftops_of_Lisbon.jpg"/>
+<meta property="og:locale" content="ru_RU"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Португалия — Маршруты для Лиды и Андрея"/>
+<meta name="twitter:description" content="Рукописи путешествий по Лиссабону и Синтре."/>
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/1/1d/The_rooftops_of_Lisbon.jpg"/>
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>"/>
+
+<!-- Preconnect to critical third parties -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link href="https://upload.wikimedia.org" rel="preconnect" crossorigin=""/>
+<link href="https://commons.wikimedia.org" rel="preconnect" crossorigin=""/>
+<link href="https://unpkg.com" rel="preconnect" crossorigin=""/>
+
+<!-- Preload hero image for LCP -->
+<link rel="preload" as="image" href="https://upload.wikimedia.org/wikipedia/commons/1/1d/The_rooftops_of_Lisbon.jpg" fetchpriority="high"/>
+
+<!-- Font set: Cormorant 400/700 + italic 400/700; Plus Jakarta 400/500/600 -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,700;1,400;1,700&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+
+<!-- Leaflet CSS non-blocking; JS injected lazily on first modal open -->
+<link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet" media="print" onload="this.media='all'"/>
+<noscript><link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/></noscript>
+
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
         tailwind.config = {
@@ -81,6 +108,14 @@
 
         .azulejo-pattern {
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 30-15 30-15-30z' fill='%230a1628' fill-opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        .hero-fallback .hero-gradient {
+            background:
+                radial-gradient(ellipse at 18% 22%, rgba(184, 149, 62, 0.28), transparent 48%),
+                radial-gradient(ellipse at 82% 78%, rgba(196, 93, 53, 0.35), transparent 52%),
+                linear-gradient(160deg, #0a1628 0%, #1a2a4a 55%, #3b2a1a 100%) !important;
+            background-size: cover, cover, cover !important;
         }
 
         .hero-gradient {
@@ -256,6 +291,12 @@
         .route-card.is-visible {
             opacity: 1;
             transform: translate3d(0, 0, 0);
+        }
+
+        .route-card-fallback {
+            background:
+                linear-gradient(135deg, rgba(196, 93, 53, 0.35), rgba(10, 22, 40, 0.75)),
+                repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 12px, transparent 12px 24px);
         }
 
         .route-card-media {
@@ -761,6 +802,12 @@
             }
         }
 
+        .anim-paused,
+        .anim-paused::before,
+        .anim-paused::after {
+            animation-play-state: paused !important;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             html {
                 scroll-behavior: auto;
@@ -864,6 +911,9 @@
 <!-- Rendered by JS -->
 </div>
 </div>
+<!-- Hero image availability probe -->
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/The_rooftops_of_Lisbon.jpg" alt="" aria-hidden="true" style="display:none" onerror="document.body.classList.add('hero-fallback')" />
+
 <!-- ═══════════════ SCRIPT ═══════════════ -->
 <script>
     const routes = [
@@ -1333,7 +1383,7 @@
         
         card.innerHTML = `
             <div class="route-card-media relative mb-6 rounded-2xl overflow-hidden aspect-[3/4] bg-primary/5 route-card-shadow">
-                <img src="${route.image}" alt="${route.title}" class="w-full h-full object-cover transition-all duration-700" />
+                <img src="${route.image}" alt="${route.title}" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="w-full h-full object-cover transition-all duration-700" onerror="this.style.display='none'; this.parentElement.classList.add('route-card-fallback');" />
                 <div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent"></div>
                 <div class="absolute top-5 left-5">
                     <span class="text-[#b8953e] font-serif font-bold text-5xl leading-none opacity-50">${String(index + 1).padStart(2, '0')}</span>
@@ -1369,6 +1419,51 @@
     });
 
     const galleryPhotoCache = new Map();
+
+    // ======= Lazy Leaflet loader =======
+    let leafletLoadPromise = null;
+    function loadLeaflet() {
+        if (window.L) return Promise.resolve(window.L);
+        if (leafletLoadPromise) return leafletLoadPromise;
+        leafletLoadPromise = new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+            s.async = true;
+            s.onload = () => resolve(window.L);
+            s.onerror = () => { leafletLoadPromise = null; reject(new Error('Leaflet failed to load')); };
+            document.head.appendChild(s);
+        });
+        return leafletLoadPromise;
+    }
+
+    // ======= Wikimedia gallery cache (localStorage, 7 day TTL) =======
+    const GALLERY_CACHE_PREFIX = 'pt-gallery-v1:';
+    const GALLERY_CACHE_TTL = 7 * 24 * 60 * 60 * 1000;
+    const GALLERY_FETCH_TIMEOUT = 6000;
+
+    function readGalleryCache(key) {
+        try {
+            const raw = localStorage.getItem(GALLERY_CACHE_PREFIX + key);
+            if (!raw) return null;
+            const parsed = JSON.parse(raw);
+            if (!parsed || Date.now() - parsed.t > GALLERY_CACHE_TTL) return null;
+            return parsed.v;
+        } catch { return null; }
+    }
+
+    function writeGalleryCache(key, value) {
+        try {
+            localStorage.setItem(GALLERY_CACHE_PREFIX + key, JSON.stringify({ t: Date.now(), v: value }));
+        } catch { /* quota: ignore */ }
+    }
+
+    function fetchWithTimeout(url, ms = GALLERY_FETCH_TIMEOUT) {
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), ms);
+        return fetch(url, { signal: ctrl.signal }).finally(() => clearTimeout(t));
+    }
+
+
 
     function escapeHtml(value = '') {
         return value
@@ -1458,7 +1553,7 @@
     }
 
     async function fetchCommonsCategoryPhotos(categoryTitle, limit = 4, keywords = []) {
-        const response = await fetch(buildCommonsApiUrl({
+        const response = await fetchWithTimeout(buildCommonsApiUrl({
             generator: 'categorymembers',
             gcmtitle: `Category:${categoryTitle}`,
             gcmtype: 'file',
@@ -1491,7 +1586,7 @@
     async function fetchCommonsFiles(fileTitles = []) {
         if (!fileTitles.length) return [];
 
-        const response = await fetch(buildCommonsApiUrl({
+        const response = await fetchWithTimeout(buildCommonsApiUrl({
             titles: fileTitles.join('|'),
             prop: 'imageinfo',
             iiprop: 'url|mime|size',
@@ -1533,6 +1628,13 @@
         if (!cacheKey) return [];
         if (galleryPhotoCache.has(cacheKey)) return galleryPhotoCache.get(cacheKey);
 
+        const cached = readGalleryCache(cacheKey);
+        if (cached && cached.length) {
+            const resolved = Promise.resolve(cached);
+            galleryPhotoCache.set(cacheKey, resolved);
+            return resolved;
+        }
+
         const loader = (async () => {
             const collected = [];
             const seen = new Set();
@@ -1567,7 +1669,9 @@
                 if (collected.length >= 4) break;
             }
 
-            return collected.slice(0, 4);
+            const final = collected.slice(0, 4);
+            if (final.length) writeGalleryCache(cacheKey, final);
+            return final;
         })();
 
         galleryPhotoCache.set(cacheKey, loader);
@@ -1683,9 +1787,16 @@
         }
     }
 
-    function openRoute(route) {
+    function openRoute(route, opts = {}) {
         if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
         if (mapTimer) { clearTimeout(mapTimer); mapTimer = null; }
+
+        if (!opts.skipHash) {
+            const newHash = '#route=' + route.id;
+            if (window.location.hash !== newHash) {
+                history.pushState({ routeId: route.id }, '', newHash);
+            }
+        }
 
         lastFocusedElement = document.activeElement;
         document.body.classList.add('body-locked');
@@ -1778,7 +1889,8 @@
         }, 380);
     }
 
-    function initMap(route) {
+    async function initMap(route) {
+        try { await loadLeaflet(); } catch (e) { console.warn('Leaflet load failed', e); document.getElementById('modalMap').innerHTML = '<div style="padding:2rem;text-align:center;color:#5a5a52;font-family:Plus Jakarta Sans,sans-serif">Не удалось загрузить карту. Описания маршрута и фото ниже доступны.</div>'; return; }
         if (map) map.remove();
         map = L.map('modalMap', { scrollWheelZoom: false }).setView(route.mapCenter, route.mapZoom);
         map.attributionControl.setPrefix(false);
@@ -1822,10 +1934,14 @@
         });
     }
 
-    function closeRoute() {
+    function closeRoute(opts = {}) {
         if (mapTimer) { clearTimeout(mapTimer); mapTimer = null; }
         if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
         document.removeEventListener('keydown', trapFocus);
+
+        if (!opts.skipHash && window.location.hash.startsWith('#route=')) {
+            history.pushState({ routeId: null }, '', window.location.pathname + window.location.search);
+        }
 
         panel.classList.add('translate-y-full');
         overlay.classList.remove('opacity-100');
@@ -1843,5 +1959,37 @@
     closeBtn.onclick = closeRoute;
     overlay.onclick = closeRoute;
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeRoute(); });
+
+    // ======= Deep-link sync (popstate + initial load) =======
+    function routeFromHash() {
+        const m = window.location.hash.match(/#route=(\d+)/);
+        if (!m) return null;
+        return routes.find(r => r.id === Number(m[1]) && r.ready) || null;
+    }
+
+    window.addEventListener('popstate', () => {
+        const r = routeFromHash();
+        if (r) openRoute(r, { skipHash: true });
+        else if (!panel.classList.contains('translate-y-full')) closeRoute({ skipHash: true });
+    });
+
+    // Open initial route from hash after a short delay so UI is ready
+    window.addEventListener('load', () => {
+        const r = routeFromHash();
+        if (r) setTimeout(() => openRoute(r, { skipHash: true }), 200);
+    });
+
+    // ======= Pause decorative animations when off-screen =======
+    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+        const animTargets = document.querySelectorAll('.hero-gradient, .azulejo-pattern');
+        const animObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                e.target.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+                // also pause pseudo-element animations via class
+                e.target.classList.toggle('anim-paused', !e.isIntersecting);
+            });
+        }, { rootMargin: '80px' });
+        animTargets.forEach(t => animObserver.observe(t));
+    }
     </script>
 </body></html>
