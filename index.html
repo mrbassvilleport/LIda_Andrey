@@ -302,13 +302,81 @@
         .route-card-media {
             border-radius: 1rem;
             overflow: hidden;
+            position: relative;
             transform: translateZ(0);
         }
 
-        .route-card-media img {
+        .route-card-media > img,
+        .route-card-slide img {
             transition:
                 transform 1.1s var(--ease-soft),
                 filter 0.75s ease;
+        }
+
+        .route-card-carousel,
+        .route-card-carousel-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .route-card-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transform: scale(1.04);
+            transition:
+                opacity 0.65s ease,
+                transform 1.1s var(--ease-soft);
+        }
+
+        .route-card-slide.is-active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .route-card-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .route-card-nav {
+            position: absolute;
+            right: 1rem;
+            bottom: 1rem;
+            width: 2.2rem;
+            height: 2.2rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.34);
+            background: rgba(245, 240, 232, 0.88);
+            color: var(--navy);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 10px 24px rgba(10, 22, 40, 0.18);
+            transition:
+                transform 0.35s var(--ease-swift),
+                background-color 0.35s ease,
+                opacity 0.35s ease;
+            z-index: 4;
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        .route-card-nav.prev {
+            right: 3.7rem;
+        }
+
+        .route-card-nav:hover {
+            background: rgba(255, 255, 255, 0.96);
+            transform: translateY(0) scale(1.04);
+        }
+
+        .route-card-nav[hidden] {
+            display: none;
         }
 
         .route-card-title,
@@ -329,9 +397,16 @@
             transform: scale(1);
         }
 
-        .route-card:hover .route-card-media img {
+        .route-card:hover .route-card-media > img,
+        .route-card:hover .route-card-slide.is-active img {
             transform: scale(1.08);
             filter: saturate(1.03);
+        }
+
+        .route-card:hover .route-card-nav,
+        .route-card:focus-within .route-card-nav {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .route-card:hover .route-card-title {
@@ -348,8 +423,16 @@
             transform: translate3d(0, -4px, 0);
         }
 
-        .route-card.coming-soon .route-card-media img {
+        .route-card.coming-soon .route-card-media > img,
+        .route-card.coming-soon .route-card-slide img {
             filter: saturate(0.85) brightness(0.92);
+        }
+
+        @media (hover: none) {
+            .route-card-nav {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .custom-marker {
@@ -392,16 +475,79 @@
 
         #modalPanel {
             opacity: 0;
-            filter: blur(14px);
+            will-change: transform, opacity;
             transition:
-                transform 0.72s var(--ease-soft),
-                opacity 0.52s ease,
-                filter 0.52s ease;
+                transform 0.6s var(--ease-soft),
+                opacity 0.42s ease;
         }
 
         #modalPanel:not(.translate-y-full) {
             opacity: 1;
-            filter: blur(0);
+        }
+
+        .modal-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.25rem;
+        }
+
+        .modal-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.35rem 0;
+            border: 0;
+            background: transparent;
+            color: rgba(10, 22, 40, 0.55);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.25s ease;
+        }
+
+        .modal-back-btn:hover,
+        .modal-back-btn:focus-visible {
+            color: var(--gold);
+            outline: none;
+        }
+
+        .modal-back-arrow {
+            display: inline-flex;
+            transition: transform 0.3s var(--ease-swift);
+        }
+
+        .modal-back-btn:hover .modal-back-arrow,
+        .modal-back-btn:focus-visible .modal-back-arrow {
+            transform: translateX(-3px);
+        }
+
+        .modal-back-arrow svg {
+            width: 0.78rem;
+            height: 0.78rem;
+        }
+
+        #modalCloseTitle {
+            display: block;
+            max-width: min(100%, 32rem);
+            color: rgba(10, 22, 40, 0.78);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 640px) {
+            .modal-back-btn {
+                font-size: 0.62rem;
+                letter-spacing: 0.2em;
+            }
+
+            #modalCloseTitle {
+                display: none;
+            }
         }
 
         #modalMap {
@@ -837,7 +983,7 @@
         }
     </style>
 </head>
-<body class="antialiased selection:bg-secondary/20 selection:text-primary">
+<body class="antialiased selection:bg-secondary/20 selection:text-primary page-ready">
 <!-- ═══════════════ HERO ═══════════════ -->
 <section class="relative min-h-[100svh] md:min-h-screen flex items-center md:items-end hero-gradient pb-14 sm:pb-20 md:pb-28 pt-16 sm:pt-20 md:pt-32 px-5 sm:px-8">
 <div class="hero-shell max-w-7xl mx-auto w-full">
@@ -848,7 +994,7 @@
 <span class="italic font-normal text-[#b8953e]">Маршруты</span>
 </h1>
 <p class="hero-reveal hero-delay-3 hero-subtitle text-lg md:text-xl leading-relaxed mb-10 md:mb-14 max-w-xl font-light">
-                    Рукописи путешествий по Лиссабону и Синтре — выбирайте, что по душе.
+                    Рукописи путешествий по Лиссабону, Синтре и Порту — выбирайте, что по душе.
                 </p>
 <a class="hero-reveal hero-delay-4 hero-cta group inline-flex w-full sm:w-auto items-center justify-center gap-3 bg-[#b8953e] text-[#0a1628] px-8 py-4 rounded-full font-bold text-sm tracking-wide transition-all duration-500" href="#routes">
                     Смотреть маршруты
@@ -867,7 +1013,7 @@
 <!-- ═══════════════ ROUTES ═══════════════ -->
 <section class="relative py-28 md:py-40 bg-surface azulejo-pattern overflow-hidden" id="routes">
 <div class="max-w-7xl mx-auto px-5 sm:px-8">
-<div class="section-reveal mb-20 md:mb-28">
+<div class="section-reveal is-visible mb-20 md:mb-28">
 <div class="flex items-center gap-4 mb-8">
 <div class="w-12 h-px bg-tertiary"></div>
 <span class="text-tertiary font-bold tracking-[0.25em] uppercase text-[10px]">Маршруты</span>
@@ -875,9 +1021,148 @@
 <h2 class="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-primary leading-[1.05] mb-6">Никаких <span class="italic text-secondary">подвигов</span></h2>
 <p class="text-lg text-on-surface-variant max-w-2xl leading-relaxed">Только приятные прогулки, хорошие места и темп, в котором можно и город посмотреть, и не устать раньше обеда.</p>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10" id="routesGrid">
-<!-- Cards rendered by JS -->
+
+<!-- ── Лиссабон ── -->
+<div class="section-reveal is-visible mb-10 md:mb-14">
+<div class="flex items-center gap-5">
+<span class="text-3xl md:text-4xl font-serif font-bold text-primary">Лиссабон</span>
+<div class="flex-1 h-px bg-primary/10"></div>
 </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mb-28 md:mb-40" id="routesGrid">
+<div class="route-card group is-visible" data-route-id="1">
+<div class="route-card-media relative mb-6 rounded-2xl overflow-hidden aspect-[3/4] bg-primary/5 route-card-shadow">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3FwyksFHZ5nCPcfehPaIeDjScTtcapjq5g5CzUjwDcNHRlQ6ZXKAUYkTNgfDdyU1T457q3N8JhC_MjyvHri8HJf0XcMmNxIdt3fUPWXPMXCVKEFtol5Vo4fWyazG9ITCcZyX-FmKMkeNzl2LwXhD_UbkXKEccTZ99GFaig7JRTM2qoN-SNRg8GkB6CoVfx1oLIJB6wDVNjo56WMfRxBZ0_hLFmw8D_GfdNPzvFE3ye9zeJidIAuofDkSULVZ_tgCCkTw9TI1goeM" alt="От Парка Наций к вечерней Байше" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="w-full h-full object-cover transition-all duration-700" onerror="this.style.display='none'; this.parentElement.classList.add('route-card-fallback');" />
+<div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent"></div>
+<div class="absolute top-5 left-5">
+<span class="text-[#b8953e] font-serif font-bold text-5xl leading-none opacity-50">01</span>
+</div>
+<div class="absolute bottom-5 left-5 right-5">
+<span class="inline-block bg-white/15 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] text-white/90 uppercase border border-white/10">River to Baixa</span>
+</div>
+</div>
+<div class="space-y-3 px-1">
+<h3 class="route-card-title text-2xl md:text-[1.7rem] font-serif font-bold text-primary leading-tight">От Парка Наций к вечерней Байше</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Набережная, панорама Лиссабона, азиатский обед и прогулка к Тежу</p>
+<div class="route-card-meta pt-4 flex items-center gap-6 border-t border-primary/8">
+<span class="text-[10px] font-bold text-tertiary tracking-[0.15em] uppercase">7–8 часов</span>
+<span class="text-[10px] font-medium text-primary/30 uppercase tracking-[0.15em]">~6,5 км</span>
+</div>
+</div>
+</div>
+<div class="route-card group is-visible" data-route-id="2">
+<div class="route-card-media relative mb-6 rounded-2xl overflow-hidden aspect-[3/4] bg-primary/5 route-card-shadow">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Monument_of_the_Discoveries%2C_Sunset_on_Tagus_River%2C_Padr%C3%A3o_dos_Descobrimentos_%E2%80%A2_Monument_of_the_Discoveries_%2850656270833%29.jpg/1280px-Monument_of_the_Discoveries%2C_Sunset_on_Tagus_River%2C_Padr%C3%A3o_dos_Descobrimentos_%E2%80%A2_Monument_of_the_Discoveries_%2850656270833%29.jpg" alt="От Тежу к Атлантике" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="w-full h-full object-cover transition-all duration-700" onerror="this.style.display='none'; this.parentElement.classList.add('route-card-fallback');" />
+<div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent"></div>
+<div class="absolute top-5 left-5">
+<span class="text-[#b8953e] font-serif font-bold text-5xl leading-none opacity-50">02</span>
+</div>
+<div class="absolute bottom-5 left-5 right-5">
+<span class="inline-block bg-white/15 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] text-white/90 uppercase border border-white/10">Tagus to Atlantic</span>
+</div>
+</div>
+<div class="space-y-3 px-1">
+<h3 class="route-card-title text-2xl md:text-[1.7rem] font-serif font-bold text-primary leading-tight">От Тежу к Атлантике</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Белем, устрицы, панорама Cristo Rei и вечер на Капарике</p>
+<div class="route-card-meta pt-4 flex items-center gap-6 border-t border-primary/8">
+<span class="text-[10px] font-bold text-tertiary tracking-[0.15em] uppercase">8–9 часов</span>
+<span class="text-[10px] font-medium text-primary/30 uppercase tracking-[0.15em]">~7,5 км</span>
+</div>
+</div>
+</div>
+<div class="route-card group is-visible" data-route-id="3">
+<div class="route-card-media relative mb-6 rounded-2xl overflow-hidden aspect-[3/4] bg-primary/5 route-card-shadow">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Sintra_palaces_in_the_midst_of_nature.jpg/1280px-Sintra_palaces_in_the_midst_of_nature.jpg" alt="Синтра и край света" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="w-full h-full object-cover transition-all duration-700" onerror="this.style.display='none'; this.parentElement.classList.add('route-card-fallback');" />
+<div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent"></div>
+<div class="absolute top-5 left-5">
+<span class="text-[#b8953e] font-serif font-bold text-5xl leading-none opacity-50">03</span>
+</div>
+<div class="absolute bottom-5 left-5 right-5">
+<span class="inline-block bg-white/15 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] text-white/90 uppercase border border-white/10">Romantic Sintra</span>
+</div>
+</div>
+<div class="space-y-3 px-1">
+<h3 class="route-card-title text-2xl md:text-[1.7rem] font-serif font-bold text-primary leading-tight">Синтра и край света</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Вила, Регалейра, Seteais и ветер Cabo da Roca</p>
+<div class="route-card-meta pt-4 flex items-center gap-6 border-t border-primary/8">
+<span class="text-[10px] font-bold text-tertiary tracking-[0.15em] uppercase">10–11 часов</span>
+<span class="text-[10px] font-medium text-primary/30 uppercase tracking-[0.15em]">~6,5 км</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ── Порту ── -->
+<div class="section-reveal is-visible mb-10 md:mb-14">
+<div class="flex items-center gap-5">
+<span class="text-3xl md:text-4xl font-serif font-bold text-primary">Порту</span>
+<div class="flex-1 h-px bg-primary/10"></div>
+</div>
+<p class="text-on-surface-variant text-base mt-4 max-w-xl leading-relaxed">Три дня у Дору: азулежу, атлантический ветер и самый красивый трамвай Европы.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10" id="portoRoutesGrid">
+<div class="route-card group is-visible" data-route-id="4">
+<div class="route-card-media relative mb-6 rounded-2xl overflow-hidden aspect-[3/4] bg-primary/5 route-card-shadow">
+<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ponte%20Dom%20Luis%20I%20Porto.jpg?width=1280" data-fallback-src="https://commons.wikimedia.org/wiki/Special:FilePath/Oporto-%20Ponte%20Dom%20Luis%20I%20%2836934655696%29.jpg?width=1280" alt="Исторический центр и Гайя" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="w-full h-full object-cover transition-all duration-700" onerror="if(this.dataset.fallbackSrc && !this.dataset.fallbackApplied){ this.dataset.fallbackApplied='1'; this.src=this.dataset.fallbackSrc; return; } this.style.display='none'; this.parentElement.classList.add('route-card-fallback');" />
+<div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent"></div>
+<div class="absolute top-5 left-5">
+<span class="text-[#b8953e] font-serif font-bold text-5xl leading-none opacity-50">01</span>
+</div>
+<div class="absolute bottom-5 left-5 right-5">
+<span class="inline-block bg-white/15 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] text-white/90 uppercase border border-white/10">Historic Porto</span>
+</div>
+</div>
+<div class="space-y-3 px-1">
+<h3 class="route-card-title text-2xl md:text-[1.7rem] font-serif font-bold text-primary leading-tight">Исторический центр и Гайя</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Азулежу, соборы, золотой час у Дору</p>
+<div class="route-card-meta pt-4 flex items-center gap-6 border-t border-primary/8">
+<span class="text-[10px] font-bold text-tertiary tracking-[0.15em] uppercase">7 часов</span>
+<span class="text-[10px] font-medium text-primary/30 uppercase tracking-[0.15em]">~5 км</span>
+</div>
+</div>
+</div>
+<div class="route-card group is-visible" data-route-id="5">
+<div class="route-card-media relative mb-6 rounded-2xl overflow-hidden aspect-[3/4] bg-primary/5 route-card-shadow">
+<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Livraria%20Lello%203.jpg?width=1280" data-fallback-src="https://commons.wikimedia.org/wiki/Special:FilePath/Porto%20-%20livraria%20Lello%20e%20Irm%C3%A3o%20%283%29.jpg?width=1280" alt="Книги, рынки и Фонтайнаш" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="w-full h-full object-cover transition-all duration-700" onerror="if(this.dataset.fallbackSrc && !this.dataset.fallbackApplied){ this.dataset.fallbackApplied='1'; this.src=this.dataset.fallbackSrc; return; } this.style.display='none'; this.parentElement.classList.add('route-card-fallback');" />
+<div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent"></div>
+<div class="absolute top-5 left-5">
+<span class="text-[#b8953e] font-serif font-bold text-5xl leading-none opacity-50">02</span>
+</div>
+<div class="absolute bottom-5 left-5 right-5">
+<span class="inline-block bg-white/15 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] text-white/90 uppercase border border-white/10">Porto Culture</span>
+</div>
+</div>
+<div class="space-y-3 px-1">
+<h3 class="route-card-title text-2xl md:text-[1.7rem] font-serif font-bold text-primary leading-tight">Книги, рынки и Фонтайнаш</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">От Лелло до francesinhas — пешком и на автобусе</p>
+<div class="route-card-meta pt-4 flex items-center gap-6 border-t border-primary/8">
+<span class="text-[10px] font-bold text-tertiary tracking-[0.15em] uppercase">9,5 часов</span>
+<span class="text-[10px] font-medium text-primary/30 uppercase tracking-[0.15em]">~7 км</span>
+</div>
+</div>
+</div>
+<div class="route-card group is-visible" data-route-id="6">
+<div class="route-card-media relative mb-6 rounded-2xl overflow-hidden aspect-[3/4] bg-primary/5 route-card-shadow">
+<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gardens%20of%20Serralves.jpg?width=1280" data-fallback-src="https://commons.wikimedia.org/wiki/Special:FilePath/Parterre%20lateral%20Serralves%20Porto.jpg?width=1280" alt="Атлантические парки и Фоз" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="w-full h-full object-cover transition-all duration-700" onerror="if(this.dataset.fallbackSrc && !this.dataset.fallbackApplied){ this.dataset.fallbackApplied='1'; this.src=this.dataset.fallbackSrc; return; } this.style.display='none'; this.parentElement.classList.add('route-card-fallback');" />
+<div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent"></div>
+<div class="absolute top-5 left-5">
+<span class="text-[#b8953e] font-serif font-bold text-5xl leading-none opacity-50">03</span>
+</div>
+<div class="absolute bottom-5 left-5 right-5">
+<span class="inline-block bg-white/15 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] text-white/90 uppercase border border-white/10">Atlantic Porto</span>
+</div>
+</div>
+<div class="space-y-3 px-1">
+<h3 class="route-card-title text-2xl md:text-[1.7rem] font-serif font-bold text-primary leading-tight">Атлантические парки и Фоз</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">До Атлантики пешком, трамваем и метро</p>
+<div class="route-card-meta pt-4 flex items-center gap-6 border-t border-primary/8">
+<span class="text-[10px] font-bold text-tertiary tracking-[0.15em] uppercase">7 часов</span>
+<span class="text-[10px] font-medium text-primary/30 uppercase tracking-[0.15em]">~8 км</span>
+</div>
+</div>
+</div>
+</div>
+
 </div>
 </section>
 <!-- ═══════════════ FOOTER ═══════════════ -->
@@ -1348,7 +1633,6 @@
             ]
         });
     }
-
     const grid = document.getElementById('routesGrid');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealObserver = prefersReducedMotion ? null : new IntersectionObserver((entries) => {
@@ -1376,14 +1660,149 @@
         revealObserver.observe(element);
     });
 
-    routes.forEach((route, index) => {
+    const ROUTE_CARD_AUTOPLAY_MS = 4200;
+    const routeCardCarouselCleanup = new WeakMap();
+
+    function getRouteCardCoverPhotos(route) {
+        const photos = [];
+        const seen = new Set();
+
+        appendUniquePhotos(photos, seen, [
+            route.image ? { src: route.image, alt: route.title, fallbackSrc: route.imageFallback || '' } : null,
+            route.imageFallback ? { src: route.imageFallback, alt: route.title } : null,
+        ].filter(Boolean), 2);
+
+        return photos;
+    }
+
+    function getRouteCardInitialIndex(slideCount) {
+        if (slideCount <= 1) return 0;
+        return Math.floor(Math.random() * slideCount);
+    }
+
+    function renderRouteCardSlides(route, photos, initialIndex = 0) {
+        return photos.map((photo, index) => `
+            <figure class="route-card-slide${index === initialIndex ? ' is-active' : ''}">
+                <img src="${escapeHtml(photo.src)}"${photo.fallbackSrc ? ` data-fallback-src="${escapeHtml(photo.fallbackSrc)}"` : ''} alt="${escapeHtml(photo.alt || route.title)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="w-full h-full object-cover transition-all duration-700" onerror="if(this.dataset.fallbackSrc && !this.dataset.fallbackApplied){ this.dataset.fallbackApplied='1'; this.src=this.dataset.fallbackSrc; return; } this.style.display='none'; this.closest('.route-card-carousel')?.classList.add('route-card-fallback');" />
+            </figure>
+        `).join('');
+    }
+
+    function initializeRouteCardCarousel(card, route, photos = getRouteCardCoverPhotos(route)) {
+        routeCardCarouselCleanup.get(card)?.();
+
+        const carousel = card.querySelector('[data-route-card-carousel]');
+        const track = card.querySelector('[data-route-card-track]');
+        const prevButton = card.querySelector('[data-route-card-prev]');
+        const nextButton = card.querySelector('[data-route-card-next]');
+
+        if (!carousel || !track || !prevButton || !nextButton) return;
+
+        const safePhotos = photos.length ? photos : getRouteCardCoverPhotos(route);
+        const initialIndex = getRouteCardInitialIndex(safePhotos.length);
+        track.innerHTML = renderRouteCardSlides(route, safePhotos, initialIndex);
+        carousel.classList.toggle('route-card-fallback', !safePhotos.length);
+
+        const slides = Array.from(track.querySelectorAll('.route-card-slide'));
+        if (!slides.length) return;
+
+        let currentIndex = initialIndex;
+        let autoplayTimer = null;
+
+        function setActive(nextIndex) {
+            currentIndex = (nextIndex + slides.length) % slides.length;
+            slides.forEach((slide, slideIndex) => {
+                slide.classList.toggle('is-active', slideIndex === currentIndex);
+            });
+        }
+
+        function stopAutoplay() {
+            if (autoplayTimer) {
+                window.clearInterval(autoplayTimer);
+                autoplayTimer = null;
+            }
+        }
+
+        function startAutoplay() {
+            if (prefersReducedMotion || slides.length < 2) return;
+            stopAutoplay();
+            autoplayTimer = window.setInterval(() => {
+                setActive(currentIndex + 1);
+            }, ROUTE_CARD_AUTOPLAY_MS);
+        }
+
+        function stepSlides(direction) {
+            stopAutoplay();
+            setActive(currentIndex + direction);
+            startAutoplay();
+        }
+
+        const handlePrevClick = (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            stepSlides(-1);
+        };
+        const handleNextClick = (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            stepSlides(1);
+        };
+        const handleArrowKeydown = (event) => {
+            event.stopPropagation();
+        };
+        const handlePointerEnter = () => stopAutoplay();
+        const handlePointerLeave = () => startAutoplay();
+        const handleFocusIn = () => stopAutoplay();
+        const handleFocusOut = (event) => {
+            if (!carousel.contains(event.relatedTarget)) {
+                startAutoplay();
+            }
+        };
+
+        prevButton.hidden = slides.length < 2;
+        nextButton.hidden = slides.length < 2;
+
+        prevButton.addEventListener('click', handlePrevClick);
+        nextButton.addEventListener('click', handleNextClick);
+        prevButton.addEventListener('keydown', handleArrowKeydown);
+        nextButton.addEventListener('keydown', handleArrowKeydown);
+        carousel.addEventListener('mouseenter', handlePointerEnter);
+        carousel.addEventListener('mouseleave', handlePointerLeave);
+        carousel.addEventListener('focusin', handleFocusIn);
+        carousel.addEventListener('focusout', handleFocusOut);
+
+        startAutoplay();
+
+        routeCardCarouselCleanup.set(card, () => {
+            stopAutoplay();
+            prevButton.removeEventListener('click', handlePrevClick);
+            nextButton.removeEventListener('click', handleNextClick);
+            prevButton.removeEventListener('keydown', handleArrowKeydown);
+            nextButton.removeEventListener('keydown', handleArrowKeydown);
+            carousel.removeEventListener('mouseenter', handlePointerEnter);
+            carousel.removeEventListener('mouseleave', handlePointerLeave);
+            carousel.removeEventListener('focusin', handleFocusIn);
+            carousel.removeEventListener('focusout', handleFocusOut);
+        });
+    }
+
+    function createRouteCard(route, index) {
         const card = document.createElement('div');
+        card.dataset.routeId = String(route.id);
         card.className = `route-card group ${route.ready ? 'cursor-pointer' : 'coming-soon opacity-70 grayscale'}`;
         card.style.transitionDelay = `${index * 90}ms`;
-        
+
         card.innerHTML = `
             <div class="route-card-media relative mb-6 rounded-2xl overflow-hidden aspect-[3/4] bg-primary/5 route-card-shadow">
-                <img src="${route.image}" alt="${route.title}" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="w-full h-full object-cover transition-all duration-700" onerror="this.style.display='none'; this.parentElement.classList.add('route-card-fallback');" />
+                <div class="route-card-carousel" data-route-card-carousel>
+                    <div class="route-card-carousel-track" data-route-card-track></div>
+                    <button type="button" class="route-card-nav prev" data-route-card-prev aria-label="Previous route photo for ${escapeHtml(route.title)}" hidden>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <button type="button" class="route-card-nav next" data-route-card-next aria-label="Next route photo for ${escapeHtml(route.title)}" hidden>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                    </button>
+                </div>
                 <div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent"></div>
                 <div class="absolute top-5 left-5">
                     <span class="text-[#b8953e] font-serif font-bold text-5xl leading-none opacity-50">${String(index + 1).padStart(2, '0')}</span>
@@ -1409,14 +1828,32 @@
             card.onclick = () => openRoute(route);
             card.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openRoute(route); } };
         }
-        grid.appendChild(card);
 
-        if (prefersReducedMotion) {
-            card.classList.add('is-visible');
-        } else {
-            revealObserver.observe(card);
-        }
-    });
+        return card;
+    }
+
+    function mountRouteGrid(gridNode, routeList) {
+        const fragment = document.createDocumentFragment();
+        const cards = routeList.map((route, index) => {
+            const card = createRouteCard(route, index);
+            fragment.appendChild(card);
+            return { card, route };
+        });
+
+        gridNode.replaceChildren(fragment);
+
+        cards.forEach(({ card, route }) => {
+            initializeRouteCardCarousel(card, route);
+
+            if (prefersReducedMotion) {
+                card.classList.add('is-visible');
+            } else {
+                revealObserver.observe(card);
+            }
+        });
+    }
+
+    mountRouteGrid(grid, routes.filter((route) => route.ready));
 
     const galleryPhotoCache = new Map();
 
@@ -1541,7 +1978,7 @@
         let score = width + height;
 
         if (ratio > 0.9 && ratio < 2.2) score += 900;
-        if (/panorama|sunset|night|view|lisbon|lisboa|tejo|tagus|rossio|augusta|carmo|parque/.test(title)) score += 700;
+        if (/panorama|sunset|night|view|lisbon|lisboa|tejo|tagus|rossio|augusta|carmo|parque|porto|douro|gaia|foz|ribeira|serralves|clerigos|clérigos|bento|tram/.test(title)) score += 700;
         if (/cropped|poster|detail|drawing|logo|map/.test(title)) score -= 1800;
         keywords.forEach((keyword) => {
             if (title.includes(keyword.toLowerCase())) {
@@ -1550,6 +1987,30 @@
         });
 
         return score;
+    }
+
+    function appendUniquePhotos(target, seen, photos, limit = 4) {
+        photos.forEach((photo) => {
+            if (!photo?.src || seen.has(photo.src) || target.length >= limit) return;
+            seen.add(photo.src);
+            target.push(photo);
+        });
+    }
+
+    function buildGallerySearchQueries(place) {
+        const keywords = (place.galleryKeywords || []).filter(Boolean).slice(0, 3);
+        const queries = [
+            place.gallerySearchQuery,
+            place.mapsQuery ? place.mapsQuery.replace(/\+/g, ' ') : '',
+            place.name,
+            [place.name, ...keywords].filter(Boolean).join(' '),
+        ];
+
+        return [...new Set(
+            queries
+                .map((value) => (value || '').replace(/\s+/g, ' ').trim())
+                .filter(Boolean)
+        )];
     }
 
     async function fetchCommonsCategoryPhotos(categoryTitle, limit = 4, keywords = []) {
@@ -1565,6 +2026,37 @@
 
         if (!response.ok) {
             throw new Error(`Failed to load gallery for category ${categoryTitle}`);
+        }
+
+        const data = await response.json();
+        const pages = data.query?.pages || [];
+
+        return pages
+            .filter(isUsableCommonsPhoto)
+            .sort((a, b) => scoreCommonsPhoto(b, keywords) - scoreCommonsPhoto(a, keywords))
+            .map((page) => {
+                const info = page.imageinfo[0];
+                return {
+                    src: info.thumburl || info.url,
+                    alt: page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
+                };
+            })
+            .slice(0, limit);
+    }
+
+    async function fetchCommonsSearchPhotos(searchQuery, limit = 4, keywords = []) {
+        const response = await fetchWithTimeout(buildCommonsApiUrl({
+            generator: 'search',
+            gsrsearch: searchQuery,
+            gsrnamespace: '6',
+            gsrlimit: '12',
+            prop: 'imageinfo',
+            iiprop: 'url|mime|size',
+            iiurlwidth: '1600',
+        }));
+
+        if (!response.ok) {
+            throw new Error(`Failed to search gallery for ${searchQuery}`);
         }
 
         const data = await response.json();
@@ -1623,7 +2115,8 @@
         const fileList = place.galleryFiles || [];
         const categoryList = place.galleryCategories || [];
         const keywords = place.galleryKeywords || [];
-        const cacheKey = `${fileList.join('|')}::${categoryList.join('|')}::${keywords.join('|')}`;
+        const searchQueries = buildGallerySearchQueries(place);
+        const cacheKey = `${fileList.join('|')}::${categoryList.join('|')}::${keywords.join('|')}::${searchQueries.join('|')}`;
 
         if (!cacheKey) return [];
         if (galleryPhotoCache.has(cacheKey)) return galleryPhotoCache.get(cacheKey);
@@ -1642,12 +2135,7 @@
             if (fileList.length) {
                 try {
                     const curatedPhotos = await fetchCommonsFiles(fileList);
-                    curatedPhotos.forEach((photo) => {
-                        if (!seen.has(photo.src) && collected.length < 4) {
-                            seen.add(photo.src);
-                            collected.push(photo);
-                        }
-                    });
+                    appendUniquePhotos(collected, seen, curatedPhotos);
                 } catch (error) {
                     console.warn('Gallery file selection failed', place.nameRu, error);
                 }
@@ -1656,17 +2144,25 @@
             for (const category of categoryList) {
                 try {
                     const photos = await fetchCommonsCategoryPhotos(category, 6, keywords);
-                    photos.forEach((photo) => {
-                        if (!seen.has(photo.src) && collected.length < 4) {
-                            seen.add(photo.src);
-                            collected.push(photo);
-                        }
-                    });
+                    appendUniquePhotos(collected, seen, photos);
                 } catch (error) {
                     console.warn('Gallery category failed', category, error);
                 }
 
                 if (collected.length >= 4) break;
+            }
+
+            if (collected.length < 4) {
+                for (const searchQuery of searchQueries) {
+                    try {
+                        const photos = await fetchCommonsSearchPhotos(searchQuery, 8, keywords);
+                        appendUniquePhotos(collected, seen, photos);
+                    } catch (error) {
+                        console.warn('Gallery search fallback failed', searchQuery, error);
+                    }
+
+                    if (collected.length >= 4) break;
+                }
             }
 
             const final = collected.slice(0, 4);
@@ -1676,6 +2172,62 @@
 
         galleryPhotoCache.set(cacheKey, loader);
         return loader;
+    }
+
+    async function getRouteCardPhotos(route, limit = 6) {
+        const featuredPhotos = [];
+        const overflowPhotos = [];
+        const featuredSeen = new Set();
+
+        const gallerySets = await Promise.all(route.places.map(async (place) => {
+            try {
+                return { place, photos: await getPlaceGalleryPhotos(place) };
+            } catch (error) {
+                console.warn('Route card gallery failed', route.title, place.nameRu, error);
+                return { place, photos: [] };
+            }
+        }));
+
+        gallerySets.forEach(({ place, photos }) => {
+            if (!photos.length) return;
+
+            appendUniquePhotos(featuredPhotos, featuredSeen, [{
+                src: photos[0].src,
+                alt: photos[0].alt || place.nameRu || route.title,
+            }], limit);
+
+            appendUniquePhotos(overflowPhotos, featuredSeen, photos.slice(1).map((photo, index) => ({
+                src: photo.src,
+                alt: photo.alt || `${place.nameRu || route.title} ${index + 2}`,
+            })), limit);
+        });
+
+        const combinedPhotos = [];
+        const combinedSeen = new Set();
+        appendUniquePhotos(combinedPhotos, combinedSeen, featuredPhotos, limit);
+        appendUniquePhotos(combinedPhotos, combinedSeen, overflowPhotos, limit);
+
+        if (!combinedPhotos.length) {
+            appendUniquePhotos(combinedPhotos, combinedSeen, getRouteCardCoverPhotos(route), limit);
+        }
+
+        return combinedPhotos;
+    }
+
+    function hydrateRouteCardCarousels(routeList) {
+        routeList.forEach((route) => {
+            const card = document.querySelector(`.route-card[data-route-id="${route.id}"]`);
+            if (!card) return;
+
+            getRouteCardPhotos(route)
+                .then((photos) => {
+                    if (!card.isConnected) return;
+                    initializeRouteCardCarousel(card, route, photos);
+                })
+                .catch((error) => {
+                    console.warn('Route card carousel hydration failed', route.title, error);
+                });
+        });
     }
 
     function renderGalleryFallback(root, place) {
@@ -1766,13 +2318,41 @@
 
     const overlay = document.getElementById('modalOverlay');
     const panel = document.getElementById('modalPanel');
-    const closeBtn = document.getElementById('modalCloseBtn');
-    const modalCloseTitle = document.getElementById('modalCloseTitle');
+    let closeBtn = document.getElementById('modalCloseBtn');
+    let modalCloseTitle = document.getElementById('modalCloseTitle');
+    const modalMap = document.getElementById('modalMap');
     const modalContent = document.getElementById('modalContent');
+    const modalHeader = closeBtn.parentElement;
+    modalHeader.className = 'sticky top-0 z-[700] bg-surface/84 backdrop-blur-lg border-b border-tertiary/10 px-4 sm:px-8 py-4';
+    modalHeader.innerHTML = `
+        <div class="modal-topbar">
+            <button class="modal-back-btn" id="modalCloseBtn" aria-label="\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \u0432\u044B\u0431\u043E\u0440\u0443 \u043C\u0430\u0440\u0448\u0440\u0443\u0442\u043E\u0432">
+                <span class="modal-back-arrow" aria-hidden="true">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 18l-6-6 6-6"></path>
+                    </svg>
+                </span>
+                <span>\u041A \u043C\u0430\u0440\u0448\u0440\u0443\u0442\u0430\u043C</span>
+            </button>
+            <span class="font-serif italic font-bold text-primary text-lg" id="modalCloseTitle">\u041C\u0430\u0440\u0448\u0440\u0443\u0442</span>
+        </div>
+    `;
+    closeBtn = document.getElementById('modalCloseBtn');
+    modalCloseTitle = document.getElementById('modalCloseTitle');
+    closeBtn.setAttribute('title', '\u041D\u0430\u0437\u0430\u0434 \u043A \u043C\u0430\u0440\u0448\u0440\u0443\u0442\u0430\u043C');
     let map = null;
     let mapTimer = null;
     let closeTimer = null;
     let lastFocusedElement = null;
+    const enableMapScrollZoom = () => {
+        if (map) map.scrollWheelZoom.enable();
+    };
+    const disableMapScrollZoom = () => {
+        if (map) map.scrollWheelZoom.disable();
+    };
+
+    modalMap.addEventListener('mouseenter', enableMapScrollZoom);
+    modalMap.addEventListener('mouseleave', disableMapScrollZoom);
 
     function trapFocus(e) {
         if (e.key !== 'Tab') return;
@@ -1804,6 +2384,7 @@
         panel.setAttribute('aria-label', route.title);
         modalCloseTitle.textContent = route.title;
         panel.scrollTop = 0;
+        modalMap.innerHTML = '';
 
         modalContent.innerHTML = `
             <div class="modal-rise text-center mb-16" style="--delay: 80ms;">
@@ -1886,18 +2467,15 @@
         mapTimer = setTimeout(() => {
             mapTimer = null;
             initMap(route);
-        }, 380);
+        }, 700);
     }
 
     async function initMap(route) {
-        try { await loadLeaflet(); } catch (e) { console.warn('Leaflet load failed', e); document.getElementById('modalMap').innerHTML = '<div style="padding:2rem;text-align:center;color:#5a5a52;font-family:Plus Jakarta Sans,sans-serif">Не удалось загрузить карту. Описания маршрута и фото ниже доступны.</div>'; return; }
+        try { await loadLeaflet(); } catch (e) { console.warn('Leaflet load failed', e); modalMap.innerHTML = '<div style="padding:2rem;text-align:center;color:#5a5a52;font-family:Plus Jakarta Sans,sans-serif">Не удалось загрузить карту. Описания маршрута и фото ниже доступны.</div>'; return; }
         if (map) map.remove();
-        map = L.map('modalMap', { scrollWheelZoom: false }).setView(route.mapCenter, route.mapZoom);
+        modalMap.innerHTML = '';
+        map = L.map(modalMap, { scrollWheelZoom: false }).setView(route.mapCenter, route.mapZoom);
         map.attributionControl.setPrefix(false);
-
-        // Enable scroll-wheel zoom on hover, disable on mouse leave
-        map.getContainer().addEventListener('mouseenter', () => map.scrollWheelZoom.enable());
-        map.getContainer().addEventListener('mouseleave', () => map.scrollWheelZoom.disable());
         
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://carto.com/">CARTO</a>'
@@ -1940,7 +2518,7 @@
         document.removeEventListener('keydown', trapFocus);
 
         if (!opts.skipHash && window.location.hash.startsWith('#route=')) {
-            history.pushState({ routeId: null }, '', window.location.pathname + window.location.search);
+            history.replaceState({ routeId: null }, '', window.location.pathname + window.location.search);
         }
 
         panel.classList.add('translate-y-full');
@@ -1960,11 +2538,446 @@
     overlay.onclick = closeRoute;
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeRoute(); });
 
+    // ======= Porto routes =======
+    const portoRoutes = [
+        {
+            id: 4,
+            title: "Исторический центр и Гайя",
+            subtitle: "Азулежу, соборы, золотой час у Дору",
+            duration: "7 часов",
+            distance: "~5 км",
+            difficulty: "Лёгкая (всё пешком)",
+            category: "Historic Porto",
+            tip: "Маршрут начинается в 14:00, чтобы попасть на смотровую Serra do Pilar в золотой час. Все расстояния пешком и небольшие. Верхний ярус Ponte Luís I открыт для пешеходов и велосипедистов — виды головокружительные. В Adega São Nicolau ужинать лучше к 19:30, иначе очередь. На мосту сильный ветер, возьмите куртку.",
+            image: "https://commons.wikimedia.org/wiki/Special:FilePath/Ponte%20Dom%20Luis%20I%20Porto.jpg?width=1280",
+            imageFallback: "https://commons.wikimedia.org/wiki/Special:FilePath/Oporto-%20Ponte%20Dom%20Luis%20I%20%2836934655696%29.jpg?width=1280",
+            ready: true,
+            mapCenter: [41.1400, -8.6130],
+            mapZoom: 15,
+            places: [
+                {
+                    name: "São Bento Station",
+                    nameRu: "Вокзал Сан-Бенту",
+                    coords: [41.1455, -8.6099],
+                    description: "Один из красивейших вокзалов мира: около 20 000 плиток азулежу на стенах главного зала рассказывают историю Португалии — сцены сражений, крестьянской жизни, королевские процессии. Даже если вы никуда не едете, зайти сюда обязательно.",
+                    galleryFiles: [
+                        "File:Estação de São Bento - Porto - Portugal (16910949619).jpg",
+                        "File:Estação de São Bento (Porto) (4).jpg",
+                        "File:São Bento train station, Porto.jpg",
+                        "File:Porto - Estação de São Bento - 20110730 (2).jpg"
+                    ],
+                    galleryCategories: ["São Bento railway station", "Azulejo in São Bento railway station"],
+                    galleryKeywords: ["são bento", "station", "azulejo", "porto", "tiles"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/S%C3%A3o_Bento_railway_station",
+                    mapsQuery: "São+Bento+Station+Porto"
+                },
+                {
+                    name: "Sé do Porto",
+                    nameRu: "Кафедральный собор Порту",
+                    coords: [41.1427, -8.6116],
+                    description: "Романский собор XII века — один из старейших памятников города. Поднимитесь на смотровую терассу клуатра: оттуда открывается панорама красных крыш, реки Дору и холмов Гайи. Особенно хороши виды в послеполуденном свете.",
+                    galleryFiles: [
+                        "File:Porto Cathedral (Se) - panoramio.jpg",
+                        "File:Sé do Porto (1).jpg",
+                        "File:Sé Catedral do Porto, cloître, 2012-05-09, DD 02.JPG",
+                        "File:Porto - Sé - 20110730 (3).jpg"
+                    ],
+                    galleryCategories: ["Porto Cathedral", "Sé do Porto"],
+                    galleryKeywords: ["sé", "cathedral", "porto", "romanesque", "cloister"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Porto_Cathedral",
+                    mapsQuery: "Porto+Cathedral+Sé"
+                },
+                {
+                    name: "Igreja de São Francisco",
+                    nameRu: "Церковь Святого Франциска",
+                    coords: [41.1404, -8.6156],
+                    description: "Готический фасад скрывает самый богатый барочный интерьер Португалии: сотни килограммов позолоченного дерева, резные алтари, ангелы и виноградные лозы. Ощущение почти сногсшибательное — настоящее избыточное великолепие XVII века.",
+                    galleryFiles: [
+                        "File:Igreja de São Francisco (Porto) - interior, gilded wood carving.jpg",
+                        "File:Igreja de São Francisco, Porto, Portugal.jpg",
+                        "File:Igreja São Francisco Porto interior 2.jpg",
+                        "File:Porto - Igreja de São Francisco - 20110730 (1).jpg"
+                    ],
+                    galleryCategories: ["Igreja de São Francisco (Porto)", "Interior of Igreja de São Francisco (Porto)"],
+                    galleryKeywords: ["são francisco", "church", "porto", "baroque", "gilded"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Church_of_S%C3%A3o_Francisco_(Porto)",
+                    mapsQuery: "Igreja+de+São+Francisco+Porto"
+                },
+                {
+                    name: "Rua das Flores — Coffee Break",
+                    nameRu: "Руа дас Флориш — кофе-пауза",
+                    coords: [41.1449, -8.6147],
+                    description: "Одна из красивейших улиц старого Порту: сплошные азулежу на фасадах, уютные кафе и ювелирные лавки. Идеальное место для кофе и паштел де ната после барочного интенсива — выдохнуть и просто посидеть в старом городе.",
+                    galleryFiles: [
+                        "File:Rua das Flores, Porto.jpg",
+                        "File:Porto - Rua das Flores (14603451741).jpg",
+                        "File:Porto - Rua das Flores (7420382780).jpg"
+                    ],
+                    galleryCategories: ["Rua das Flores (Porto)", "Streets in Porto"],
+                    galleryKeywords: ["flores", "rua", "porto", "street", "azulejo"],
+                    gallerySearchQuery: "Rua das Flores Porto",
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Rua_das_Flores",
+                    mapsQuery: "Rua+das+Flores+Porto"
+                },
+                {
+                    name: "Ponte Luís I — Upper Deck",
+                    nameRu: "Мост Луиша I — верхний ярус",
+                    coords: [41.1392, -8.6098],
+                    description: "Двухъярусный железный мост через Дору — один из символов Порту. По верхнему ярусу идут пешеходы и лёгкое метро: 172 метра над рекой, головокружительные виды на оба города и ощущение, что ты висишь в воздухе над историей.",
+                    galleryFiles: [
+                        "File:Ponte Luís I (Porto-Gaia) October 2017-1.jpg",
+                        "File:Ponte Dom Luís I (3).jpg",
+                        "File:Porto - Ponte Luís I (7).jpg",
+                        "File:Ponte Luis I.jpg"
+                    ],
+                    galleryCategories: ["Ponte Luís I", "Views from Ponte Luís I"],
+                    galleryKeywords: ["ponte", "luís", "bridge", "porto", "douro"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Lu%C3%ADs_I_Bridge",
+                    mapsQuery: "Ponte+Luis+I+Porto"
+                },
+                {
+                    name: "Miradouro Serra do Pilar",
+                    nameRu: "Мирадоуро Серра ду Пилар",
+                    coords: [41.1370, -8.6110],
+                    description: "Лучшая обзорная точка над Порту — с терассы монастыря Serra do Pilar открывается классическая открыточная панорама: мост Луиша I, оранжевые крыши исторического центра, Дору и далёкие холмы. В золотой час сюда стекаются все фотографы города — и правильно делают.",
+                    galleryFiles: [
+                        "File:Serra do Pilar from Luís I Bridge, Porto.jpg",
+                        "File:View of Porto from Serra do Pilar.jpg",
+                        "File:Mosteiro da Serra do Pilar (Porto) (2).jpg",
+                        "File:Porto - Serra do Pilar panorama.jpg"
+                    ],
+                    galleryCategories: ["Serra do Pilar", "Views from Serra do Pilar"],
+                    galleryKeywords: ["serra", "pilar", "porto", "panorama", "viewpoint"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Serra_do_Pilar_Monastery",
+                    mapsQuery: "Miradouro+Serra+do+Pilar+Gaia"
+                },
+                {
+                    name: "Ribeira & Adega São Nicolau",
+                    nameRu: "Рибейра и Adega São Nicolau",
+                    coords: [41.1400, -8.6136],
+                    description: "Исторический набережный квартал у подножия моста: цветные фасады домов, лодки-рабелуш, запах реки и туристический гул — живой и очень атмосферный. Adega São Nicolau здесь же — традиционный ресторан с хорошей треской и местным вином прямо у воды.",
+                    galleryFiles: [
+                        "File:Ribeira, Porto, Portugal.jpg",
+                        "File:Porto, Ribeira (11).jpg",
+                        "File:Ribeira Porto.jpg",
+                        "File:Porto cais da ribeira.jpg"
+                    ],
+                    galleryCategories: ["Ribeira (Porto)", "Cais da Ribeira"],
+                    galleryKeywords: ["ribeira", "porto", "douro", "waterfront", "cais"],
+                    gallerySearchQuery: "Cais da Ribeira Porto",
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Ribeira,_Porto",
+                    mapsQuery: "Adega+São+Nicolau+Porto+Ribeira"
+                }
+            ]
+        },
+        {
+            id: 5,
+            title: "Книги, рынки и Фонтайнаш",
+            subtitle: "От Лелло до francesinhas — пешком и на автобусе",
+            duration: "9,5 часов",
+            distance: "~7 км",
+            difficulty: "Лёгкая (прогулочная)",
+            category: "Porto Culture",
+            tip: "Livraria Lello — билеты нужно обязательно купить онлайн заранее, иначе очередь. Francesinha — фирменное блюдо Порту: горячий бутерброд в остром пивном соусе с яйцом, пробовать обязательно. Bus 207 (карта Andante) идёт от центра до Фонтайнаш за 12 минут. Jardim das Virtudes — тихий и нетуристический, отличное место для отдыха. Café Majestic — одно из красивейших кафе Европы стиля арт-нуво, кофе здесь дороже, но атмосфера стоит того.",
+            image: "https://commons.wikimedia.org/wiki/Special:FilePath/Livraria%20Lello%203.jpg?width=1280",
+            imageFallback: "https://commons.wikimedia.org/wiki/Special:FilePath/Porto%20-%20livraria%20Lello%20e%20Irm%C3%A3o%20%283%29.jpg?width=1280",
+            ready: true,
+            mapCenter: [41.1470, -8.6120],
+            mapZoom: 15,
+            places: [
+                {
+                    name: "Livraria Lello",
+                    nameRu: "Книжный магазин Лелло",
+                    coords: [41.1472, -8.6151],
+                    description: "Один из красивейших книжных магазинов мира и обязательная остановка в Порту. Витражный потолок, знаменитая изогнутая лестница, деревянная резьба — архитектура 1906 года, которую называли вдохновением для Гарри Поттера. Билеты только онлайн, приходить к открытию.",
+                    galleryFiles: [
+                        "File:Livraria Lello & Irmão - 3.jpg",
+                        "File:Livraria Lello Porto 2012.jpg",
+                        "File:Livraria Lello inside.jpg",
+                        "File:Livraria Lello Porto - staircase.jpg"
+                    ],
+                    galleryCategories: ["Livraria Lello"],
+                    galleryKeywords: ["lello", "bookshop", "porto", "staircase", "art nouveau"],
+                    sourceLabel: "Livraria Lello",
+                    sourceUrl: "https://www.livrarialello.pt/",
+                    mapsQuery: "Livraria+Lello+Porto"
+                },
+                {
+                    name: "Torre dos Clérigos",
+                    nameRu: "Башня Клеригуш",
+                    coords: [41.1453, -8.6148],
+                    description: "Барочная колокольня 1763 года и один из главных символов Порту — 76 метров над городом, 240 ступеней наверх. С верхней смотровой открывается 360° панорама: весь исторический центр, река Дору, черепичные крыши. Лучше всего приходить в будний день.",
+                    galleryFiles: [
+                        "File:Torre dos Clérigos, Porto.jpg",
+                        "File:Porto - Torre dos Clérigos (2).jpg",
+                        "File:Torre dos Clérigos (Porto), vista aérea.jpg",
+                        "File:Clérigos Tower Porto October 2017-1.jpg"
+                    ],
+                    galleryCategories: ["Torre dos Clérigos", "Clérigos Tower"],
+                    galleryKeywords: ["clérigos", "tower", "porto", "baroque", "bell tower"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Cl%C3%A9rigos_Tower",
+                    mapsQuery: "Torre+dos+Clerigos+Porto"
+                },
+                {
+                    name: "Mercado do Bolhão",
+                    nameRu: "Рынок Болья́н",
+                    coords: [41.1494, -8.6083],
+                    description: "Исторический крытый рынок Порту, открытый в 1914 году — один из красивейших рынков Иберийского полуострова. Двухэтажные аркады с балконами, прилавки с цветами, сыром, морепродуктами и местными специалитетами. Атмосфера подлинная и очень живая.",
+                    galleryFiles: [
+                        "File:Mercado do Bolhão (Porto) 04.jpg",
+                        "File:Bolhão Market, Porto.jpg",
+                        "File:Mercado do Bolhão - renovated market hall interior.jpg",
+                        "File:Porto - Mercado do Bolhão (15).jpg"
+                    ],
+                    galleryCategories: ["Mercado do Bolhão"],
+                    galleryKeywords: ["bolhão", "market", "porto", "mercado", "interior"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Bolh%C3%A3o_Market",
+                    mapsQuery: "Mercado+do+Bolhão+Porto"
+                },
+                {
+                    name: "Jardim das Virtudes",
+                    nameRu: "Сад Виртудеш",
+                    coords: [41.1490, -8.6220],
+                    description: "Один из старейших садов Порту — тихий, террасный, почти нетуристический. Тенистые аллеи спускаются уступами с холма, открывая виды на реку и Гайю. Отличное место для паузы после рынка — посидеть на скамейке в тени и выдохнуть.",
+                    galleryFiles: [
+                        "File:Jardim das Virtudes 01.jpg",
+                        "File:Jardim das Virtudes, Porto.jpg"
+                    ],
+                    galleryCategories: ["Jardim das Virtudes", "Gardens in Porto"],
+                    galleryKeywords: ["virtudes", "jardim", "porto", "garden", "terraced"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Jardim_das_Virtudes",
+                    mapsQuery: "Jardim+das+Virtudes+Porto"
+                },
+                {
+                    name: "Cedofeita & Rua Miguel Bombarda",
+                    nameRu: "Седофейта и галереи Мигел Бомбарда",
+                    coords: [41.1536, -8.6256],
+                    description: "Богемный квартал Порту с лучшей концентрацией галерей современного искусства. Rua Miguel Bombarda — главная артерия: в каждом втором доме галерея, мастерская или концептуальный магазин. После обеда в Седофейте — идеальный послеполуденный маршрут.",
+                    galleryFiles: [
+                        "File:Porto - Rua Miguel Bombarda (2).jpg",
+                        "File:Cedofeita Porto 2016.jpg"
+                    ],
+                    galleryCategories: ["Rua Miguel Bombarda", "Cedofeita"],
+                    galleryKeywords: ["bombarda", "cedofeita", "porto", "gallery", "art"],
+                    gallerySearchQuery: "Rua Miguel Bombarda Porto",
+                    sourceLabel: "Visit Porto",
+                    sourceUrl: "https://www.visitporto.travel/",
+                    mapsQuery: "Rua+Miguel+Bombarda+Porto"
+                },
+                {
+                    name: "Fontainhas",
+                    nameRu: "Квартал Фонтайнаш",
+                    coords: [41.1452, -8.6031],
+                    description: "Один из самых живописных и аутентичных кварталов Порту: узкие улочки, крутые лестницы, яркие фасады из азулежу и минимум туристов. Сюда приезжают местные фотографы — за настроением и случайными кадрами. Лучше всего в послеполуденном свете.",
+                    galleryFiles: [
+                        "File:Fontainhas Porto.jpg",
+                        "File:Porto Fontainhas (30780100256).jpg",
+                        "File:Bairro das Fontainhas, Porto.jpg",
+                        "File:Porto - Fontainhas (11).jpg"
+                    ],
+                    galleryCategories: ["Fontainhas (Porto)", "Bairro das Fontainhas"],
+                    galleryKeywords: ["fontainhas", "porto", "azulejo", "neighbourhood", "stairs"],
+                    sourceLabel: "Visit Porto",
+                    sourceUrl: "https://www.visitporto.travel/",
+                    mapsQuery: "Fontainhas+Porto"
+                },
+                {
+                    name: "Igreja de Santo Ildefonso",
+                    nameRu: "Церковь Санту Илдефонсу",
+                    coords: [41.1462, -8.6072],
+                    description: "Знаменитый азулежу-фасад церкви XVIII века: 11 000 плиток с библейскими и историческими сценами, уложенных вручную в 1932 году. Один из самых фотографируемых фасадов Порту — особенно выразительный рядом с шумной площадью Баталья.",
+                    galleryFiles: [
+                        "File:Igreja de Santo Ildefonso, Porto (01).jpg",
+                        "File:Porto - Igreja de Santo Ildefonso (3).jpg",
+                        "File:Igreja de Santo Ildefonso (Porto), azulejo facade.jpg",
+                        "File:Santo Ildefonso church porto.jpg"
+                    ],
+                    galleryCategories: ["Igreja de Santo Ildefonso (Porto)", "Azulejo in Porto"],
+                    galleryKeywords: ["ildefonso", "church", "porto", "azulejo", "facade"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Church_of_Santo_Ildef%C3%B3nso",
+                    mapsQuery: "Igreja+Santo+Ildefonso+Porto"
+                },
+                {
+                    name: "Café Majestic",
+                    nameRu: "Кафе Маджестик",
+                    coords: [41.1470, -8.6078],
+                    description: "Одно из красивейших кафе Европы и живая легенда Порту с 1921 года: зеркала, лепнина, кожаные кресла, официанты в смокингах — чистый belle époque. Дороже обычного, но кофе здесь — это повод, а не напиток. Говорят, Дж. К. Роулинг писала здесь первые главы о Гарри Поттере.",
+                    galleryFiles: [
+                        "File:Cafe Majestic Porto.jpg",
+                        "File:Majestic Café, Porto (interior) 01.jpg",
+                        "File:Porto - Café Majestic (3).jpg",
+                        "File:Café Majestic Porto 2015.jpg"
+                    ],
+                    galleryCategories: ["Café Majestic", "Cafes in Porto"],
+                    galleryKeywords: ["majestic", "café", "porto", "belle époque", "interior"],
+                    gallerySearchQuery: "Café Majestic Porto interior",
+                    sourceLabel: "Café Majestic",
+                    sourceUrl: "https://cafemajestic.com/",
+                    mapsQuery: "Café+Majestic+Porto"
+                },
+                {
+                    name: "Café Santiago — Francesinha",
+                    nameRu: "Café Santiago — francesinha",
+                    coords: [41.1501, -8.6080],
+                    description: "Культовое место для главного блюда Порту: francesinha — горячий бутерброд с несколькими видами мяса, расплавленным сыром и острым пивным соусом, с яйцом и картошкой. Кажется перегруженным описанием, но на вкус — это именно то, чем должна заканчиваться прогулка по Порту.",
+                    galleryFiles: [
+                        "File:Francesinha.jpg",
+                        "File:Francesinhas (Porto).jpg",
+                        "File:Francesinha com batatas fritas (cropped).jpg"
+                    ],
+                    galleryCategories: ["Francesinha", "Portuguese cuisine"],
+                    galleryKeywords: ["francesinha", "porto", "sandwich", "food", "santiago"],
+                    gallerySearchQuery: "Francesinha Porto",
+                    sourceLabel: "Café Santiago",
+                    sourceUrl: "https://cafesantiago.pt/",
+                    mapsQuery: "Café+Santiago+Porto+Francesinhas"
+                }
+            ]
+        },
+        {
+            id: 6,
+            title: "Атлантические парки и Фоз",
+            subtitle: "До Атлантики пешком, трамваем и метро",
+            duration: "7 часов",
+            distance: "~8 км",
+            difficulty: "Средняя (спуски к морю)",
+            category: "Atlantic Porto",
+            tip: "День заканчивается на поезде 19:30 из Кампаньи — это жёсткая точка финала, весь маршрут под неё и рассчитан. Трамвай №1 — исторический, деревянные вагоны 1930-х, едет вдоль реки от Фоза до центра: не спешите и наслаждайтесь. Serralves лучше смотреть в обе стороны: и музей, и сад. В дождь такси Серралвеш→Фоз около 4€. Карта Andante покрывает трамвай, метро и автобусы.",
+            image: "https://commons.wikimedia.org/wiki/Special:FilePath/Gardens%20of%20Serralves.jpg?width=1280",
+            imageFallback: "https://commons.wikimedia.org/wiki/Special:FilePath/Parterre%20lateral%20Serralves%20Porto.jpg?width=1280",
+            ready: true,
+            mapCenter: [41.1530, -8.6600],
+            mapZoom: 13,
+            places: [
+                {
+                    name: "Crystal Palace Gardens",
+                    nameRu: "Сад Хрустального дворца",
+                    coords: [41.1520, -8.6268],
+                    description: "Романтический парк на холме над Дору: многоуровневые сады с павлинами, фонтаны, розарий и захватывающие виды на реку и Серру ду Пилар. Несмотря на название, Хрустального дворца здесь больше нет — но зелёный покой и тишина здесь абсолютные.",
+                    galleryFiles: [
+                        "File:Crystal Palace Gardens Porto 01.jpg",
+                        "File:Jardins do Palácio de Cristal, Porto.jpg",
+                        "File:Porto - Jardins do Palácio de Cristal (1).jpg",
+                        "File:Crystal Palace gardens Porto panorama.jpg"
+                    ],
+                    galleryCategories: ["Crystal Palace Gardens, Porto", "Jardins do Palácio de Cristal"],
+                    galleryKeywords: ["crystal", "palace", "garden", "porto", "peacock"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Crystal_Palace_(Porto)",
+                    mapsQuery: "Crystal+Palace+Gardens+Porto"
+                },
+                {
+                    name: "Fundação de Serralves",
+                    nameRu: "Фонд Серралвеш",
+                    coords: [41.1592, -8.6534],
+                    description: "Главный музей современного искусства Порту и один из лучших в Португалии: белоснежное здание архитектора Алвару Сизы Виейры, масштабные выставки и огромный парк 18 гектаров с форменными садами, скульптурами и спокойным прудом. Закладывайте минимум 2 часа.",
+                    galleryFiles: [
+                        "File:Jardins de Serralves, Porto, Portugal, 2012-05-09, DD 01.jpg",
+                        "File:Museu de Serralves, Porto.jpg",
+                        "File:Serralves Foundation Porto.jpg",
+                        "File:Jardins Serralves 2.jpg"
+                    ],
+                    galleryCategories: ["Serralves Foundation", "Serralves Museum", "Serralves Park"],
+                    galleryKeywords: ["serralves", "museum", "porto", "garden", "contemporary"],
+                    sourceLabel: "Serralves",
+                    sourceUrl: "https://www.serralves.pt/en/",
+                    mapsQuery: "Fundação+de+Serralves+Porto"
+                },
+                {
+                    name: "Foz do Douro",
+                    nameRu: "Фоз ду Дору — обед у реки",
+                    coords: [41.1499, -8.6762],
+                    description: "Фешенебельный район у слияния Дору с Атлантикой: рыбные рестораны, кафе с видом на прибой, старые виллы и запах моря. После Серралвеша идеально спуститься к воде пешком и пообедать рыбой прямо у берега — тут ощущение настоящего морского Порту.",
+                    galleryFiles: [
+                        "File:Foz do Douro, Porto.jpg",
+                        "File:Foz do Douro panorama.jpg",
+                        "File:Porto - Foz do Douro (3).jpg"
+                    ],
+                    galleryCategories: ["Foz do Douro", "Porto waterfront"],
+                    galleryKeywords: ["foz", "douro", "porto", "atlantic", "waterfront"],
+                    gallerySearchQuery: "Foz do Douro Porto Atlantic",
+                    sourceLabel: "Visit Porto",
+                    sourceUrl: "https://www.visitporto.travel/",
+                    mapsQuery: "Foz+do+Douro+Porto"
+                },
+                {
+                    name: "Castelo do Queijo",
+                    nameRu: "Замок Сыра",
+                    coords: [41.1567, -8.6789],
+                    description: "Небольшой береговой форт XVII века, стоящий прямо на скалах у входа в Дору — там, где река встречается с Атлантикой. «Замок Сыра» — народное название за форму скалы-основания. Отсюда открывается отличный вид на оба берега и морской горизонт.",
+                    galleryFiles: [
+                        "File:Forte São João Baptista, Foz do Douro, Porto (1).jpg",
+                        "File:Castelo do Queijo, Porto.jpg",
+                        "File:Porto - Castelo do Queijo (2).jpg",
+                        "File:Forte do Queijo Porto.jpg"
+                    ],
+                    galleryCategories: ["Castelo do Queijo", "Fort of São João Baptista (Porto)"],
+                    galleryKeywords: ["queijo", "castle", "fort", "porto", "atlantic"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Castelo_do_Queijo",
+                    mapsQuery: "Castelo+do+Queijo+Porto"
+                },
+                {
+                    name: "Historic Tram #1 — Passeio Alegre to Infante",
+                    nameRu: "Трамвай №1 — Пасейо Алегри → Инфанте",
+                    coords: [41.1475, -8.6738],
+                    description: "Один из последних действующих исторических трамваев Европы: деревянные вагоны 1930-х годов едут вдоль набережной Дору от Фоза до центра города. 35 минут панорамной поездки с видами на реку, мосты и холмы Порту — лучший способ вернуться в центр.",
+                    galleryFiles: [
+                        "File:Tram Porto 2010.jpg",
+                        "File:Historic Tram Porto Line 1.jpg",
+                        "File:Porto tram 218 Massarelos.jpg",
+                        "File:STCP Porto tram line 1.jpg"
+                    ],
+                    galleryCategories: ["Trams in Porto", "Porto tram network", "Carro elétrico do Porto"],
+                    galleryKeywords: ["tram", "porto", "historic", "line 1", "douro"],
+                    sourceLabel: "Wikipedia",
+                    sourceUrl: "https://en.wikipedia.org/wiki/Porto_tram_network",
+                    mapsQuery: "Passeio+Alegre+Tram+Porto"
+                },
+                {
+                    name: "Campanhã Station — Train Home",
+                    nameRu: "Вокзал Кампанья — поезд домой",
+                    coords: [41.1504, -8.5757],
+                    description: "Главный железнодорожный узел Порту и финальная точка маршрута. От Алиадуш на метро C/E до Кампаньи — около 9 минут. Поезд в 19:30 отправляется по расписанию. Маршрут завершён — три дня, которые стоит помнить.",
+                    galleryFiles: [
+                        "File:Campanhã railway station exterior.jpg",
+                        "File:Porto - Estação de Campanhã (2).jpg",
+                        "File:Campanhã station Porto.jpg"
+                    ],
+                    galleryCategories: ["Campanhã railway station", "Porto Metro"],
+                    galleryKeywords: ["campanhã", "station", "porto", "train", "metro"],
+                    gallerySearchQuery: "Campanhã station Porto",
+                    sourceLabel: "CP",
+                    sourceUrl: "https://www.cp.pt/",
+                    mapsQuery: "Campanhã+Station+Porto"
+                }
+            ]
+        }
+    ];
+
+    // ── Render Porto route cards ──
+    const portoGrid = document.getElementById('portoRoutesGrid');
+    mountRouteGrid(portoGrid, portoRoutes.filter((route) => route.ready));
+
     // ======= Deep-link sync (popstate + initial load) =======
+    const allRoutes = [...routes, ...portoRoutes];
+    hydrateRouteCardCarousels(allRoutes.filter((route) => route.ready));
+
     function routeFromHash() {
         const m = window.location.hash.match(/#route=(\d+)/);
         if (!m) return null;
-        return routes.find(r => r.id === Number(m[1]) && r.ready) || null;
+        return allRoutes.find(r => r.id === Number(m[1]) && r.ready) || null;
     }
 
     window.addEventListener('popstate', () => {
