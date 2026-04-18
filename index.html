@@ -472,9 +472,10 @@
             position: relative;
             padding: 1.25rem 0 1.25rem 0;
             opacity: 0;
-            transform: translate3d(0, 18px, 0);
+            transform: translate3d(0, 34px, 0);
             animation: fadeUpSoft 0.8s var(--ease-soft) forwards;
             animation-delay: var(--delay, 0ms);
+            will-change: transform, opacity;
         }
 
         @media (min-width: 768px) {
@@ -522,7 +523,6 @@
             border-radius: 14px;
             padding: 0.95rem 1rem 0.95rem 3.1rem;
             transition: transform 0.35s var(--ease-soft), border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
-            overflow: hidden;
         }
 
         .transit-option::before {
@@ -533,6 +533,7 @@
             opacity: 0;
             transition: opacity 0.35s ease;
             pointer-events: none;
+            border-radius: inherit;
         }
 
         .transit-option:hover {
