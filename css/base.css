@@ -1,0 +1,43 @@
+:root {
+            --navy: #0a1628;
+            --navy-mid: #1a2a4a;
+            --terracotta: #c45d35;
+            --gold: #b8953e;
+            --ivory: #f5f0e8;
+            --ink: #1a1a18;
+            --muted: #5a5a52;
+            --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease-swift: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-soft: 0 24px 60px rgba(10, 22, 40, 0.08);
+            --shadow-lift: 0 34px 80px rgba(10, 22, 40, 0.16);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            margin: 0;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--ivory);
+            color: var(--ink);
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.06;
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAA30lEQVRoge3XMQ6DMBAF0ZlN7n9lUiAhkC3s/z3S1G52R7KLxLiua5wex+v+4r3+/yfj6QEAoMQ0v/8W7y/zf/b+5WXm5HMeHwAAanT+f8lP8vpL/9a/OZYaHh8AAGpM8/ue4v1l+td+e5lJjw8AADW8/gIA0MfrLwAAffK+5e1t+o+e4/EBAODM9J98TvH+kv61v7/Mpz0+AADUmOZ5T/H+spqv/fYyc/z/AABwbprnbYr3l+V87beXmefrPD4AANSY5u850zy/J+9f1u/dXmaeXgYA4GL8AHNrEwxnBwVkAAAAAElFTkSuQmCC");
+            background-repeat: repeat;
+        }
+
+        .font-serif { font-family: 'Cormorant', serif; }
+
+        .azulejo-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 30-15 30-15-30z' fill='%230a1628' fill-opacity='0.03'/%3E%3C/svg%3E");
+        }
