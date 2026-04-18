@@ -518,11 +518,42 @@
 
         .transit-option {
             position: relative;
+            display: block;
             background: rgba(245, 240, 232, 0.55);
             border: 1px solid rgba(184, 149, 62, 0.18);
             border-radius: 14px;
             padding: 0.95rem 1rem 0.95rem 3.1rem;
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
             transition: transform 0.35s var(--ease-soft), border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .transit-option:focus-visible {
+            outline: 2px solid rgba(184, 149, 62, 0.6);
+            outline-offset: 3px;
+        }
+
+        .transit-open-icon {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            color: rgba(95, 77, 42, 0.32);
+            opacity: 0;
+            transform: translate(-2px, 2px);
+            transition: opacity 0.3s ease, transform 0.3s var(--ease-soft), color 0.3s ease;
+        }
+
+        .transit-option:hover .transit-open-icon,
+        .transit-option:focus-visible .transit-open-icon {
+            opacity: 1;
+            transform: translate(0, 0);
+            color: var(--gold, #b8953e);
+        }
+
+        .transit-option.is-recommended .transit-open-icon {
+            opacity: 0.55;
+            color: var(--gold, #b8953e);
         }
 
         .transit-option::before {
@@ -2267,7 +2298,23 @@
         cable:     { label: 'Канатка',   icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l18 3"/><path d="M9 8v3M9 11h4l-1 6h-2z"/></svg>' },
     };
 
-    function renderTransitOption(option) {
+    const GMAPS_TRAVEL_MODE = {
+        walk: 'walking',
+        metro: 'transit', tram: 'transit', bus: 'transit',
+        train: 'transit', funicular: 'transit', cable: 'transit',
+        taxi: 'driving',
+    };
+
+    function buildDirectionsUrl(from, to, modeKey) {
+        if (!from || !to) return null;
+        const travelmode = GMAPS_TRAVEL_MODE[modeKey] || 'walking';
+        return `https://www.google.com/maps/dir/?api=1`
+            + `&origin=${from[0]},${from[1]}`
+            + `&destination=${to[0]},${to[1]}`
+            + `&travelmode=${travelmode}`;
+    }
+
+    function renderTransitOption(option, from, to) {
         const modeKey = option.mode in TRANSIT_MODES ? option.mode : 'walk';
         const mode = TRANSIT_MODES[modeKey];
         const recommended = option.recommended ? ' is-recommended' : '';
@@ -2284,19 +2331,22 @@
         const metaHtml = metaBits.length
             ? `<div class="transit-meta">${metaBits.join('<span class="dot"></span>')}</div>`
             : '';
+        const href = buildDirectionsUrl(from, to, modeKey);
+        const aria = `Открыть маршрут в Google Maps: ${mode.label}${option.duration ? ', ' + option.duration : ''}`;
         return `
-            <div class="transit-option${recommended}" data-mode="${modeKey}">
+            <a href="${href}" target="_blank" rel="noopener noreferrer" class="transit-option${recommended}" data-mode="${modeKey}" aria-label="${escapeHtml(aria)}">
                 <div class="transit-mode-icon" aria-hidden="true">${mode.icon}</div>
                 <div class="transit-mode-label">${mode.label}${lineBadge}</div>
                 <div class="transit-duration">${durationHtml}</div>
                 ${metaHtml}
-            </div>
+                <svg class="transit-open-icon" aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg>
+            </a>
         `;
     }
 
-    function renderTransitConnector(transit, delay) {
+    function renderTransitConnector(transit, delay, from, to) {
         if (!transit || !Array.isArray(transit.options) || !transit.options.length) return '';
-        const options = transit.options.map(renderTransitOption).join('');
+        const options = transit.options.map(o => renderTransitOption(o, from, to)).join('');
         const note = transit.note
             ? `<div class="transit-note">${escapeHtml(transit.note)}</div>`
             : '';
@@ -2816,7 +2866,7 @@
             <div class="space-y-16 relative">
                 <div class="modal-rise absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-tertiary/20 via-tertiary/10 to-transparent hidden md:block" style="--delay: 260ms;"></div>
                 ${route.places.map((place, i) => `
-                    ${i > 0 && place.transit ? renderTransitConnector(place.transit, 300 + (i * 95)) : ''}
+                    ${i > 0 && place.transit ? renderTransitConnector(place.transit, 300 + (i * 95), route.places[i - 1].coords, place.coords) : ''}
                     <div id="place-${i}" class="modal-place flex flex-col md:flex-row gap-8 relative" style="--delay: ${340 + (i * 95)}ms;">
                         <div class="place-step hidden md:flex absolute left-0 -translate-x-1/2 w-12 h-12 rounded-full bg-surface border-2 border-tertiary/25 items-center justify-center font-bold text-tertiary z-10 shadow-sm text-base leading-none">
                             ${i + 1}
