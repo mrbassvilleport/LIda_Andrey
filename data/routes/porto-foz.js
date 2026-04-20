@@ -7,8 +7,8 @@ export const portoFoz = {
     "difficulty": "Средняя (спуски к морю)",
     "category": "Atlantic Porto",
     "tip": "День заканчивается на поезде 19:30 из Кампаньи — это жёсткая точка финала, весь маршрут под неё и рассчитан. Трамвай №1 — исторический, деревянные вагоны 1930-х, едет вдоль реки от Фоза до центра: не спешите и наслаждайтесь. Serralves лучше смотреть в обе стороны: и музей, и сад. В дождь такси Серралвеш→Фоз около 4€. Карта Andante покрывает трамвай, метро и автобусы.",
-    "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Gardens%20of%20Serralves.jpg?width=1280",
-    "imageFallback": "https://commons.wikimedia.org/wiki/Special:FilePath/Parterre%20lateral%20Serralves%20Porto.jpg?width=1280",
+    "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Foz%20do%20Rio%20Douro%20-%20Portugal%20%287226440326%29.jpg?width=1280",
+    "imageFallback": "https://commons.wikimedia.org/wiki/Special:FilePath/Gardens%20of%20the%20Pal%C3%A1cio%20de%20Cristal%20%28Porto%29%2004.jpg?width=1280",
     "ready": true,
     "mapCenter": [
         41.153,
@@ -25,10 +25,10 @@ export const portoFoz = {
             ],
             "description": "Романтический парк на холме над Дору: многоуровневые сады с павлинами, фонтаны, розарий и захватывающие виды на реку и Серру ду Пилар. Несмотря на название, Хрустального дворца здесь больше нет — но зелёный покой и тишина здесь абсолютные.",
             "galleryFiles": [
-                "File:Crystal Palace Gardens Porto 01.jpg",
-                "File:Jardins do Palácio de Cristal, Porto.jpg",
-                "File:Porto - Jardins do Palácio de Cristal (1).jpg",
-                "File:Crystal Palace gardens Porto panorama.jpg"
+                "File:Jardins do Palacio de Cristal (26431248795).jpg",
+                "File:Gardens of the Palácio de Cristal (Porto) 04.jpg",
+                "File:Jardins do Palacio de Cristal (26158389210).jpg",
+                "File:Gardens of the Palácio de Cristal (Porto) 12.jpg"
             ],
             "galleryCategories": [
                 "Crystal Palace Gardens, Porto",
@@ -78,10 +78,10 @@ export const portoFoz = {
             ],
             "description": "Главный музей современного искусства Порту и один из лучших в Португалии: белоснежное здание архитектора Алвару Сизы Виейры, масштабные выставки и огромный парк 18 гектаров с форменными садами, скульптурами и спокойным прудом. Закладывайте минимум 2 часа.",
             "galleryFiles": [
-                "File:Jardins de Serralves, Porto, Portugal, 2012-05-09, DD 01.jpg",
-                "File:Museu de Serralves, Porto.jpg",
-                "File:Serralves Foundation Porto.jpg",
-                "File:Jardins Serralves 2.jpg"
+                "File:Museu Serralves, Porto, Portugal (32817965511).jpg",
+                "File:Casa e jardins de Serralves 2.jpg",
+                "File:Porto Serralves (53093437084).jpg",
+                "File:Museu Serralves, Porto, Portugal (32817963921).jpg"
             ],
             "galleryCategories": [
                 "Serralves Foundation",
@@ -126,9 +126,9 @@ export const portoFoz = {
             ],
             "description": "Фешенебельный район у слияния Дору с Атлантикой: рыбные рестораны, кафе с видом на прибой, старые виллы и запах моря. После Серралвеша идеально спуститься к воде пешком и пообедать рыбой прямо у берега — тут ощущение настоящего морского Порту.",
             "galleryFiles": [
-                "File:Foz do Douro, Porto.jpg",
-                "File:Foz do Douro panorama.jpg",
-                "File:Porto - Foz do Douro (3).jpg"
+                "File:Foz do Rio Douro - Portugal (7226440326).jpg",
+                "File:Porto, Foz do Douro (52667959121).jpg",
+                "File:Foz do Porto Ramalho Ortigão.jpg"
             ],
             "galleryCategories": [
                 "Foz do Douro",
@@ -167,10 +167,10 @@ export const portoFoz = {
             ],
             "description": "Небольшой береговой форт XVII века, стоящий прямо на скалах у входа в Дору — там, где река встречается с Атлантикой. «Замок Сыра» — народное название за форму скалы-основания. Отсюда открывается отличный вид на оба берега и морской горизонт.",
             "galleryFiles": [
-                "File:Forte São João Baptista, Foz do Douro, Porto (1).jpg",
-                "File:Castelo do Queijo, Porto.jpg",
-                "File:Porto - Castelo do Queijo (2).jpg",
-                "File:Forte do Queijo Porto.jpg"
+                "File:Castelo do Queijo (12).jpg",
+                "File:Castelo do Queijo (11).jpg",
+                "File:Forte de São João Baptista da Foz - Porto - Portugal (15615226755).jpg",
+                "File:Castelo do Queijo (16634127933).jpg"
             ],
             "galleryCategories": [
                 "Castelo do Queijo",
@@ -214,10 +214,10 @@ export const portoFoz = {
             ],
             "description": "Один из последних действующих исторических трамваев Европы: деревянные вагоны 1930-х годов едут вдоль набережной Дору от Фоза до центра города. 35 минут панорамной поездки с видами на реку, мосты и холмы Порту — лучший способ вернуться в центр.",
             "galleryFiles": [
-                "File:Tram Porto 2010.jpg",
-                "File:Historic Tram Porto Line 1.jpg",
-                "File:Porto tram 218 Massarelos.jpg",
-                "File:STCP Porto tram line 1.jpg"
+                "File:Porto tram 213 in 2023.jpg",
+                "File:Porto tram 213 in 2023 (b).jpg",
+                "File:Porto Tram 66.JPG",
+                "File:Tram Porto 288.jpg"
             ],
             "galleryCategories": [
                 "Trams in Porto",
@@ -268,9 +268,10 @@ export const portoFoz = {
             ],
             "description": "Главный железнодорожный узел Порту и финальная точка маршрута. От Алиадуш на метро C/E до Кампаньи — около 9 минут. Поезд в 19:30 отправляется по расписанию. Маршрут завершён — три дня, которые стоит помнить.",
             "galleryFiles": [
-                "File:Campanhã railway station exterior.jpg",
-                "File:Porto - Estação de Campanhã (2).jpg",
-                "File:Campanhã station Porto.jpg"
+                "File:Estação de Campanhã, Porto, 2016 (01).jpg",
+                "File:Estação de Campanhã, Porto, 2016 (02).jpg",
+                "File:Estação de Campanhã, Porto, 2016 (03).jpg",
+                "File:Estação de Campanhã, Porto, 2016 (04).jpg"
             ],
             "galleryCategories": [
                 "Campanhã railway station",

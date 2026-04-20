@@ -7,8 +7,8 @@ export const portoHistorical = {
     "difficulty": "Лёгкая (прогулочная)",
     "category": "Porto Culture",
     "tip": "Livraria Lello — билеты нужно обязательно купить онлайн заранее, иначе очередь. Francesinha — фирменное блюдо Порту: горячий бутерброд в остром пивном соусе с яйцом, пробовать обязательно. Bus 207 (карта Andante) идёт от центра до Фонтайнаш за 12 минут. Jardim das Virtudes — тихий и нетуристический, отличное место для отдыха. Café Majestic — одно из красивейших кафе Европы стиля арт-нуво, кофе здесь дороже, но атмосфера стоит того.",
-    "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Livraria%20Lello%203.jpg?width=1280",
-    "imageFallback": "https://commons.wikimedia.org/wiki/Special:FilePath/Porto%20-%20livraria%20Lello%20e%20Irm%C3%A3o%20%283%29.jpg?width=1280",
+    "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior%20of%20Livraria%20Lello%20-%20Portugal%202017%2004.jpg?width=1280",
+    "imageFallback": "https://commons.wikimedia.org/wiki/Special:FilePath/Western%20view%20from%20Torre%20dos%20Cl%C3%A9rigos%20in%20Porto%2C%2020250605%201725%209969.jpg?width=1280",
     "ready": true,
     "mapCenter": [
         41.147,
@@ -25,10 +25,10 @@ export const portoHistorical = {
             ],
             "description": "Один из красивейших книжных магазинов мира и обязательная остановка в Порту. Витражный потолок, знаменитая изогнутая лестница, деревянная резьба — архитектура 1906 года, которую называли вдохновением для Гарри Поттера. Билеты только онлайн, приходить к открытию.",
             "galleryFiles": [
-                "File:Livraria Lello & Irmão - 3.jpg",
-                "File:Livraria Lello Porto 2012.jpg",
-                "File:Livraria Lello inside.jpg",
-                "File:Livraria Lello Porto - staircase.jpg"
+                "File:Interior of Livraria Lello - Portugal 2017 04.jpg",
+                "File:Exterior of the Lello Bookstore in Porto - Apr 2011.jpg",
+                "File:Exterior view of Livraria Lello 01.jpg",
+                "File:Livraria Lello (49369268093).jpg"
             ],
             "galleryCategories": [
                 "Livraria Lello"
@@ -65,10 +65,10 @@ export const portoHistorical = {
             ],
             "description": "Барочная колокольня 1763 года и один из главных символов Порту — 76 метров над городом, 240 ступеней наверх. С верхней смотровой открывается 360° панорама: весь исторический центр, река Дору, черепичные крыши. Лучше всего приходить в будний день.",
             "galleryFiles": [
-                "File:Torre dos Clérigos, Porto.jpg",
-                "File:Porto - Torre dos Clérigos (2).jpg",
-                "File:Torre dos Clérigos (Porto), vista aérea.jpg",
-                "File:Clérigos Tower Porto October 2017-1.jpg"
+                "File:Western view from Torre dos Clérigos in Porto, 20250605 1725 9969.jpg",
+                "File:View of Porto Cathedral from Clérigos Tower, 20250605 1724 9965.jpg",
+                "File:20200130 PortoClérigos 3294 (49650935781).jpg",
+                "File:20200131 PortoTour 4091 (49651049321).jpg"
             ],
             "galleryCategories": [
                 "Torre dos Clérigos",
@@ -113,10 +113,10 @@ export const portoHistorical = {
             ],
             "description": "Исторический крытый рынок Порту, открытый в 1914 году — один из красивейших рынков Иберийского полуострова. Двухэтажные аркады с балконами, прилавки с цветами, сыром, морепродуктами и местными специалитетами. Атмосфера подлинная и очень живая.",
             "galleryFiles": [
-                "File:Mercado do Bolhão (Porto) 04.jpg",
-                "File:Bolhão Market, Porto.jpg",
-                "File:Mercado do Bolhão - renovated market hall interior.jpg",
-                "File:Porto - Mercado do Bolhão (15).jpg"
+                "File:1 Mercado do Bolhão.jpg",
+                "File:Mercado do Bolhão interno.jpg",
+                "File:Trudging Through Porto; Mercada do Bolhão Market (54455080306).jpg",
+                "File:Bolhão (1).jpg"
             ],
             "galleryCategories": [
                 "Mercado do Bolhão"
@@ -159,8 +159,9 @@ export const portoHistorical = {
             ],
             "description": "Один из старейших садов Порту — тихий, террасный, почти нетуристический. Тенистые аллеи спускаются уступами с холма, открывая виды на реку и Гайю. Отличное место для паузы после рынка — посидеть на скамейке в тени и выдохнуть.",
             "galleryFiles": [
-                "File:Jardim das Virtudes 01.jpg",
-                "File:Jardim das Virtudes, Porto.jpg"
+                "File:POR Porto Jardim Horto Virtudes 01.jpg",
+                "File:POR Porto Jardim Horto Virtudes 02.jpg",
+                "File:Passeio das Virtudes (2).JPG"
             ],
             "galleryCategories": [
                 "Jardim das Virtudes",
@@ -198,8 +199,10 @@ export const portoHistorical = {
             ],
             "description": "Богемный квартал Порту с лучшей концентрацией галерей современного искусства. Rua Miguel Bombarda — главная артерия: в каждом втором доме галерея, мастерская или концептуальный магазин. После обеда в Седофейте — идеальный послеполуденный маршрут.",
             "galleryFiles": [
-                "File:Porto - Rua Miguel Bombarda (2).jpg",
-                "File:Cedofeita Porto 2016.jpg"
+                "File:POR Porto Rua de Cedofeita 01.jpg",
+                "File:POR Porto Rua de Cedofeita 04.jpg",
+                "File:POR Porto Rua Melo 01.jpg",
+                "File:Classic architecture in Porto, Portugal (54042836650).jpg"
             ],
             "galleryCategories": [
                 "Rua Miguel Bombarda",
@@ -250,10 +253,10 @@ export const portoHistorical = {
             ],
             "description": "Один из самых живописных и аутентичных кварталов Порту: узкие улочки, крутые лестницы, яркие фасады из азулежу и минимум туристов. Сюда приезжают местные фотографы — за настроением и случайными кадрами. Лучше всего в послеполуденном свете.",
             "galleryFiles": [
-                "File:Fontainhas Porto.jpg",
-                "File:Porto Fontainhas (30780100256).jpg",
-                "File:Bairro das Fontainhas, Porto.jpg",
-                "File:Porto - Fontainhas (11).jpg"
+                "File:POR Porto Passeio Fontainhas 01.jpg",
+                "File:POR Porto Passeio Fontainhas 02.jpg",
+                "File:POR Porto Passeio Fontainhas 03.jpg",
+                "File:São João das Fontainhas.jpg"
             ],
             "galleryCategories": [
                 "Fontainhas (Porto)",
@@ -291,10 +294,10 @@ export const portoHistorical = {
             ],
             "description": "Знаменитый азулежу-фасад церкви XVIII века: 11 000 плиток с библейскими и историческими сценами, уложенных вручную в 1932 году. Один из самых фотографируемых фасадов Порту — особенно выразительный рядом с шумной площадью Баталья.",
             "galleryFiles": [
-                "File:Igreja de Santo Ildefonso, Porto (01).jpg",
-                "File:Porto - Igreja de Santo Ildefonso (3).jpg",
-                "File:Igreja de Santo Ildefonso (Porto), azulejo facade.jpg",
-                "File:Santo Ildefonso church porto.jpg"
+                "File:IlDefonso2.jpg",
+                "File:Iglesia de San Ildefonso, Oporto, Portugal, 2019-06-02, DD 32-34 HDR.jpg",
+                "File:Igreja de Santo Ildefonso - Porto - Portugal (32332607273).jpg",
+                "File:Igreja de Santo Ildefonso - Porto - Portugal (32551448843).jpg"
             ],
             "galleryCategories": [
                 "Igreja de Santo Ildefonso (Porto)",
@@ -332,10 +335,10 @@ export const portoHistorical = {
             ],
             "description": "Одно из красивейших кафе Европы и живая легенда Порту с 1921 года: зеркала, лепнина, кожаные кресла, официанты в смокингах — чистый belle époque. Дороже обычного, но кофе здесь — это повод, а не напиток. Говорят, Дж. К. Роулинг писала здесь первые главы о Гарри Поттере.",
             "galleryFiles": [
-                "File:Cafe Majestic Porto.jpg",
-                "File:Majestic Café, Porto (interior) 01.jpg",
-                "File:Porto - Café Majestic (3).jpg",
-                "File:Café Majestic Porto 2015.jpg"
+                "File:Cafe Majestic in Porto (6).jpg",
+                "File:Majestic Cafe in Porto (54046621216).jpg",
+                "File:Café Majestic, Porto (29221969574).jpg",
+                "File:Porto - café Majestic (10).jpg"
             ],
             "galleryCategories": [
                 "Café Majestic",
@@ -374,9 +377,10 @@ export const portoHistorical = {
             ],
             "description": "Культовое место для главного блюда Порту: francesinha — горячий бутерброд с несколькими видами мяса, расплавленным сыром и острым пивным соусом, с яйцом и картошкой. Кажется перегруженным описанием, но на вкус — это именно то, чем должна заканчиваться прогулка по Порту.",
             "galleryFiles": [
-                "File:Francesinha.jpg",
-                "File:Francesinhas (Porto).jpg",
-                "File:Francesinha com batatas fritas (cropped).jpg"
+                "File:Francesinha (9297346834).jpg",
+                "File:FrancesinhaNoPorto.jpg",
+                "File:Francesinha (48159444066).jpg",
+                "File:Francesinha at O Afonso (51706945083).jpg"
             ],
             "galleryCategories": [
                 "Francesinha",

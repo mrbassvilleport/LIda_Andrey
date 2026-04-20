@@ -7,8 +7,8 @@ export const portoRibeira = {
     "difficulty": "Лёгкая (всё пешком)",
     "category": "Historic Porto",
     "tip": "Маршрут начинается в 14:00, чтобы попасть на смотровую Serra do Pilar в золотой час. Все расстояния пешком и небольшие. Верхний ярус Ponte Luís I открыт для пешеходов и велосипедистов — виды головокружительные. В Adega São Nicolau ужинать лучше к 19:30, иначе очередь. На мосту сильный ветер, возьмите куртку.",
-    "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Ponte%20Dom%20Luis%20I%20Porto.jpg?width=1280",
-    "imageFallback": "https://commons.wikimedia.org/wiki/Special:FilePath/Oporto-%20Ponte%20Dom%20Luis%20I%20%2836934655696%29.jpg?width=1280",
+    "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Ponte%20de%20Dom%20Lu%C3%ADs%20por%20Rodrigo%20Tetsuo%20Argenton%20%283%29.jpg?width=1280",
+    "imageFallback": "https://commons.wikimedia.org/wiki/Special:FilePath/Colorful%20Ribeira%20Facades%20and%20Hillside%20Views%2C%20Porto%2C%20Portugal%20%2854759954654%29.jpg?width=1280",
     "ready": true,
     "mapCenter": [
         41.14,
@@ -25,10 +25,10 @@ export const portoRibeira = {
             ],
             "description": "Один из красивейших вокзалов мира: около 20 000 плиток азулежу на стенах главного зала рассказывают историю Португалии — сцены сражений, крестьянской жизни, королевские процессии. Даже если вы никуда не едете, зайти сюда обязательно.",
             "galleryFiles": [
-                "File:Estação de São Bento - Porto - Portugal (16910949619).jpg",
-                "File:Estação de São Bento (Porto) (4).jpg",
-                "File:São Bento train station, Porto.jpg",
-                "File:Porto - Estação de São Bento - 20110730 (2).jpg"
+                "File:Estación de tren São Bento, Oporto, Portugal, 2019-06-02, DD 05.jpg",
+                "File:Estação Ferroviária de Porto-São Bento por Rodrigo Tetsuo Argenton (04).jpg",
+                "File:Estação São Bento - interior.JPG",
+                "File:Azulejos São Bento 3.jpg"
             ],
             "galleryCategories": [
                 "São Bento railway station",
@@ -66,10 +66,10 @@ export const portoRibeira = {
             ],
             "description": "Романский собор XII века — один из старейших памятников города. Поднимитесь на смотровую терассу клуатра: оттуда открывается панорама красных крыш, реки Дору и холмов Гайи. Особенно хороши виды в послеполуденном свете.",
             "galleryFiles": [
-                "File:Porto Cathedral (Se) - panoramio.jpg",
-                "File:Sé do Porto (1).jpg",
-                "File:Sé Catedral do Porto, cloître, 2012-05-09, DD 02.JPG",
-                "File:Porto - Sé - 20110730 (3).jpg"
+                "File:Porto Cathedral, July 2023.jpg",
+                "File:Sé do Porto - Cloître gothique 16.jpg",
+                "File:Cedofeita, Santo Ildefonso, Sé, Miragaia, São Nicolau e Vitória - Sé do Porto - 2025-10-22 00-57-30 001.JPG",
+                "File:Porto April 2019-19a.jpg"
             ],
             "galleryCategories": [
                 "Porto Cathedral",
@@ -107,10 +107,10 @@ export const portoRibeira = {
             ],
             "description": "Готический фасад скрывает самый богатый барочный интерьер Португалии: сотни килограммов позолоченного дерева, резные алтари, ангелы и виноградные лозы. Ощущение почти сногсшибательное — настоящее избыточное великолепие XVII века.",
             "galleryFiles": [
-                "File:Igreja de São Francisco (Porto) - interior, gilded wood carving.jpg",
-                "File:Igreja de São Francisco, Porto, Portugal.jpg",
-                "File:Igreja São Francisco Porto interior 2.jpg",
-                "File:Porto - Igreja de São Francisco - 20110730 (1).jpg"
+                "File:Gilded Interior - Igreja de Sao Francisco - Ribeira District - Porto, Portugal - 04 (4642355743).jpg",
+                "File:Church of São Francisco (15648113308).jpg",
+                "File:Altar of Chapel inside the Church of Saint Francis - Porto, Portugal (54302109003).jpg",
+                "File:IGREJA DE S.FRANCISCO 1.jpg"
             ],
             "galleryCategories": [
                 "Igreja de São Francisco (Porto)",
@@ -148,9 +148,10 @@ export const portoRibeira = {
             ],
             "description": "Одна из красивейших улиц старого Порту: сплошные азулежу на фасадах, уютные кафе и ювелирные лавки. Идеальное место для кофе и паштел де ната после барочного интенсива — выдохнуть и просто посидеть в старом городе.",
             "galleryFiles": [
-                "File:Rua das Flores, Porto.jpg",
-                "File:Porto - Rua das Flores (14603451741).jpg",
-                "File:Porto - Rua das Flores (7420382780).jpg"
+                "File:Rua das Flores (3185947938).jpg",
+                "File:Rua das Flores - panoramio.jpg",
+                "File:Porto - façades avec faïences 28 (33730131666).jpg",
+                "File:Casas en comienzo de la Rua das flores IMGP0323 (37201875985).jpg"
             ],
             "galleryCategories": [
                 "Rua das Flores (Porto)",
@@ -196,10 +197,10 @@ export const portoRibeira = {
             ],
             "description": "Двухъярусный железный мост через Дору — один из символов Порту. По верхнему ярусу идут пешеходы и лёгкое метро: 172 метра над рекой, головокружительные виды на оба города и ощущение, что ты висишь в воздухе над историей.",
             "galleryFiles": [
-                "File:Ponte Luís I (Porto-Gaia) October 2017-1.jpg",
-                "File:Ponte Dom Luís I (3).jpg",
-                "File:Porto - Ponte Luís I (7).jpg",
-                "File:Ponte Luis I.jpg"
+                "File:Ponte de Dom Luís por Rodrigo Tetsuo Argenton (3).jpg",
+                "File:Porto-Ponte Dom Luis I-02-2011-gje.jpg",
+                "File:Ponte Dom Luís I in Porto, Portugal.jpg",
+                "File:Puente Don Luis I, Oporto, Portugal, 2012-05-09, DD 13.JPG"
             ],
             "galleryCategories": [
                 "Ponte Luís I",
@@ -237,10 +238,10 @@ export const portoRibeira = {
             ],
             "description": "Лучшая обзорная точка над Порту — с терассы монастыря Serra do Pilar открывается классическая открыточная панорама: мост Луиша I, оранжевые крыши исторического центра, Дору и далёкие холмы. В золотой час сюда стекаются все фотографы города — и правильно делают.",
             "galleryFiles": [
-                "File:Serra do Pilar from Luís I Bridge, Porto.jpg",
-                "File:View of Porto from Serra do Pilar.jpg",
-                "File:Mosteiro da Serra do Pilar (Porto) (2).jpg",
-                "File:Porto - Serra do Pilar panorama.jpg"
+                "File:2025-08-02 Monastery of Serra do Pilar.jpg",
+                "File:Igreja da Serra do Pilar por Rodrigo Tetsuo Argenton (02).jpg",
+                "File:Igreja do Mosteiro de Santo Agostinho da Serra do Pilar - Porto, Portugal (54432004205).jpg",
+                "File:Mosteiro da Serra do Pilar (1).jpg"
             ],
             "galleryCategories": [
                 "Serra do Pilar",
@@ -285,10 +286,10 @@ export const portoRibeira = {
             ],
             "description": "Исторический набережный квартал у подножия моста: цветные фасады домов, лодки-рабелуш, запах реки и туристический гул — живой и очень атмосферный. Adega São Nicolau здесь же — традиционный ресторан с хорошей треской и местным вином прямо у воды.",
             "galleryFiles": [
-                "File:Ribeira, Porto, Portugal.jpg",
-                "File:Porto, Ribeira (11).jpg",
-                "File:Ribeira Porto.jpg",
-                "File:Porto cais da ribeira.jpg"
+                "File:Colorful Ribeira Facades and Hillside Views, Porto, Portugal (54759954654).jpg",
+                "File:Porto Riverfront (49941013888).jpg",
+                "File:Along the Riverfront, Porto Portugal (54269255177).jpg",
+                "File:Nighttime View of the Douro Riverfront in Porto, Portugal (54803354871).jpg"
             ],
             "galleryCategories": [
                 "Ribeira (Porto)",
