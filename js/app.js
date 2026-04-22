@@ -74,13 +74,64 @@ function proxyWikimediaUrl(url) {
     return `https://wsrv.nl/?url=${encodeURIComponent(url)}`;
 }
 
+function collectUniqueImageUrls(urls = []) {
+    const seen = new Set();
+
+    return urls.filter((url) => {
+        if (!url || seen.has(url)) return false;
+        seen.add(url);
+        return true;
+    });
+}
+
+function buildRemotePhoto(url, alt, fallbackUrls = []) {
+    if (!url) return null;
+
+    const directSrc = url.trim();
+    const proxiedSrc = proxyWikimediaUrl(directSrc);
+    const fallbackSrcs = collectUniqueImageUrls([
+        proxiedSrc !== directSrc ? proxiedSrc : '',
+        ...fallbackUrls.flatMap((candidate) => {
+            const directFallback = (candidate || '').trim();
+            if (!directFallback) return [];
+
+            const proxiedFallback = proxyWikimediaUrl(directFallback);
+            return [directFallback, proxiedFallback !== directFallback ? proxiedFallback : ''];
+        }),
+    ]);
+
+    return {
+        src: directSrc,
+        alt,
+        fallbackSrcs,
+    };
+}
+
+function serializeFallbackSrcs(fallbackSrcs = []) {
+    return fallbackSrcs.join('||');
+}
+
+function advanceImageFallback(image) {
+    const pendingFallbacks = (image?.dataset?.fallbackSrcs || '')
+        .split('||')
+        .map((value) => value.trim())
+        .filter(Boolean);
+
+    if (!pendingFallbacks.length) return false;
+
+    const nextSrc = pendingFallbacks.shift();
+    image.dataset.fallbackSrcs = pendingFallbacks.join('||');
+    image.setAttribute('src', nextSrc);
+    return true;
+}
+
 function getRouteCardCoverPhotos(route) {
     const photos = [];
     const seen = new Set();
 
     appendUniquePhotos(photos, seen, [
-        route.image ? { src: proxyWikimediaUrl(route.image), alt: route.title, fallbackSrc: proxyWikimediaUrl(route.imageFallback || '') } : null,
-        route.imageFallback ? { src: proxyWikimediaUrl(route.imageFallback), alt: route.title } : null,
+        route.image ? buildRemotePhoto(route.image, route.title, route.imageFallback ? [route.imageFallback] : []) : null,
+        route.imageFallback ? buildRemotePhoto(route.imageFallback, route.title) : null,
     ].filter(Boolean), 2);
 
     return photos;
@@ -94,7 +145,7 @@ function getRouteCardInitialIndex(slideCount) {
 function renderRouteCardSlides(route, photos, initialIndex = 0) {
     return photos.map((photo, index) => `
         <figure class="route-card-slide${index === initialIndex ? ' is-active' : ''}">
-            <img src="${escapeHtml(photo.src)}"${photo.fallbackSrc ? ` data-fallback-src="${escapeHtml(photo.fallbackSrc)}"` : ''} alt="${escapeHtml(photo.alt || route.title)}" loading="lazy" decoding="async" referrerpolicy="${REMOTE_IMAGE_REFERRER_POLICY}" class="w-full h-full object-cover transition-all duration-700" onerror="if(this.dataset.fallbackSrc && !this.dataset.fallbackApplied){ this.dataset.fallbackApplied='1'; this.src=this.dataset.fallbackSrc; return; } this.style.display='none'; this.closest('.route-card-carousel')?.classList.add('route-card-fallback');" />
+            <img src="${escapeHtml(photo.src)}"${photo.fallbackSrcs?.length ? ` data-fallback-srcs="${escapeHtml(serializeFallbackSrcs(photo.fallbackSrcs))}"` : ''} alt="${escapeHtml(photo.alt || route.title)}" loading="lazy" decoding="async" referrerpolicy="${REMOTE_IMAGE_REFERRER_POLICY}" class="w-full h-full object-cover transition-all duration-700" />
         </figure>
     `).join('');
 }
@@ -117,14 +168,45 @@ function initializeRouteCardCarousel(card, route, photos = getRouteCardCoverPhot
     const slides = Array.from(track.querySelectorAll('.route-card-slide'));
     if (!slides.length) return;
 
+    const slideImages = slides.map((slide) => slide.querySelector('img'));
+    const failedIndices = new Set();
     let currentIndex = initialIndex;
     let autoplayTimer = null;
 
-    function setActive(nextIndex) {
-        currentIndex = (nextIndex + slides.length) % slides.length;
+    function getAvailableSlideCount() {
+        return slides.length - failedIndices.size;
+    }
+
+    function updateNavVisibility() {
+        const hasMultipleSlides = getAvailableSlideCount() > 1;
+        prevButton.hidden = !hasMultipleSlides;
+        nextButton.hidden = !hasMultipleSlides;
+    }
+
+    function findNextAvailableIndex(startIndex, direction = 1) {
+        for (let step = 0; step < slides.length; step += 1) {
+            const candidateIndex = (startIndex + (direction * step) + slides.length * 2) % slides.length;
+            if (!failedIndices.has(candidateIndex)) return candidateIndex;
+        }
+
+        return -1;
+    }
+
+    function setActive(nextIndex, direction = 1) {
+        const resolvedIndex = findNextAvailableIndex((nextIndex + slides.length) % slides.length, direction);
+        if (resolvedIndex < 0) {
+            carousel.classList.add('route-card-fallback');
+            updateNavVisibility();
+            return;
+        }
+
+        currentIndex = resolvedIndex;
         slides.forEach((slide, slideIndex) => {
             slide.classList.toggle('is-active', slideIndex === currentIndex);
+            slide.hidden = failedIndices.has(slideIndex);
         });
+        carousel.classList.remove('route-card-fallback');
+        updateNavVisibility();
     }
 
     function stopAutoplay() {
@@ -135,16 +217,16 @@ function initializeRouteCardCarousel(card, route, photos = getRouteCardCoverPhot
     }
 
     function startAutoplay() {
-        if (prefersReducedMotion || slides.length < 2) return;
+        if (prefersReducedMotion || getAvailableSlideCount() < 2) return;
         stopAutoplay();
         autoplayTimer = window.setInterval(() => {
-            setActive(currentIndex + 1);
+            setActive(currentIndex + 1, 1);
         }, ROUTE_CARD_AUTOPLAY_MS);
     }
 
     function stepSlides(direction) {
         stopAutoplay();
-        setActive(currentIndex + direction);
+        setActive(currentIndex + direction, direction);
         startAutoplay();
     }
 
@@ -170,9 +252,6 @@ function initializeRouteCardCarousel(card, route, photos = getRouteCardCoverPhot
         }
     };
 
-    prevButton.hidden = slides.length < 2;
-    nextButton.hidden = slides.length < 2;
-
     prevButton.addEventListener('click', handlePrevClick);
     nextButton.addEventListener('click', handleNextClick);
     prevButton.addEventListener('keydown', handleArrowKeydown);
@@ -182,6 +261,30 @@ function initializeRouteCardCarousel(card, route, photos = getRouteCardCoverPhot
     carousel.addEventListener('focusin', handleFocusIn);
     carousel.addEventListener('focusout', handleFocusOut);
 
+    slideImages.forEach((image, index) => {
+        image?.addEventListener('error', () => {
+            if (advanceImageFallback(image)) return;
+
+            failedIndices.add(index);
+            slides[index]?.classList.remove('is-active');
+            slides[index] && (slides[index].hidden = true);
+
+            if (!getAvailableSlideCount()) {
+                stopAutoplay();
+                carousel.classList.add('route-card-fallback');
+                updateNavVisibility();
+                return;
+            }
+
+            if (currentIndex === index) {
+                setActive(index + 1, 1);
+            } else {
+                updateNavVisibility();
+            }
+        });
+    });
+
+    setActive(currentIndex, 1);
     startAutoplay();
 
     routeCardCarouselCleanup.set(card, () => {
@@ -409,11 +512,9 @@ async function fetchCommonsCategoryPhotos(categoryTitle, limit = 4, keywords = [
         .sort((a, b) => scoreCommonsPhoto(b, keywords) - scoreCommonsPhoto(a, keywords))
         .map((page) => {
             const info = page.imageinfo[0];
-            return {
-                src: proxyWikimediaUrl(info.thumburl || info.url),
-                alt: page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
-            };
+            return buildRemotePhoto(info.thumburl || info.url, page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '));
         })
+        .filter(Boolean)
         .slice(0, limit);
 }
 
@@ -440,11 +541,9 @@ async function fetchCommonsSearchPhotos(searchQuery, limit = 4, keywords = []) {
         .sort((a, b) => scoreCommonsPhoto(b, keywords) - scoreCommonsPhoto(a, keywords))
         .map((page) => {
             const info = page.imageinfo[0];
-            return {
-                src: proxyWikimediaUrl(info.thumburl || info.url),
-                alt: page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
-            };
+            return buildRemotePhoto(info.thumburl || info.url, page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '));
         })
+        .filter(Boolean)
         .slice(0, limit);
 }
 
@@ -477,10 +576,7 @@ async function fetchCommonsFiles(fileTitles = []) {
         .filter(isUsableCommonsPhoto)
         .map((page) => {
             const info = page.imageinfo[0];
-            return {
-                src: proxyWikimediaUrl(info.thumburl || info.url),
-                alt: page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
-            };
+            return buildRemotePhoto(info.thumburl || info.url, page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '));
         });
 }
 
@@ -567,11 +663,13 @@ async function getRouteCardPhotos(route, limit = 6) {
         appendUniquePhotos(featuredPhotos, featuredSeen, [{
             src: photos[0].src,
             alt: photos[0].alt || place.nameRu || route.title,
+            fallbackSrcs: photos[0].fallbackSrcs || [],
         }], limit);
 
         appendUniquePhotos(overflowPhotos, featuredSeen, photos.slice(1).map((photo, index) => ({
             src: photo.src,
             alt: photo.alt || `${place.nameRu || route.title} ${index + 2}`,
+            fallbackSrcs: photo.fallbackSrcs || [],
         })), limit);
     });
 
@@ -648,6 +746,18 @@ function mountPlaceGallery(root, place, photos) {
         </button>
     `).join('');
 
+    Array.from(root.querySelectorAll('.place-gallery-slide img')).forEach((image, index) => {
+        if (photos[index]?.fallbackSrcs?.length) {
+            image.dataset.fallbackSrcs = serializeFallbackSrcs(photos[index].fallbackSrcs);
+        }
+    });
+
+    Array.from(root.querySelectorAll('.place-gallery-thumb img')).forEach((image, index) => {
+        if (photos[index]?.fallbackSrcs?.length) {
+            image.dataset.fallbackSrcs = serializeFallbackSrcs(photos[index].fallbackSrcs);
+        }
+    });
+
     Array.from(root.querySelectorAll('.place-gallery-slide img, .place-gallery-thumb img')).forEach((image) => {
         const originalSrc = image.getAttribute('src');
         image.referrerPolicy = REMOTE_IMAGE_REFERRER_POLICY;
@@ -661,6 +771,7 @@ function mountPlaceGallery(root, place, photos) {
     const slides = Array.from(stage.querySelectorAll('.place-gallery-slide'));
     const thumbs = Array.from(preview.querySelectorAll('.place-gallery-thumb'));
     const slideImages = slides.map((slide) => slide.querySelector('img'));
+    const thumbImages = thumbs.map((thumb) => thumb.querySelector('img'));
     const failedIndices = new Set();
 
     function findNextAvailableIndex(startIndex, direction = 1) {
@@ -689,6 +800,8 @@ function mountPlaceGallery(root, place, photos) {
 
     slideImages.forEach((image, index) => {
         image?.addEventListener('error', () => {
+            if (advanceImageFallback(image)) return;
+
             failedIndices.add(index);
             slides[index]?.classList.remove('is-active');
             thumbs[index]?.classList.remove('is-active');
@@ -703,7 +816,14 @@ function mountPlaceGallery(root, place, photos) {
             if (currentIndex === index) {
                 updateGallery(index + 1, 1);
             }
-        }, { once: true });
+        });
+    });
+
+    thumbImages.forEach((image, index) => {
+        image?.addEventListener('error', () => {
+            if (advanceImageFallback(image)) return;
+            thumbs[index] && (thumbs[index].hidden = true);
+        });
     });
 
     status.textContent = `1 / ${photos.length}`;
