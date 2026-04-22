@@ -19,6 +19,43 @@ requestAnimationFrame(() => {
     document.body.classList.add('page-ready');
 });
 
+function shouldRetryRemoteImage(src = '') {
+    return /wikimedia\.org|googleusercontent\.com/i.test(src);
+}
+
+function normalizeRemoteImagePolicy(root = document) {
+    root.querySelectorAll?.('img[referrerpolicy="no-referrer"]:not([data-referrer-fixed])').forEach((image) => {
+        const originalSrc = image.getAttribute('src');
+        image.dataset.referrerFixed = '1';
+        image.referrerPolicy = 'origin';
+        image.setAttribute('referrerpolicy', 'origin');
+
+        if (!originalSrc || !shouldRetryRemoteImage(originalSrc)) return;
+
+        image.removeAttribute('src');
+        image.setAttribute('src', originalSrc);
+    });
+}
+
+normalizeRemoteImagePolicy();
+
+const remoteImageObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+            if (node.nodeType !== Node.ELEMENT_NODE) return;
+
+            if (node.matches?.('img')) {
+                normalizeRemoteImagePolicy(node.parentElement || document);
+                return;
+            }
+
+            normalizeRemoteImagePolicy(node);
+        });
+    });
+});
+
+remoteImageObserver.observe(document.body, { childList: true, subtree: true });
+
 document.querySelectorAll('.section-reveal').forEach((element) => {
     if (prefersReducedMotion) {
         element.classList.add('is-visible');
@@ -29,15 +66,21 @@ document.querySelectorAll('.section-reveal').forEach((element) => {
 });
 
 const ROUTE_CARD_AUTOPLAY_MS = 4200;
+const REMOTE_IMAGE_REFERRER_POLICY = 'origin';
 const routeCardCarouselCleanup = new WeakMap();
+
+function proxyWikimediaUrl(url) {
+    if (!url || !url.includes('wikimedia.org')) return url;
+    return `https://wsrv.nl/?url=${encodeURIComponent(url)}`;
+}
 
 function getRouteCardCoverPhotos(route) {
     const photos = [];
     const seen = new Set();
 
     appendUniquePhotos(photos, seen, [
-        route.image ? { src: route.image, alt: route.title, fallbackSrc: route.imageFallback || '' } : null,
-        route.imageFallback ? { src: route.imageFallback, alt: route.title } : null,
+        route.image ? { src: proxyWikimediaUrl(route.image), alt: route.title, fallbackSrc: proxyWikimediaUrl(route.imageFallback || '') } : null,
+        route.imageFallback ? { src: proxyWikimediaUrl(route.imageFallback), alt: route.title } : null,
     ].filter(Boolean), 2);
 
     return photos;
@@ -51,7 +94,7 @@ function getRouteCardInitialIndex(slideCount) {
 function renderRouteCardSlides(route, photos, initialIndex = 0) {
     return photos.map((photo, index) => `
         <figure class="route-card-slide${index === initialIndex ? ' is-active' : ''}">
-            <img src="${escapeHtml(photo.src)}"${photo.fallbackSrc ? ` data-fallback-src="${escapeHtml(photo.fallbackSrc)}"` : ''} alt="${escapeHtml(photo.alt || route.title)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="w-full h-full object-cover transition-all duration-700" onerror="if(this.dataset.fallbackSrc && !this.dataset.fallbackApplied){ this.dataset.fallbackApplied='1'; this.src=this.dataset.fallbackSrc; return; } this.style.display='none'; this.closest('.route-card-carousel')?.classList.add('route-card-fallback');" />
+            <img src="${escapeHtml(photo.src)}"${photo.fallbackSrc ? ` data-fallback-src="${escapeHtml(photo.fallbackSrc)}"` : ''} alt="${escapeHtml(photo.alt || route.title)}" loading="lazy" decoding="async" referrerpolicy="${REMOTE_IMAGE_REFERRER_POLICY}" class="w-full h-full object-cover transition-all duration-700" onerror="if(this.dataset.fallbackSrc && !this.dataset.fallbackApplied){ this.dataset.fallbackApplied='1'; this.src=this.dataset.fallbackSrc; return; } this.style.display='none'; this.closest('.route-card-carousel')?.classList.add('route-card-fallback');" />
         </figure>
     `).join('');
 }
@@ -367,7 +410,7 @@ async function fetchCommonsCategoryPhotos(categoryTitle, limit = 4, keywords = [
         .map((page) => {
             const info = page.imageinfo[0];
             return {
-                src: info.thumburl || info.url,
+                src: proxyWikimediaUrl(info.thumburl || info.url),
                 alt: page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
             };
         })
@@ -398,7 +441,7 @@ async function fetchCommonsSearchPhotos(searchQuery, limit = 4, keywords = []) {
         .map((page) => {
             const info = page.imageinfo[0];
             return {
-                src: info.thumburl || info.url,
+                src: proxyWikimediaUrl(info.thumburl || info.url),
                 alt: page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
             };
         })
@@ -435,7 +478,7 @@ async function fetchCommonsFiles(fileTitles = []) {
         .map((page) => {
             const info = page.imageinfo[0];
             return {
-                src: info.thumburl || info.url,
+                src: proxyWikimediaUrl(info.thumburl || info.url),
                 alt: page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
             };
         });
@@ -595,42 +638,86 @@ function mountPlaceGallery(root, place, photos) {
 
     stage.innerHTML = photos.map((photo, index) => `
         <figure class="place-gallery-slide${index === 0 ? ' is-active' : ''}">
-            <img src="${photo.src}" alt="${escapeHtml(place.nameRu)} — фото ${index + 1}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+            <img src="${photo.src}" alt="${escapeHtml(place.nameRu)} — фото ${index + 1}" loading="lazy" decoding="async" referrerpolicy="${REMOTE_IMAGE_REFERRER_POLICY}" />
         </figure>
     `).join('');
 
     preview.innerHTML = photos.map((photo, index) => `
         <button type="button" class="place-gallery-thumb${index === 0 ? ' is-active' : ''}" data-gallery-thumb="${index}" aria-label="Показать фото ${index + 1} для ${escapeHtml(place.nameRu)}">
-            <img src="${photo.src}" alt="${escapeHtml(place.nameRu)} — превью ${index + 1}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+            <img src="${photo.src}" alt="${escapeHtml(place.nameRu)} — превью ${index + 1}" loading="lazy" decoding="async" referrerpolicy="${REMOTE_IMAGE_REFERRER_POLICY}" />
         </button>
     `).join('');
 
+    Array.from(root.querySelectorAll('.place-gallery-slide img, .place-gallery-thumb img')).forEach((image) => {
+        const originalSrc = image.getAttribute('src');
+        image.referrerPolicy = REMOTE_IMAGE_REFERRER_POLICY;
+
+        if (!originalSrc) return;
+
+        image.removeAttribute('src');
+        image.setAttribute('src', originalSrc);
+    });
+
     const slides = Array.from(stage.querySelectorAll('.place-gallery-slide'));
     const thumbs = Array.from(preview.querySelectorAll('.place-gallery-thumb'));
+    const slideImages = slides.map((slide) => slide.querySelector('img'));
+    const failedIndices = new Set();
 
-    function updateGallery(nextIndex) {
-        currentIndex = (nextIndex + photos.length) % photos.length;
+    function findNextAvailableIndex(startIndex, direction = 1) {
+        for (let step = 0; step < photos.length; step += 1) {
+            const candidateIndex = (startIndex + (direction * step) + photos.length * 2) % photos.length;
+            if (!failedIndices.has(candidateIndex)) return candidateIndex;
+        }
+
+        return -1;
+    }
+
+    function updateGallery(nextIndex, direction = 1) {
+        const resolvedIndex = findNextAvailableIndex((nextIndex + photos.length) % photos.length, direction);
+        if (resolvedIndex < 0) return;
+
+        currentIndex = resolvedIndex;
         slides.forEach((slide, index) => {
             slide.classList.toggle('is-active', index === currentIndex);
         });
         thumbs.forEach((thumb, index) => {
             thumb.classList.toggle('is-active', index === currentIndex);
+            thumb.hidden = failedIndices.has(index);
         });
         status.textContent = `${currentIndex + 1} / ${photos.length}`;
     }
+
+    slideImages.forEach((image, index) => {
+        image?.addEventListener('error', () => {
+            failedIndices.add(index);
+            slides[index]?.classList.remove('is-active');
+            thumbs[index]?.classList.remove('is-active');
+            thumbs[index] && (thumbs[index].hidden = true);
+            image.remove();
+
+            if (failedIndices.size >= photos.length) {
+                renderGalleryFallback(root, place);
+                return;
+            }
+
+            if (currentIndex === index) {
+                updateGallery(index + 1, 1);
+            }
+        }, { once: true });
+    });
 
     status.textContent = `1 / ${photos.length}`;
 
     if (photos.length > 1) {
         prevButton.hidden = false;
         nextButton.hidden = false;
-        prevButton.addEventListener('click', () => updateGallery(currentIndex - 1));
-        nextButton.addEventListener('click', () => updateGallery(currentIndex + 1));
+        prevButton.addEventListener('click', () => updateGallery(currentIndex - 1, -1));
+        nextButton.addEventListener('click', () => updateGallery(currentIndex + 1, 1));
     }
 
     thumbs.forEach((thumb) => {
         thumb.addEventListener('click', () => {
-            updateGallery(Number(thumb.dataset.galleryThumb));
+            updateGallery(Number(thumb.dataset.galleryThumb), 1);
         });
     });
 }
