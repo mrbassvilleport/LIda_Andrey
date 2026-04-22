@@ -7,8 +7,8 @@ export const portoHistorical = {
     "difficulty": "Лёгкая (прогулочная)",
     "category": "Porto Culture",
     "tip": "Livraria Lello — билеты нужно обязательно купить онлайн заранее, иначе очередь. Francesinha — фирменное блюдо Порту: горячий бутерброд в остром пивном соусе с яйцом, пробовать обязательно. Bus 207 (карта Andante) идёт от центра до Фонтайнаш за 12 минут. Jardim das Virtudes — тихий и нетуристический, отличное место для отдыха. Café Majestic — одно из красивейших кафе Европы стиля арт-нуво, кофе здесь дороже, но атмосфера стоит того.",
-    "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior%20of%20Livraria%20Lello%20-%20Portugal%202017%2004.jpg?width=1280",
-    "imageFallback": "https://commons.wikimedia.org/wiki/Special:FilePath/Western%20view%20from%20Torre%20dos%20Cl%C3%A9rigos%20in%20Porto%2C%2020250605%201725%209969.jpg?width=1280",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Interior_of_Livraria_Lello_-_Portugal_2017_04.jpg/1280px-Interior_of_Livraria_Lello_-_Portugal_2017_04.jpg",
+    "imageFallback": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Western_view_from_Torre_dos_Cl%C3%A9rigos_in_Porto%2C_20250605_1725_9969.jpg/1280px-Western_view_from_Torre_dos_Cl%C3%A9rigos_in_Porto%2C_20250605_1725_9969.jpg",
     "ready": true,
     "mapCenter": [
         41.147,

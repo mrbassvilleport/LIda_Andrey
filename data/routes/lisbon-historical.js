@@ -7,7 +7,7 @@ export const lisbonHistorical = {
     "difficulty": "Лёгкая / средняя",
     "category": "River to Baixa",
     "tip": "Маршрут лучше строить так: 1,5–2 часа на спокойную прогулку по Parque das Nações, затем такси до Miradouro da Senhora do Monte, чтобы не тратить силы на крутой подъём. Дальше центр удобно пройти пешком: от смотровой до Praça do Comércio получится около 4 км с обедом, остановками на фото и мягким спуском вниз. Если захотите зайти внутрь Convento do Carmo или задержитесь на ужин у реки, день легко растянется до 8,5–9 часов.",
-    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuA3FwyksFHZ5nCPcfehPaIeDjScTtcapjq5g5CzUjwDcNHRlQ6ZXKAUYkTNgfDdyU1T457q3N8JhC_MjyvHri8HJf0XcMmNxIdt3fUPWXPMXCVKEFtol5Vo4fWyazG9ITCcZyX-FmKMkeNzl2LwXhD_UbkXKEccTZ99GFaig7JRTM2qoN-SNRg8GkB6CoVfx1oLIJB6wDVNjo56WMfRxBZ0_hLFmw8D_GfdNPzvFE3ye9zeJidIAuofDkSULVZ_tgCCkTw9TI1goeM",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/The_rooftops_of_Lisbon.jpg/1280px-The_rooftops_of_Lisbon.jpg",
     "ready": true,
     "mapCenter": [
         38.732,

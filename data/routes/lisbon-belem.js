@@ -5,7 +5,7 @@ export const lisbonBelem = {
     "duration": "8–9 часов",
     "distance": "~7,5 км",
     "category": "Tagus to Atlantic",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Monument_of_the_Discoveries%2C_Sunset_on_Tagus_River%2C_Padr%C3%A3o_dos_Descobrimentos_%E2%80%A2_Monument_of_the_Discoveries_%2850656270833%29.jpg/1280px-Monument_of_the_Discoveries%2C_Sunset_on_Tagus_River%2C_Padr%C3%A3o_dos_Descobrimentos_%E2%80%A2_Monument_of_the_Discoveries_%2850656270833%29.jpg",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Padr%C3%A3o_dos_Descobrimentos_ao_Crep%C3%BAsculo_01.jpg/1280px-Padr%C3%A3o_dos_Descobrimentos_ao_Crep%C3%BAsculo_01.jpg",
     "ready": true,
     "difficulty": "Лёгкая / долгая",
     "mapCenter": [

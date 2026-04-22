@@ -7,8 +7,8 @@ export const portoFoz = {
     "difficulty": "Средняя (спуски к морю)",
     "category": "Atlantic Porto",
     "tip": "День заканчивается на поезде 19:30 из Кампаньи — это жёсткая точка финала, весь маршрут под неё и рассчитан. Трамвай №1 — исторический, деревянные вагоны 1930-х, едет вдоль реки от Фоза до центра: не спешите и наслаждайтесь. Serralves лучше смотреть в обе стороны: и музей, и сад. В дождь такси Серралвеш→Фоз около 4€. Карта Andante покрывает трамвай, метро и автобусы.",
-    "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Foz%20do%20Rio%20Douro%20-%20Portugal%20%287226440326%29.jpg?width=1280",
-    "imageFallback": "https://commons.wikimedia.org/wiki/Special:FilePath/Gardens%20of%20the%20Pal%C3%A1cio%20de%20Cristal%20%28Porto%29%2004.jpg?width=1280",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Foz_do_Rio_Douro_-_Portugal_%287226440326%29.jpg/1280px-Foz_do_Rio_Douro_-_Portugal_%287226440326%29.jpg",
+    "imageFallback": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Gardens_of_the_Pal%C3%A1cio_de_Cristal_%28Porto%29_04.jpg/1280px-Gardens_of_the_Pal%C3%A1cio_de_Cristal_%28Porto%29_04.jpg",
     "ready": true,
     "mapCenter": [
         41.153,

@@ -7,8 +7,8 @@ export const portoRibeira = {
     "difficulty": "Лёгкая (всё пешком)",
     "category": "Historic Porto",
     "tip": "Маршрут начинается в 14:00, чтобы попасть на смотровую Serra do Pilar в золотой час. Все расстояния пешком и небольшие. Верхний ярус Ponte Luís I открыт для пешеходов и велосипедистов — виды головокружительные. В Adega São Nicolau ужинать лучше к 19:30, иначе очередь. На мосту сильный ветер, возьмите куртку.",
-    "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Ponte%20de%20Dom%20Lu%C3%ADs%20por%20Rodrigo%20Tetsuo%20Argenton%20%283%29.jpg?width=1280",
-    "imageFallback": "https://commons.wikimedia.org/wiki/Special:FilePath/Colorful%20Ribeira%20Facades%20and%20Hillside%20Views%2C%20Porto%2C%20Portugal%20%2854759954654%29.jpg?width=1280",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Ponte_de_Dom_Lu%C3%ADs_por_Rodrigo_Tetsuo_Argenton_%283%29.jpg/1280px-Ponte_de_Dom_Lu%C3%ADs_por_Rodrigo_Tetsuo_Argenton_%283%29.jpg",
+    "imageFallback": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Colorful_Ribeira_Facades_and_Hillside_Views%2C_Porto%2C_Portugal_%2854759954654%29.jpg/1280px-Colorful_Ribeira_Facades_and_Hillside_Views%2C_Porto%2C_Portugal_%2854759954654%29.jpg",
     "ready": true,
     "mapCenter": [
         41.14,
