@@ -67,7 +67,11 @@ document.querySelectorAll('.section-reveal').forEach((element) => {
 
 const ROUTE_CARD_AUTOPLAY_MS = 4200;
 const REMOTE_IMAGE_REFERRER_POLICY = 'origin';
+const COMMONS_API_TIMEOUT_MS = 12000;
+const COMMONS_API_CONCURRENCY = 3;
 const routeCardCarouselCleanup = new WeakMap();
+let commonsApiActiveRequests = 0;
+const commonsApiQueue = [];
 
 function proxyWikimediaUrl(url) {
     if (!url || !url.includes('wikimedia.org')) return url;
@@ -107,6 +111,22 @@ function buildRemotePhoto(url, alt, fallbackUrls = []) {
     };
 }
 
+function normalizeCommonsFileTitle(fileTitle = '') {
+    return fileTitle.replace(/^File:/i, '').replace(/_/g, ' ').trim();
+}
+
+function buildCommonsFilePathUrl(fileTitle, width = 1600) {
+    const fileName = normalizeCommonsFileTitle(fileTitle);
+    if (!fileName) return '';
+    return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(fileName)}?width=${width}`;
+}
+
+function buildCuratedCommonsFilePhoto(fileTitle) {
+    const fileName = normalizeCommonsFileTitle(fileTitle);
+    if (!fileName) return null;
+    return buildRemotePhoto(buildCommonsFilePathUrl(fileName), fileName.replace(/[_-]+/g, ' '));
+}
+
 function serializeFallbackSrcs(fallbackSrcs = []) {
     return fallbackSrcs.join('||');
 }
@@ -123,6 +143,24 @@ function advanceImageFallback(image) {
     image.dataset.fallbackSrcs = pendingFallbacks.join('||');
     image.setAttribute('src', nextSrc);
     return true;
+}
+
+function safeExternalUrl(value, fallback = '#') {
+    if (!value) return fallback;
+
+    try {
+        const url = new URL(value, window.location.href);
+        if (url.protocol === 'http:' || url.protocol === 'https:') return url.href;
+    } catch {
+        // Fall through to the inert fallback.
+    }
+
+    return fallback;
+}
+
+function buildMapsSearchUrl(query = '') {
+    const searchParams = new URLSearchParams({ q: String(query || '').replace(/\+/g, ' ') });
+    return `https://maps.google.com/?${searchParams.toString()}`;
 }
 
 function getRouteCardCoverPhotos(route) {
@@ -322,16 +360,16 @@ function createRouteCard(route, index) {
                 <span class="text-[#b8953e] font-serif font-bold text-5xl leading-none opacity-50">${String(index + 1).padStart(2, '0')}</span>
             </div>
             <div class="absolute bottom-5 left-5 right-5">
-                <span class="inline-block bg-white/15 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] text-white/90 uppercase border border-white/10">${route.category}</span>
+                <span class="inline-block bg-white/15 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] text-white/90 uppercase border border-white/10">${escapeHtml(route.category)}</span>
             </div>
             ${!route.ready ? '<div class="absolute inset-0 flex items-center justify-center bg-primary/40 backdrop-blur-sm"><span class="bg-white/90 px-5 py-2 rounded-full font-bold text-[10px] uppercase tracking-[0.2em] text-primary">Скоро</span></div>' : ''}
         </div>
         <div class="space-y-3 px-1">
-            <h3 class="route-card-title text-2xl md:text-[1.7rem] font-serif font-bold text-primary leading-tight">${route.title}</h3>
-            <p class="text-on-surface-variant text-sm leading-relaxed">${route.subtitle}</p>
+            <h3 class="route-card-title text-2xl md:text-[1.7rem] font-serif font-bold text-primary leading-tight">${escapeHtml(route.title)}</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">${escapeHtml(route.subtitle)}</p>
             <div class="route-card-meta pt-4 flex items-center gap-6 border-t border-primary/8">
-                <span class="text-[10px] font-bold text-tertiary tracking-[0.15em] uppercase">${route.duration}</span>
-                <span class="text-[10px] font-medium text-primary/30 uppercase tracking-[0.15em]">${route.distance || '--'}</span>
+                <span class="text-[10px] font-bold text-tertiary tracking-[0.15em] uppercase">${escapeHtml(route.duration)}</span>
+                <span class="text-[10px] font-medium text-primary/30 uppercase tracking-[0.15em]">${escapeHtml(route.distance || '--')}</span>
             </div>
         </div>
     `;
@@ -433,6 +471,41 @@ function buildCommonsApiUrl(params) {
     return `https://commons.wikimedia.org/w/api.php?${searchParams.toString()}`;
 }
 
+function runQueuedCommonsRequest(task) {
+    return new Promise((resolve, reject) => {
+        const run = () => {
+            commonsApiActiveRequests += 1;
+
+            task()
+                .then(resolve, reject)
+                .finally(() => {
+                    commonsApiActiveRequests -= 1;
+                    const next = commonsApiQueue.shift();
+                    if (next) next();
+                });
+        };
+
+        if (commonsApiActiveRequests < COMMONS_API_CONCURRENCY) {
+            run();
+        } else {
+            commonsApiQueue.push(run);
+        }
+    });
+}
+
+async function fetchCommonsJson(params, errorMessage) {
+    const response = await runQueuedCommonsRequest(() => fetchWithTimeout(
+        buildCommonsApiUrl(params),
+        COMMONS_API_TIMEOUT_MS
+    ));
+
+    if (!response.ok) {
+        throw new Error(errorMessage);
+    }
+
+    return response.json();
+}
+
 function isUsableCommonsPhoto(page) {
     const info = page.imageinfo?.[0];
     const title = (page.title || '').toLowerCase();
@@ -490,7 +563,7 @@ function buildGallerySearchQueries(place) {
 }
 
 async function fetchCommonsCategoryPhotos(categoryTitle, limit = 4, keywords = []) {
-    const response = await fetchWithTimeout(buildCommonsApiUrl({
+    const data = await fetchCommonsJson({
         generator: 'categorymembers',
         gcmtitle: `Category:${categoryTitle}`,
         gcmtype: 'file',
@@ -498,13 +571,7 @@ async function fetchCommonsCategoryPhotos(categoryTitle, limit = 4, keywords = [
         prop: 'imageinfo',
         iiprop: 'url|mime|size',
         iiurlwidth: '1600',
-    }));
-
-    if (!response.ok) {
-        throw new Error(`Failed to load gallery for category ${categoryTitle}`);
-    }
-
-    const data = await response.json();
+    }, `Failed to load gallery for category ${categoryTitle}`);
     const pages = data.query?.pages || [];
 
     return pages
@@ -519,7 +586,7 @@ async function fetchCommonsCategoryPhotos(categoryTitle, limit = 4, keywords = [
 }
 
 async function fetchCommonsSearchPhotos(searchQuery, limit = 4, keywords = []) {
-    const response = await fetchWithTimeout(buildCommonsApiUrl({
+    const data = await fetchCommonsJson({
         generator: 'search',
         gsrsearch: searchQuery,
         gsrnamespace: '6',
@@ -527,13 +594,7 @@ async function fetchCommonsSearchPhotos(searchQuery, limit = 4, keywords = []) {
         prop: 'imageinfo',
         iiprop: 'url|mime|size',
         iiurlwidth: '1600',
-    }));
-
-    if (!response.ok) {
-        throw new Error(`Failed to search gallery for ${searchQuery}`);
-    }
-
-    const data = await response.json();
+    }, `Failed to search gallery for ${searchQuery}`);
     const pages = data.query?.pages || [];
 
     return pages
@@ -550,28 +611,22 @@ async function fetchCommonsSearchPhotos(searchQuery, limit = 4, keywords = []) {
 async function fetchCommonsFiles(fileTitles = []) {
     if (!fileTitles.length) return [];
 
-    const response = await fetchWithTimeout(buildCommonsApiUrl({
+    const data = await fetchCommonsJson({
         titles: fileTitles.join('|'),
         prop: 'imageinfo',
         iiprop: 'url|mime|size',
         iiurlwidth: '1600',
         redirects: '1',
-    }));
-
-    if (!response.ok) {
-        throw new Error('Failed to load curated gallery files');
-    }
-
-    const data = await response.json();
+    }, 'Failed to load curated gallery files');
     const pages = data.query?.pages || [];
     const pageMap = new Map(
         pages
             .filter((page) => !page.missing)
-            .map((page) => [(page.title || '').toLowerCase(), page])
+            .map((page) => [normalizeCommonsFileTitle(page.title).toLowerCase(), page])
     );
 
     return fileTitles
-        .map((title) => pageMap.get(title.toLowerCase()))
+        .map((title) => pageMap.get(normalizeCommonsFileTitle(title).toLowerCase()))
         .filter(Boolean)
         .filter(isUsableCommonsPhoto)
         .map((page) => {
@@ -602,6 +657,10 @@ async function getPlaceGalleryPhotos(place) {
         const seen = new Set();
 
         if (fileList.length) {
+            appendUniquePhotos(collected, seen, fileList.map(buildCuratedCommonsFilePhoto));
+        }
+
+        if (fileList.length && collected.length < 4) {
             try {
                 const curatedPhotos = await fetchCommonsFiles(fileList);
                 appendUniquePhotos(collected, seen, curatedPhotos);
@@ -640,65 +699,12 @@ async function getPlaceGalleryPhotos(place) {
     })();
 
     galleryPhotoCache.set(cacheKey, loader);
+    loader.then((photos) => {
+        if (!photos.length) galleryPhotoCache.delete(cacheKey);
+    }, () => {
+        galleryPhotoCache.delete(cacheKey);
+    });
     return loader;
-}
-
-async function getRouteCardPhotos(route, limit = 6) {
-    const featuredPhotos = [];
-    const overflowPhotos = [];
-    const featuredSeen = new Set();
-
-    const gallerySets = await Promise.all(route.places.map(async (place) => {
-        try {
-            return { place, photos: await getPlaceGalleryPhotos(place) };
-        } catch (error) {
-            console.warn('Route card gallery failed', route.title, place.nameRu, error);
-            return { place, photos: [] };
-        }
-    }));
-
-    gallerySets.forEach(({ place, photos }) => {
-        if (!photos.length) return;
-
-        appendUniquePhotos(featuredPhotos, featuredSeen, [{
-            src: photos[0].src,
-            alt: photos[0].alt || place.nameRu || route.title,
-            fallbackSrcs: photos[0].fallbackSrcs || [],
-        }], limit);
-
-        appendUniquePhotos(overflowPhotos, featuredSeen, photos.slice(1).map((photo, index) => ({
-            src: photo.src,
-            alt: photo.alt || `${place.nameRu || route.title} ${index + 2}`,
-            fallbackSrcs: photo.fallbackSrcs || [],
-        })), limit);
-    });
-
-    const combinedPhotos = [];
-    const combinedSeen = new Set();
-    appendUniquePhotos(combinedPhotos, combinedSeen, featuredPhotos, limit);
-    appendUniquePhotos(combinedPhotos, combinedSeen, overflowPhotos, limit);
-
-    if (!combinedPhotos.length) {
-        appendUniquePhotos(combinedPhotos, combinedSeen, getRouteCardCoverPhotos(route), limit);
-    }
-
-    return combinedPhotos;
-}
-
-function hydrateRouteCardCarousels(routeList) {
-    routeList.forEach((route) => {
-        const card = document.querySelector(`.route-card[data-route-id="${route.id}"]`);
-        if (!card) return;
-
-        getRouteCardPhotos(route)
-            .then((photos) => {
-                if (!card.isConnected) return;
-                initializeRouteCardCarousel(card, route, photos);
-            })
-            .catch((error) => {
-                console.warn('Route card carousel hydration failed', route.title, error);
-            });
-    });
 }
 
 function renderGalleryFallback(root, place) {
@@ -736,13 +742,13 @@ function mountPlaceGallery(root, place, photos) {
 
     stage.innerHTML = photos.map((photo, index) => `
         <figure class="place-gallery-slide${index === 0 ? ' is-active' : ''}">
-            <img src="${photo.src}" alt="${escapeHtml(place.nameRu)} — фото ${index + 1}" loading="lazy" decoding="async" referrerpolicy="${REMOTE_IMAGE_REFERRER_POLICY}" />
+            <img src="${escapeHtml(photo.src)}" alt="${escapeHtml(place.nameRu)} — фото ${index + 1}" loading="lazy" decoding="async" referrerpolicy="${REMOTE_IMAGE_REFERRER_POLICY}" />
         </figure>
     `).join('');
 
     preview.innerHTML = photos.map((photo, index) => `
         <button type="button" class="place-gallery-thumb${index === 0 ? ' is-active' : ''}" data-gallery-thumb="${index}" aria-label="Показать фото ${index + 1} для ${escapeHtml(place.nameRu)}">
-            <img src="${photo.src}" alt="${escapeHtml(place.nameRu)} — превью ${index + 1}" loading="lazy" decoding="async" referrerpolicy="${REMOTE_IMAGE_REFERRER_POLICY}" />
+            <img src="${escapeHtml(photo.src)}" alt="${escapeHtml(place.nameRu)} — превью ${index + 1}" loading="lazy" decoding="async" referrerpolicy="${REMOTE_IMAGE_REFERRER_POLICY}" />
         </button>
     `).join('');
 
@@ -848,8 +854,15 @@ async function hydratePlaceGalleries(route) {
     await Promise.all(galleryRoots.map(async (root) => {
         const placeIndex = Number(root.dataset.placeIndex);
         const place = route.places[placeIndex];
-        const photos = await getPlaceGalleryPhotos(place);
-        mountPlaceGallery(root, place, photos);
+        if (!place) return;
+
+        try {
+            const photos = await getPlaceGalleryPhotos(place);
+            mountPlaceGallery(root, place, photos);
+        } catch (error) {
+            console.warn('Place gallery failed', place.nameRu, error);
+            renderGalleryFallback(root, place);
+        }
     }));
 }
 
@@ -927,22 +940,22 @@ function openRoute(route, opts = {}) {
         <div class="modal-rise text-center mb-16" style="--delay: 80ms;">
             <div class="flex items-center justify-center gap-4 mb-6">
                 <div class="w-8 h-px bg-tertiary"></div>
-                <span class="text-tertiary font-bold tracking-[0.25em] uppercase text-[10px]">${route.category}</span>
+                <span class="text-tertiary font-bold tracking-[0.25em] uppercase text-[10px]">${escapeHtml(route.category)}</span>
                 <div class="w-8 h-px bg-tertiary"></div>
             </div>
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-primary mb-4 leading-tight">${route.title}</h2>
-            <p class="text-xl text-on-surface-variant italic font-serif mb-10">${route.subtitle}</p>
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-primary mb-4 leading-tight">${escapeHtml(route.title)}</h2>
+            <p class="text-xl text-on-surface-variant italic font-serif mb-10">${escapeHtml(route.subtitle)}</p>
             <div class="flex justify-center gap-8 sm:gap-14 flex-wrap">
                 <div class="modal-rise text-center" style="--delay: 150ms;">
-                    <span class="block text-primary font-serif font-bold text-2xl">${route.duration}</span>
+                    <span class="block text-primary font-serif font-bold text-2xl">${escapeHtml(route.duration)}</span>
                     <span class="text-[9px] uppercase tracking-[0.2em] text-tertiary font-bold mt-1 block">Длительность</span>
                 </div>
                 <div class="modal-rise text-center" style="--delay: 220ms;">
-                    <span class="block text-primary font-serif font-bold text-2xl">${route.distance}</span>
+                    <span class="block text-primary font-serif font-bold text-2xl">${escapeHtml(route.distance)}</span>
                     <span class="text-[9px] uppercase tracking-[0.2em] text-tertiary font-bold mt-1 block">Дистанция</span>
                 </div>
                 <div class="modal-rise text-center" style="--delay: 290ms;">
-                    <span class="block text-primary font-serif font-bold text-2xl">${route.difficulty}</span>
+                    <span class="block text-primary font-serif font-bold text-2xl">${escapeHtml(route.difficulty)}</span>
                     <span class="text-[9px] uppercase tracking-[0.2em] text-tertiary font-bold mt-1 block">Сложность</span>
                 </div>
             </div>
@@ -960,16 +973,16 @@ function openRoute(route, opts = {}) {
                         ${renderGalleryShell(route.id, i, place)}
                         <div class="place-copy space-y-4">
                             <div>
-                                <h4 class="text-2xl font-serif font-bold text-primary">${place.name}</h4>
-                                <p class="text-secondary font-serif italic text-lg">${place.nameRu}</p>
+                                <h4 class="text-2xl font-serif font-bold text-primary">${escapeHtml(place.name)}</h4>
+                                <p class="text-secondary font-serif italic text-lg">${escapeHtml(place.nameRu)}</p>
                             </div>
-                            <p class="text-on-surface-variant leading-relaxed">${place.description}</p>
+                            <p class="text-on-surface-variant leading-relaxed">${escapeHtml(place.description)}</p>
                             <div class="flex gap-4 pt-2 flex-wrap">
-                                <a href="${place.sourceUrl || place.wikiUrl}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold uppercase tracking-[0.15em] text-tertiary/70 hover:text-secondary transition-all flex items-center gap-1.5">
+                                <a href="${escapeHtml(safeExternalUrl(place.sourceUrl || place.wikiUrl))}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold uppercase tracking-[0.15em] text-tertiary/70 hover:text-secondary transition-all flex items-center gap-1.5">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg>
-                                    ${place.sourceLabel || 'Wikipedia'}
+                                    ${escapeHtml(place.sourceLabel || 'Wikipedia')}
                                 </a>
-                                <a href="https://maps.google.com/?q=${place.mapsQuery}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold uppercase tracking-[0.15em] text-tertiary/70 hover:text-secondary transition-all flex items-center gap-1.5">
+                                <a href="${escapeHtml(buildMapsSearchUrl(place.mapsQuery))}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold uppercase tracking-[0.15em] text-tertiary/70 hover:text-secondary transition-all flex items-center gap-1.5">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                     Maps
                                 </a>
@@ -988,11 +1001,13 @@ function openRoute(route, opts = {}) {
                 </div>
                 <h5 class="font-serif font-bold text-primary text-xl">Советы Куратора</h5>
             </div>
-            <p class="text-on-surface-variant italic font-serif leading-relaxed">${route.tip}</p>
+            <p class="text-on-surface-variant italic font-serif leading-relaxed">${escapeHtml(route.tip)}</p>
         </div>
     `;
 
-    hydratePlaceGalleries(route);
+    hydratePlaceGalleries(route).catch((error) => {
+        console.warn('Route galleries failed', route.title, error);
+    });
 
     overlay.classList.remove('invisible');
     requestAnimationFrame(() => {
@@ -1082,7 +1097,6 @@ mountRouteGrid(portoGrid, portoRoutes.filter((route) => route.ready));
 
 // ======= Deep-link sync (popstate + initial load) =======
 const allRoutes = [...routes, ...portoRoutes];
-hydrateRouteCardCarousels(allRoutes.filter((route) => route.ready));
 
 function routeFromHash() {
     const m = window.location.hash.match(/#route=(\d+)/);
