@@ -1,4 +1,4 @@
-﻿const GALLERY_CACHE_PREFIX = 'pt-gallery-v2:';
+const GALLERY_CACHE_PREFIX = 'pt-gallery-v4:';
 const GALLERY_CACHE_TTL = 7 * 24 * 60 * 60 * 1000;
 const GALLERY_FETCH_TIMEOUT = 6000;
 

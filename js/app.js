@@ -1,5 +1,5 @@
 import { routes, portoRoutes } from '../data/index.js';
-import { escapeHtml, fetchWithTimeout, readGalleryCache, writeGalleryCache } from './utils.js';
+import { escapeHtml, fetchWithTimeout, readGalleryCache, writeGalleryCache } from './utils.js?v=gallery-cache-v4';
 import { renderTransitConnector } from './transit.js';
 const grid = document.getElementById('routesGrid');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -69,6 +69,7 @@ const ROUTE_CARD_AUTOPLAY_MS = 4200;
 const REMOTE_IMAGE_REFERRER_POLICY = 'origin';
 const COMMONS_API_TIMEOUT_MS = 12000;
 const COMMONS_API_CONCURRENCY = 3;
+const COMMONS_IMAGE_WIDTH = 960;
 const routeCardCarouselCleanup = new WeakMap();
 let commonsApiActiveRequests = 0;
 const commonsApiQueue = [];
@@ -115,7 +116,7 @@ function normalizeCommonsFileTitle(fileTitle = '') {
     return fileTitle.replace(/^File:/i, '').replace(/_/g, ' ').trim();
 }
 
-function buildCommonsFilePathUrl(fileTitle, width = 1600) {
+function buildCommonsFilePathUrl(fileTitle, width = COMMONS_IMAGE_WIDTH) {
     const fileName = normalizeCommonsFileTitle(fileTitle);
     if (!fileName) return '';
     return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(fileName)}?width=${width}`;
@@ -570,7 +571,7 @@ async function fetchCommonsCategoryPhotos(categoryTitle, limit = 4, keywords = [
         gcmlimit: '12',
         prop: 'imageinfo',
         iiprop: 'url|mime|size',
-        iiurlwidth: '1600',
+        iiurlwidth: String(COMMONS_IMAGE_WIDTH),
     }, `Failed to load gallery for category ${categoryTitle}`);
     const pages = data.query?.pages || [];
 
@@ -593,7 +594,7 @@ async function fetchCommonsSearchPhotos(searchQuery, limit = 4, keywords = []) {
         gsrlimit: '12',
         prop: 'imageinfo',
         iiprop: 'url|mime|size',
-        iiurlwidth: '1600',
+        iiurlwidth: String(COMMONS_IMAGE_WIDTH),
     }, `Failed to search gallery for ${searchQuery}`);
     const pages = data.query?.pages || [];
 
@@ -615,7 +616,7 @@ async function fetchCommonsFiles(fileTitles = []) {
         titles: fileTitles.join('|'),
         prop: 'imageinfo',
         iiprop: 'url|mime|size',
-        iiurlwidth: '1600',
+        iiurlwidth: String(COMMONS_IMAGE_WIDTH),
         redirects: '1',
     }, 'Failed to load curated gallery files');
     const pages = data.query?.pages || [];
