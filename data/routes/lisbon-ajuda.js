@@ -1,23 +1,23 @@
 export const lisbonAjuda = {
     "id": 7,
-    "title": "Сады Фронтейра и воды Лиссабона",
-    "subtitle": "Барочные азулежу, прогулка по акведуку и каменный резервуар Аморейраша",
-    "duration": "4–5 часов",
-    "distance": "~3,5 км",
-    "difficulty": "Лёгкая / средняя",
-    "category": "Gardens & Water",
-    "tip": "Маршрут лучше начинать утром в садах Palácio Fronteira, заранее купив билет на самостоятельное посещение с аудиогидом. Затем удобнее взять такси до входа на акведук по адресу Calçada da Quintinha, 6. Aqueduto das Águas Livres открыт со вторника по воскресенье с 10:00 до 18:00. Mãe d’Água принимает обычных посетителей только до 13:30, поэтому для полного маршрута выбирайте ранний слот во Фронтейра или поменяйте две водные точки местами. После 15:00 в резервуаре проходят отдельные иммерсивные сеансы. Свободный вход на акведук не означает непрерывный проход до Аморейраша: двухкилометровый маршрут между объектами проводится по предварительной записи.",
+    "title": "Фронтейра и Гюльбенкян: два сада Лиссабона",
+    "subtitle": "Барочный сад XVII века, современный ландшафт и искусство по желанию",
+    "duration": "5–6 часов с дорогой",
+    "distance": "~4 км",
+    "difficulty": "Лёгкая",
+    "category": "Two Gardens",
+    "tip": "Из Oriente удобнее ехать по красной линии до São Sebastião, пересесть на синюю и выйти на Jardim Zoológico. От выхода в сторону зоопарка к дворцу ведёт зелёная линия на тротуаре; дорога пешком занимает около 15 минут. Для поездки с 1 по 14 августа 2026 года выбирайте 1, 3, 5–8, 10 или 12–14 августа: сады Фронтейры закрыты по воскресеньям, а музей и CAM Гюльбенкяна — по вторникам. Если к финалу уже достаточно впечатлений, музей можно пропустить и вернуться в Oriente напрямую от São Sebastião. На 14 августа с 21:00 до полуночи во Фронтейре заявлены «Jardins Iluminados» — это отдельный вечерний вариант, который стоит проверить при покупке билетов.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Jardim_do_Pal%C3%A1cio_dos_Marqueses_de_Fronteira%2C_S%C3%A3o_Domingos_de_Benfica%2C_Lisboa_19.jpg/1920px-Jardim_do_Pal%C3%A1cio_dos_Marqueses_de_Fronteira%2C_S%C3%A3o_Domingos_de_Benfica%2C_Lisboa_19.jpg",
-    "imageFallback": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Aqueduto_das_%C3%81guas_Livres_Lisboa.jpg/1920px-Aqueduto_das_%C3%81guas_Livres_Lisboa.jpg",
+    "imageFallback": "https://commons.wikimedia.org/wiki/Special:FilePath/Jardim%20da%20Funda%C3%A7%C3%A3o%20Calouste%20Gulbenkian%2009.JPG?width=1920",
     "ready": true,
-    "mapCenter": [38.727, -9.169],
+    "mapCenter": [38.7371, -9.1672],
     "mapZoom": 14,
     "places": [
         {
             "name": "Jardins do Palácio Fronteira",
             "nameRu": "Сады дворца Фронтейра",
             "coords": [38.7374, -9.1807],
-            "description": "Один из самых красивых ансамблей азулежу в Лиссабоне. Сад XVII века построен как серия сцен: парадный партер, водоём с чёрными лебедями, лестницы, скульптуры и длинная Галерея королей над водой. Дворец остаётся жилым, но сады можно посетить отдельно с аудиогидом. На спокойный осмотр закладывайте около часа.",
+            "description": "Здесь не нужно пытаться «посмотреть всё за час». Начните с формального сада итальянского типа: пройдите вдоль большого водоёма, поднимитесь к Галерее королей и рассмотрите азулежу там, где они создавались для конкретных стен, лестниц и павильонов. Затем перейдите в более камерный сад Венеры с гротом и тенистыми уголками, задуманными как спасение от летней жары. На оба сада стоит оставить 75–90 минут и взять аудиогид. Внутрь жилого дворца идти необязательно.",
             "galleryFiles": [
                 "File:Jardim do Palácio dos Marqueses de Fronteira, São Domingos de Benfica, Lisboa 19.jpg",
                 "File:Jardim do Palácio dos Marqueses de Fronteira, São Domingos de Benfica, Lisboa 18.jpg",
@@ -26,80 +26,56 @@ export const lisbonAjuda = {
             ],
             "galleryCategories": ["Gardens of Palácio dos Marqueses de Fronteira"],
             "galleryKeywords": ["fronteira", "jardim", "azulejo", "lisboa"],
-            "sourceLabel": "Palácio Fronteira",
+            "sourceLabel": "Palácio Fronteira — билеты",
             "sourceUrl": "https://www.loja.fronteira-alorna.pt/pos/event/list",
             "mapsQuery": "Jardins+do+Palacio+Fronteira+Lisboa"
         },
         {
             "transit": {
-                "note": "Между садами и входом на акведук около трёх километров по неинтересным городским улицам. Здесь такси не сокращает впечатления, а сохраняет время для самих мест.",
+                "note": "Между Фронтейрой и Гюльбенкяном около трёх километров обычных городских улиц. Эта часть не становится лучше от пешего прохождения, поэтому здесь разумно сохранить силы для самих садов. Перед прогулкой по Гюльбенкяну можно спокойно пообедать или выпить кофе в одном из кафе комплекса.",
                 "options": [
-                    {"mode": "taxi", "duration": "8 мин", "distance": "3 км", "recommended": true, "detail": "до Calçada da Quintinha, 6"},
-                    {"mode": "bus", "duration": "25 мин", "distance": "с пересадкой", "detail": "проверить актуальную связку в день поездки"}
+                    {"mode": "taxi", "duration": "10 мин", "distance": "около 4 км", "recommended": true, "detail": "до входа CAM, Rua Marquês de Fronteira, 2"},
+                    {"mode": "metro", "duration": "25–30 мин", "distance": "1 остановка", "detail": "пешком к Jardim Zoológico, затем до Praça de Espanha"}
                 ]
             },
-            "name": "Aqueduto das Águas Livres",
-            "nameRu": "Акведук Агуаш-Ливриш",
-            "coords": [38.72975, -9.17043],
-            "description": "Гигантский акведук XVIII века пережил землетрясение 1755 года. Посетительский вход ведёт на узкий проход рядом с водным каналом, высоко над долиной Алкантары. Отсюда видны Campolide, железная дорога и северная часть города. Это не просто смотровая: масштаб арок лучше всего ощущается именно во время прохода по сооружению.",
+            "name": "Jardim Gulbenkian",
+            "nameRu": "Сад Гюльбенкяна",
+            "coords": [38.7349, -9.1538],
+            "description": "После барочной геометрии Фронтейры здесь начинается совсем другой Лиссабон. Дорожки свободно огибают пруды, заросли и небольшие поляны; здания не стоят отдельно от сада, а растворяются в нём. Пройдите не только старую часть вокруг озера и открытого амфитеатра, но и новый южный сад у CAM с длинной крытой энгавой Кэнго Кумы. Это не проходная зелёная зона, а одно из главных произведений португальской ландшафтной архитектуры XX века. На неспешный круг заложите 60–90 минут. Вход свободный.",
             "galleryFiles": [
-                "File:Aqueduto das Águas Livres Lisboa.jpg",
-                "File:Aqueduto das Águas Livres (1).jpg",
-                "File:Aqueduto das Águas Livres 2.jpg",
-                "File:Aqueduto das Águas Livres - Lisboa - Portugal (49252532116).jpg"
+                "File:Jardim da Fundação Calouste Gulbenkian 09.JPG",
+                "File:Jardim da Fundação Calouste Gulbenkian 07.JPG",
+                "File:Jardim da Fundação Calouste Gulbenkian 10.JPG",
+                "File:Jardim da Fundação Calouste Gulbenkian 04.JPG"
             ],
-            "galleryCategories": ["Aqueduto das Águas Livres"],
-            "galleryKeywords": ["aqueduto", "águas livres", "aguas livres", "lisboa"],
-            "sourceLabel": "Museu da Água",
-            "sourceUrl": "https://www.epal.pt/EPAL/menu/museu-da-%C3%A1gua/informa%C3%A7%C3%B5es-%C3%BAteis/contactos-hor%C3%A1rios",
-            "mapsQuery": "Aqueduto+das+Aguas+Livres+Calcada+da+Quintinha"
+            "galleryCategories": ["Jardim da Fundação Calouste Gulbenkian"],
+            "galleryKeywords": ["gulbenkian", "jardim", "garden", "lago", "lisboa"],
+            "sourceLabel": "Jardim Gulbenkian",
+            "sourceUrl": "https://gulbenkian.pt/jardim/informacoes-contactos/",
+            "mapsQuery": "Jardim+da+Fundacao+Calouste+Gulbenkian+Lisboa"
         },
         {
             "transit": {
-                "note": "Свободное посещение акведука и экскурсионный переход до Mãe d’Água — разные программы. Без записи вернитесь к Calçada da Quintinha и переезжайте к Praça das Amoreiras.",
+                "note": "Музейный финал не обязателен. Если хочется ещё одного сильного впечатления, выберите один музей, а не пытайтесь пройти оба. Основная коллекция и CAM находятся в том же саду.",
                 "options": [
-                    {"mode": "taxi", "duration": "7 мин", "distance": "2,3 км", "recommended": true, "detail": "до Praça das Amoreiras, 10"},
-                    {"mode": "walk", "duration": "30 мин", "distance": "2,2 км", "detail": "обычными улицами через Campolide"}
+                    {"mode": "walk", "duration": "5–7 мин", "distance": "350–450 м", "recommended": true, "detail": "через сад к основному музею"}
                 ]
             },
-            "name": "Reservatório da Mãe d’Água",
-            "nameRu": "Резервуар Маэ-д’Агуа",
-            "coords": [38.72101, -9.15559],
-            "description": "Финальная чаша акведука скрыта за суровым каменным фасадом. Внутри — огромный тёмный зал, гладкая поверхность воды, арки и свет, падающий из верхних окон. По лестнице можно подняться на крышу и увидеть Аморейраш и старые арки водопровода с необычного ракурса. Обычное посещение проходит с 10:00 до 13:30.",
+            "name": "Museu Gulbenkian ou CAM",
+            "nameRu": "Музей Гюльбенкяна или CAM — по желанию",
+            "coords": [38.7376, -9.1544],
+            "description": "Основной музей вновь открылся после ремонта в июле 2026 года. Его стоит выбрать ради камерной коллекции: Древний Египет, исламское искусство, европейская живопись, декоративное искусство и украшения Рене Лалика. CAM лучше подойдёт, если интереснее португальское современное искусство и новая архитектура Кэнго Кумы с керамической энгавой. На любой из вариантов достаточно 60–90 минут; оба музея открыты до 18:00, по субботам до 21:00 и закрыты по вторникам. Если после двух садов хочется закончить день спокойно, эту точку можно без потери качества пропустить.",
             "galleryFiles": [
-                "File:Mãe d'Água das Amoreiras - Lisboa - Portugal (51130562815).jpg",
-                "File:Mãe d'Água das Amoreiras - Lisboa - Portugal (51130562750).jpg",
-                "File:Mãe d'Água das Amoreiras - Lisboa - Portugal (51124512855).jpg",
-                "File:Reservatório da Mãe d'Água das Amoreiras - Lisboa - Portugal (47957141302).jpg"
+                "File:Museu Calouste Gulbenkian 04.jpg",
+                "File:Centro de Arte Moderna, Fundação Calouste Gulbenkian, Lisboa 01.jpg",
+                "File:Engawa (54034883963).jpg",
+                "File:O primeiro dia do novo CAM (54034883888).jpg"
             ],
-            "galleryCategories": ["Reservatório da Mãe d'Água das Amoreiras"],
-            "galleryKeywords": ["mãe d'água", "mae d'agua", "reservatório", "amoreiras"],
-            "sourceLabel": "Museu da Água",
-            "sourceUrl": "https://www.epal.pt/EPAL/menu/museu-da-%C3%A1gua/informa%C3%A7%C3%B5es-%C3%BAteis/contactos-hor%C3%A1rios",
-            "mapsQuery": "Reservatorio+da+Mae+d+Agua+das+Amoreiras"
-        },
-        {
-            "transit": {
-                "note": "Сад начинается прямо у выхода из резервуара. Это не отдельная достопримечательность ради количества, а удобное место спокойно закончить маршрут и выпить кофе под старыми шелковицами.",
-                "options": [
-                    {"mode": "walk", "duration": "2 мин", "distance": "100 м", "recommended": true, "detail": "через площадь"}
-                ]
-            },
-            "name": "Jardim das Amoreiras",
-            "nameRu": "Сад Аморейраш",
-            "coords": [38.72135, -9.15515],
-            "description": "Небольшой сад XVIII века вырос вместе с водной системой: здесь высадили шелковицы для лиссабонского производства шёлка, а над деревьями проходят последние арки акведука. После камня, высоты и тёмной воды это естественный финал — скамейка, киоск и метро Rato в десяти минутах ходьбы.",
-            "galleryFiles": [
-                "File:Jardim das Amoreiras (Lisboa) 06.jpg",
-                "File:Jardim das Amoreiras (Lisboa) 08.jpg",
-                "File:Jardim das Amoreiras (Lisboa) 07.jpg",
-                "File:Jardim das Amoreiras (Lisboa) Painel de azulejos 02.jpg"
-            ],
-            "galleryCategories": ["Jardim das Amoreiras"],
-            "galleryKeywords": ["jardim", "amoreiras", "aqueduto", "lisboa"],
-            "sourceLabel": "Câmara Municipal de Lisboa",
-            "sourceUrl": "https://informacoeseservicos.lisboa.pt/contactos/diretorio-da-cidade/jardim-das-amoreiras",
-            "mapsQuery": "Jardim+das+Amoreiras+Lisboa"
+            "galleryCategories": ["Calouste Gulbenkian Museum", "Centro de Arte Moderna"],
+            "galleryKeywords": ["gulbenkian", "museum", "cam", "engawa", "lisboa"],
+            "sourceLabel": "Fundação Gulbenkian — часы работы",
+            "sourceUrl": "https://gulbenkian.pt/en/useful-information/opening-hours/",
+            "mapsQuery": "Museu+Calouste+Gulbenkian+Lisboa"
         }
     ]
 };
