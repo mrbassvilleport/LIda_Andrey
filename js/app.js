@@ -758,19 +758,38 @@ photoLightbox.innerHTML = `
                 <path d="M18 6L6 18M6 6l12 12"></path>
             </svg>
         </button>
+        <button type="button" class="photo-lightbox-nav prev" data-lightbox-prev aria-label="Предыдущая фотография">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 18l-6-6 6-6"></path>
+            </svg>
+        </button>
+        <button type="button" class="photo-lightbox-nav next" data-lightbox-next aria-label="Следующая фотография">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6"></path>
+            </svg>
+        </button>
         <div class="photo-lightbox-image-wrap">
             <img class="photo-lightbox-image" alt="" />
             <span class="photo-lightbox-loading">Загрузка полного размера…</span>
         </div>
-        <p class="photo-lightbox-caption"></p>
+        <div class="photo-lightbox-footer">
+            <p class="photo-lightbox-caption"></p>
+            <span class="photo-lightbox-counter" aria-live="polite"></span>
+        </div>
     </div>
 `;
 document.body.appendChild(photoLightbox);
 
 const photoLightboxImage = photoLightbox.querySelector('.photo-lightbox-image');
 const photoLightboxCaption = photoLightbox.querySelector('.photo-lightbox-caption');
+const photoLightboxCounter = photoLightbox.querySelector('.photo-lightbox-counter');
 const photoLightboxClose = photoLightbox.querySelector('.photo-lightbox-close');
+const photoLightboxPrev = photoLightbox.querySelector('[data-lightbox-prev]');
+const photoLightboxNext = photoLightbox.querySelector('[data-lightbox-next]');
 let lightboxReturnFocus = null;
+let lightboxPhotos = [];
+let lightboxCurrentIndex = 0;
+let lightboxPlaceName = '';
 
 function getOriginalImageUrl(photo) {
     if (photo?.fullSrc) return photo.fullSrc;
@@ -794,16 +813,24 @@ function closePhotoLightbox() {
     photoLightbox.setAttribute('aria-hidden', 'true');
     photoLightboxImage.removeAttribute('src');
     photoLightboxImage.classList.remove('is-loaded');
+    lightboxPhotos = [];
+    lightboxCurrentIndex = 0;
+    lightboxPlaceName = '';
     lightboxReturnFocus?.focus();
     lightboxReturnFocus = null;
 }
 
-function openPhotoLightbox(photo, alt, trigger) {
+function updatePhotoLightbox(nextIndex) {
+    if (!lightboxPhotos.length) return;
+
+    lightboxCurrentIndex = (nextIndex + lightboxPhotos.length) % lightboxPhotos.length;
+    const photo = lightboxPhotos[lightboxCurrentIndex];
     const fullSrc = getOriginalImageUrl(photo);
     if (!fullSrc) return;
 
-    lightboxReturnFocus = trigger || document.activeElement;
+    const alt = `${lightboxPlaceName} — фото ${lightboxCurrentIndex + 1}`;
     photoLightboxCaption.textContent = alt;
+    photoLightboxCounter.textContent = `${lightboxCurrentIndex + 1} / ${lightboxPhotos.length}`;
     photoLightboxImage.alt = alt;
     photoLightboxImage.classList.remove('is-loaded');
     photoLightboxImage.onerror = () => {
@@ -815,6 +842,18 @@ function openPhotoLightbox(photo, alt, trigger) {
     };
     photoLightboxImage.onload = () => photoLightboxImage.classList.add('is-loaded');
     photoLightboxImage.src = fullSrc;
+}
+
+function openPhotoLightbox(photos, initialIndex, placeName, trigger) {
+    if (!photos.length) return;
+
+    lightboxPhotos = photos;
+    lightboxPlaceName = placeName;
+    lightboxReturnFocus = trigger || document.activeElement;
+    const hasMultiplePhotos = photos.length > 1;
+    photoLightboxPrev.hidden = !hasMultiplePhotos;
+    photoLightboxNext.hidden = !hasMultiplePhotos;
+    updatePhotoLightbox(initialIndex);
     photoLightbox.classList.add('is-open');
     photoLightbox.setAttribute('aria-hidden', 'false');
     photoLightboxClose.focus();
@@ -823,6 +862,8 @@ function openPhotoLightbox(photo, alt, trigger) {
 photoLightbox.querySelectorAll('[data-lightbox-close]').forEach((element) => {
     element.addEventListener('click', closePhotoLightbox);
 });
+photoLightboxPrev.addEventListener('click', () => updatePhotoLightbox(lightboxCurrentIndex - 1));
+photoLightboxNext.addEventListener('click', () => updatePhotoLightbox(lightboxCurrentIndex + 1));
 
 function mountPlaceGallery(root, place, photos) {
     if (!root) return;
@@ -958,7 +999,7 @@ function mountPlaceGallery(root, place, photos) {
     Array.from(stage.querySelectorAll('[data-gallery-expand]')).forEach((button) => {
         button.addEventListener('click', () => {
             const index = Number(button.dataset.galleryExpand);
-            openPhotoLightbox(photos[index], `${place.nameRu} — фото ${index + 1}`, button);
+            openPhotoLightbox(photos, index, place.nameRu, button);
         });
     });
 }
@@ -1206,9 +1247,24 @@ function closeRoute(opts = {}) {
 closeBtn.onclick = closeRoute;
 overlay.onclick = closeRoute;
 document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    if (photoLightbox.classList.contains('is-open')) closePhotoLightbox();
-    else closeRoute();
+    const lightboxIsOpen = photoLightbox.classList.contains('is-open');
+
+    if (lightboxIsOpen && e.key === 'ArrowLeft') {
+        e.preventDefault();
+        updatePhotoLightbox(lightboxCurrentIndex - 1);
+        return;
+    }
+
+    if (lightboxIsOpen && e.key === 'ArrowRight') {
+        e.preventDefault();
+        updatePhotoLightbox(lightboxCurrentIndex + 1);
+        return;
+    }
+
+    if (e.key === 'Escape') {
+        if (lightboxIsOpen) closePhotoLightbox();
+        else closeRoute();
+    }
 });
 
 // ======= Porto routes =======
