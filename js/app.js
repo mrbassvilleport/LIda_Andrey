@@ -89,7 +89,7 @@ function collectUniqueImageUrls(urls = []) {
     });
 }
 
-function buildRemotePhoto(url, alt, fallbackUrls = []) {
+function buildRemotePhoto(url, alt, fallbackUrls = [], fullSrc = '') {
     if (!url) return null;
 
     const directSrc = url.trim();
@@ -107,6 +107,7 @@ function buildRemotePhoto(url, alt, fallbackUrls = []) {
 
     return {
         src: directSrc,
+        fullSrc: (fullSrc || directSrc).trim(),
         alt,
         fallbackSrcs,
     };
@@ -119,13 +120,19 @@ function normalizeCommonsFileTitle(fileTitle = '') {
 function buildCommonsFilePathUrl(fileTitle, width = COMMONS_IMAGE_WIDTH) {
     const fileName = normalizeCommonsFileTitle(fileTitle);
     if (!fileName) return '';
-    return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(fileName)}?width=${width}`;
+    const baseUrl = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(fileName)}`;
+    return width ? `${baseUrl}?width=${width}` : baseUrl;
 }
 
 function buildCuratedCommonsFilePhoto(fileTitle) {
     const fileName = normalizeCommonsFileTitle(fileTitle);
     if (!fileName) return null;
-    return buildRemotePhoto(buildCommonsFilePathUrl(fileName), fileName.replace(/[_-]+/g, ' '));
+    return buildRemotePhoto(
+        buildCommonsFilePathUrl(fileName),
+        fileName.replace(/[_-]+/g, ' '),
+        [],
+        buildCommonsFilePathUrl(fileName, null)
+    );
 }
 
 function serializeFallbackSrcs(fallbackSrcs = []) {
@@ -580,7 +587,12 @@ async function fetchCommonsCategoryPhotos(categoryTitle, limit = 4, keywords = [
         .sort((a, b) => scoreCommonsPhoto(b, keywords) - scoreCommonsPhoto(a, keywords))
         .map((page) => {
             const info = page.imageinfo[0];
-            return buildRemotePhoto(info.thumburl || info.url, page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '));
+            return buildRemotePhoto(
+                info.thumburl || info.url,
+                page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
+                [],
+                info.url
+            );
         })
         .filter(Boolean)
         .slice(0, limit);
@@ -603,7 +615,12 @@ async function fetchCommonsSearchPhotos(searchQuery, limit = 4, keywords = []) {
         .sort((a, b) => scoreCommonsPhoto(b, keywords) - scoreCommonsPhoto(a, keywords))
         .map((page) => {
             const info = page.imageinfo[0];
-            return buildRemotePhoto(info.thumburl || info.url, page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '));
+            return buildRemotePhoto(
+                info.thumburl || info.url,
+                page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
+                [],
+                info.url
+            );
         })
         .filter(Boolean)
         .slice(0, limit);
@@ -632,7 +649,12 @@ async function fetchCommonsFiles(fileTitles = []) {
         .filter(isUsableCommonsPhoto)
         .map((page) => {
             const info = page.imageinfo[0];
-            return buildRemotePhoto(info.thumburl || info.url, page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '));
+            return buildRemotePhoto(
+                info.thumburl || info.url,
+                page.title.replace(/^File:/, '').replace(/[_-]+/g, ' '),
+                [],
+                info.url
+            );
         });
 }
 
@@ -725,6 +747,83 @@ function renderGalleryFallback(root, place) {
     status.textContent = 'Фото позже';
 }
 
+const photoLightbox = document.createElement('div');
+photoLightbox.className = 'photo-lightbox';
+photoLightbox.setAttribute('aria-hidden', 'true');
+photoLightbox.innerHTML = `
+    <div class="photo-lightbox-backdrop" data-lightbox-close></div>
+    <div class="photo-lightbox-frame" role="dialog" aria-modal="true" aria-label="Фотография в полном размере">
+        <button type="button" class="photo-lightbox-close" data-lightbox-close aria-label="Закрыть фотографию">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18 6L6 18M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div class="photo-lightbox-image-wrap">
+            <img class="photo-lightbox-image" alt="" />
+            <span class="photo-lightbox-loading">Загрузка полного размера…</span>
+        </div>
+        <p class="photo-lightbox-caption"></p>
+    </div>
+`;
+document.body.appendChild(photoLightbox);
+
+const photoLightboxImage = photoLightbox.querySelector('.photo-lightbox-image');
+const photoLightboxCaption = photoLightbox.querySelector('.photo-lightbox-caption');
+const photoLightboxClose = photoLightbox.querySelector('.photo-lightbox-close');
+let lightboxReturnFocus = null;
+
+function getOriginalImageUrl(photo) {
+    if (photo?.fullSrc) return photo.fullSrc;
+
+    const src = photo?.src || '';
+    if (src.includes('/thumb/')) {
+        return src.replace('/thumb/', '/').replace(/\/[^/]+$/, '');
+    }
+
+    if (src.includes('/Special:FilePath/')) {
+        return src.split('?')[0];
+    }
+
+    return src;
+}
+
+function closePhotoLightbox() {
+    if (!photoLightbox.classList.contains('is-open')) return;
+
+    photoLightbox.classList.remove('is-open');
+    photoLightbox.setAttribute('aria-hidden', 'true');
+    photoLightboxImage.removeAttribute('src');
+    photoLightboxImage.classList.remove('is-loaded');
+    lightboxReturnFocus?.focus();
+    lightboxReturnFocus = null;
+}
+
+function openPhotoLightbox(photo, alt, trigger) {
+    const fullSrc = getOriginalImageUrl(photo);
+    if (!fullSrc) return;
+
+    lightboxReturnFocus = trigger || document.activeElement;
+    photoLightboxCaption.textContent = alt;
+    photoLightboxImage.alt = alt;
+    photoLightboxImage.classList.remove('is-loaded');
+    photoLightboxImage.onerror = () => {
+        if (photo.src && photoLightboxImage.src !== photo.src) {
+            photoLightboxImage.src = photo.src;
+            return;
+        }
+        photoLightboxImage.classList.add('is-loaded');
+    };
+    photoLightboxImage.onload = () => photoLightboxImage.classList.add('is-loaded');
+    photoLightboxImage.src = fullSrc;
+    photoLightbox.classList.add('is-open');
+    photoLightbox.setAttribute('aria-hidden', 'false');
+    photoLightboxClose.focus();
+}
+
+photoLightbox.querySelectorAll('[data-lightbox-close]').forEach((element) => {
+    element.addEventListener('click', closePhotoLightbox);
+});
+
 function mountPlaceGallery(root, place, photos) {
     if (!root) return;
 
@@ -743,7 +842,15 @@ function mountPlaceGallery(root, place, photos) {
 
     stage.innerHTML = photos.map((photo, index) => `
         <figure class="place-gallery-slide${index === 0 ? ' is-active' : ''}">
-            <img src="${escapeHtml(photo.src)}" alt="${escapeHtml(place.nameRu)} — фото ${index + 1}" loading="lazy" decoding="async" referrerpolicy="${REMOTE_IMAGE_REFERRER_POLICY}" />
+            <button type="button" class="place-gallery-expand" data-gallery-expand="${index}" aria-label="Открыть фото ${index + 1} для ${escapeHtml(place.nameRu)} в полном размере">
+                <img src="${escapeHtml(photo.src)}" alt="${escapeHtml(place.nameRu)} — фото ${index + 1}" loading="lazy" decoding="async" referrerpolicy="${REMOTE_IMAGE_REFERRER_POLICY}" />
+                <span class="place-gallery-expand-hint" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"></path>
+                    </svg>
+                    Развернуть
+                </span>
+            </button>
         </figure>
     `).join('');
 
@@ -845,6 +952,13 @@ function mountPlaceGallery(root, place, photos) {
     thumbs.forEach((thumb) => {
         thumb.addEventListener('click', () => {
             updateGallery(Number(thumb.dataset.galleryThumb), 1);
+        });
+    });
+
+    Array.from(stage.querySelectorAll('[data-gallery-expand]')).forEach((button) => {
+        button.addEventListener('click', () => {
+            const index = Number(button.dataset.galleryExpand);
+            openPhotoLightbox(photos[index], `${place.nameRu} — фото ${index + 1}`, button);
         });
     });
 }
@@ -1067,6 +1181,7 @@ async function initMap(route) {
 }
 
 function closeRoute(opts = {}) {
+    closePhotoLightbox();
     if (mapTimer) { clearTimeout(mapTimer); mapTimer = null; }
     if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
     document.removeEventListener('keydown', trapFocus);
@@ -1090,7 +1205,11 @@ function closeRoute(opts = {}) {
 
 closeBtn.onclick = closeRoute;
 overlay.onclick = closeRoute;
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeRoute(); });
+document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (photoLightbox.classList.contains('is-open')) closePhotoLightbox();
+    else closeRoute();
+});
 
 // ======= Porto routes =======
 const portoGrid = document.getElementById('portoRoutesGrid');

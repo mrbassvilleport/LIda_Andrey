@@ -1,205 +1,105 @@
 export const lisbonAjuda = {
     "id": 7,
-    "title": "Ажуда без дворца",
-    "subtitle": "Старый рынок, тихие улицы, ботанический сад и зелёная Тапада",
+    "title": "Сады Фронтейра и воды Лиссабона",
+    "subtitle": "Барочные азулежу, прогулка по акведуку и каменный резервуар Аморейраша",
     "duration": "4–5 часов",
-    "distance": "~5 км",
-    "difficulty": "Средняя / есть подъёмы",
-    "category": "Slow Ajuda",
-    "tip": "Лучший вариант — приехать во вторник–субботу около 9:30, пока открыт Mercado da Ajuda. Во дворец заходить не нужно: маршрут проходит через жилую Ажуду, сад и бывшие королевские угодья. В августе начинайте утром, берите воду и не спешите в Tapada: там мало кафе, зато много тени и пространства. Если сил останется немного, закончите у Jardim Botânico и вызовите такси; полный вариант продолжается через Tapada до Portão Jau.",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Primavera_na_Tapada_da_Ajuda_%2853741060964%29.jpg/1280px-Primavera_na_Tapada_da_Ajuda_%2853741060964%29.jpg",
+    "distance": "~3,5 км",
+    "difficulty": "Лёгкая / средняя",
+    "category": "Gardens & Water",
+    "tip": "Маршрут лучше начинать утром в садах Palácio Fronteira, заранее купив билет на самостоятельное посещение с аудиогидом. Затем удобнее взять такси до входа на акведук по адресу Calçada da Quintinha, 6. Aqueduto das Águas Livres открыт со вторника по воскресенье с 10:00 до 18:00. Mãe d’Água принимает обычных посетителей только до 13:30, поэтому для полного маршрута выбирайте ранний слот во Фронтейра или поменяйте две водные точки местами. После 15:00 в резервуаре проходят отдельные иммерсивные сеансы. Свободный вход на акведук не означает непрерывный проход до Аморейраша: двухкилометровый маршрут между объектами проводится по предварительной записи.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Jardim_do_Pal%C3%A1cio_dos_Marqueses_de_Fronteira%2C_S%C3%A3o_Domingos_de_Benfica%2C_Lisboa_19.jpg/1920px-Jardim_do_Pal%C3%A1cio_dos_Marqueses_de_Fronteira%2C_S%C3%A3o_Domingos_de_Benfica%2C_Lisboa_19.jpg",
+    "imageFallback": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Aqueduto_das_%C3%81guas_Livres_Lisboa.jpg/1920px-Aqueduto_das_%C3%81guas_Livres_Lisboa.jpg",
     "ready": true,
-    "mapCenter": [
-        38.7075,
-        -9.192
-    ],
-    "mapZoom": 15,
+    "mapCenter": [38.727, -9.169],
+    "mapZoom": 14,
     "places": [
         {
-            "name": "Mercado da Ajuda",
-            "nameRu": "Рынок Ажуды",
-            "coords": [
-                38.7066,
-                -9.201
-            ],
-            "description": "Небольшой районный рынок без атмосферы туристического фуд-холла. Утром сюда приходят за рыбой, овощами, мясом и хлебом. Это хорошее начало прогулки: десять–двадцать минут среди обычной жизни Ажуды, кофе и что-нибудь в дорогу. Рынок работает со вторника по субботу с 08:00 до 14:00.",
+            "name": "Jardins do Palácio Fronteira",
+            "nameRu": "Сады дворца Фронтейра",
+            "coords": [38.7374, -9.1807],
+            "description": "Один из самых красивых ансамблей азулежу в Лиссабоне. Сад XVII века построен как серия сцен: парадный партер, водоём с чёрными лебедями, лестницы, скульптуры и длинная Галерея королей над водой. Дворец остаётся жилым, но сады можно посетить отдельно с аудиогидом. На спокойный осмотр закладывайте около часа.",
             "galleryFiles": [
-                "File:Mercado da Ajuda 01.jpg",
-                "File:Mercado da Ajuda 02.jpg"
+                "File:Jardim do Palácio dos Marqueses de Fronteira, São Domingos de Benfica, Lisboa 19.jpg",
+                "File:Jardim do Palácio dos Marqueses de Fronteira, São Domingos de Benfica, Lisboa 18.jpg",
+                "File:Jardim do Palácio dos Marqueses de Fronteira, São Domingos de Benfica, Lisboa 06.jpg",
+                "File:Jardim do Palácio dos Marqueses de Fronteira, São Domingos de Benfica, Lisboa 13.jpg"
             ],
-            "galleryCategories": [
-                "Ajuda (Lisbon)",
-                "Markets in Lisbon"
-            ],
-            "galleryKeywords": [
-                "mercado",
-                "ajuda",
-                "market",
-                "lisboa"
-            ],
-            "sourceLabel": "Junta de Freguesia da Ajuda",
-            "sourceUrl": "https://www.jf-ajuda.pt/autarquia/infraestruturas/4",
-            "mapsQuery": "Mercado+da+Ajuda+Lisboa"
+            "galleryCategories": ["Gardens of Palácio dos Marqueses de Fronteira"],
+            "galleryKeywords": ["fronteira", "jardim", "azulejo", "lisboa"],
+            "sourceLabel": "Palácio Fronteira",
+            "sourceUrl": "https://www.loja.fronteira-alorna.pt/pos/event/list",
+            "mapsQuery": "Jardins+do+Palacio+Fronteira+Lisboa"
         },
         {
             "transit": {
-                "note": "Идите через Travessa da Boa Hora и небольшие жилые улицы. Здесь важен не самый короткий путь, а сам район: старые фасады, бельё на балконах и почти полное отсутствие туристических групп.",
+                "note": "Между садами и входом на акведук около трёх километров по неинтересным городским улицам. Здесь такси не сокращает впечатления, а сохраняет время для самих мест.",
                 "options": [
-                    {
-                        "mode": "walk",
-                        "duration": "12 мин",
-                        "distance": "750 м",
-                        "recommended": true,
-                        "detail": "через жилую Ажуду"
-                    }
+                    {"mode": "taxi", "duration": "8 мин", "distance": "3 км", "recommended": true, "detail": "до Calçada da Quintinha, 6"},
+                    {"mode": "bus", "duration": "25 мин", "distance": "с пересадкой", "detail": "проверить актуальную связку в день поездки"}
                 ]
             },
-            "name": "Igreja da Memória",
-            "nameRu": "Церковь Мемория",
-            "coords": [
-                38.703,
-                -9.202
-            ],
-            "description": "Сдержанная барочная церковь в маленьком саду, построенная после неудавшегося покушения на короля Жозе I. Внутри находится гробница маркиза де Помбала. Даже если двери закрыты, стоит обойти здание вокруг и посидеть в саду: это один из самых спокойных уголков западного Лиссабона.",
+            "name": "Aqueduto das Águas Livres",
+            "nameRu": "Акведук Агуаш-Ливриш",
+            "coords": [38.72975, -9.17043],
+            "description": "Гигантский акведук XVIII века пережил землетрясение 1755 года. Посетительский вход ведёт на узкий проход рядом с водным каналом, высоко над долиной Алкантары. Отсюда видны Campolide, железная дорога и северная часть города. Это не просто смотровая: масштаб арок лучше всего ощущается именно во время прохода по сооружению.",
             "galleryFiles": [
-                "File:Igreja da Memória - Lisboa - Portugal (4947953284).jpg",
-                "File:Igreja da Memória 1.jpg",
-                "File:Igreja da Memória 2.jpg"
+                "File:Aqueduto das Águas Livres Lisboa.jpg",
+                "File:Aqueduto das Águas Livres (1).jpg",
+                "File:Aqueduto das Águas Livres 2.jpg",
+                "File:Aqueduto das Águas Livres - Lisboa - Portugal (49252532116).jpg"
             ],
-            "galleryCategories": [
-                "Igreja da Memória",
-                "Largo da Memória"
+            "galleryCategories": ["Aqueduto das Águas Livres"],
+            "galleryKeywords": ["aqueduto", "águas livres", "aguas livres", "lisboa"],
+            "sourceLabel": "Museu da Água",
+            "sourceUrl": "https://www.epal.pt/EPAL/menu/museu-da-%C3%A1gua/informa%C3%A7%C3%B5es-%C3%BAteis/contactos-hor%C3%A1rios",
+            "mapsQuery": "Aqueduto+das+Aguas+Livres+Calcada+da+Quintinha"
+        },
+        {
+            "transit": {
+                "note": "Свободное посещение акведука и экскурсионный переход до Mãe d’Água — разные программы. Без записи вернитесь к Calçada da Quintinha и переезжайте к Praça das Amoreiras.",
+                "options": [
+                    {"mode": "taxi", "duration": "7 мин", "distance": "2,3 км", "recommended": true, "detail": "до Praça das Amoreiras, 10"},
+                    {"mode": "walk", "duration": "30 мин", "distance": "2,2 км", "detail": "обычными улицами через Campolide"}
+                ]
+            },
+            "name": "Reservatório da Mãe d’Água",
+            "nameRu": "Резервуар Маэ-д’Агуа",
+            "coords": [38.72101, -9.15559],
+            "description": "Финальная чаша акведука скрыта за суровым каменным фасадом. Внутри — огромный тёмный зал, гладкая поверхность воды, арки и свет, падающий из верхних окон. По лестнице можно подняться на крышу и увидеть Аморейраш и старые арки водопровода с необычного ракурса. Обычное посещение проходит с 10:00 до 13:30.",
+            "galleryFiles": [
+                "File:Mãe d'Água das Amoreiras - Lisboa - Portugal (51130562815).jpg",
+                "File:Mãe d'Água das Amoreiras - Lisboa - Portugal (51130562750).jpg",
+                "File:Mãe d'Água das Amoreiras - Lisboa - Portugal (51124512855).jpg",
+                "File:Reservatório da Mãe d'Água das Amoreiras - Lisboa - Portugal (47957141302).jpg"
             ],
-            "galleryKeywords": [
-                "igreja",
-                "memória",
-                "memoria",
-                "ajuda"
+            "galleryCategories": ["Reservatório da Mãe d'Água das Amoreiras"],
+            "galleryKeywords": ["mãe d'água", "mae d'agua", "reservatório", "amoreiras"],
+            "sourceLabel": "Museu da Água",
+            "sourceUrl": "https://www.epal.pt/EPAL/menu/museu-da-%C3%A1gua/informa%C3%A7%C3%B5es-%C3%BAteis/contactos-hor%C3%A1rios",
+            "mapsQuery": "Reservatorio+da+Mae+d+Agua+das+Amoreiras"
+        },
+        {
+            "transit": {
+                "note": "Сад начинается прямо у выхода из резервуара. Это не отдельная достопримечательность ради количества, а удобное место спокойно закончить маршрут и выпить кофе под старыми шелковицами.",
+                "options": [
+                    {"mode": "walk", "duration": "2 мин", "distance": "100 м", "recommended": true, "detail": "через площадь"}
+                ]
+            },
+            "name": "Jardim das Amoreiras",
+            "nameRu": "Сад Аморейраш",
+            "coords": [38.72135, -9.15515],
+            "description": "Небольшой сад XVIII века вырос вместе с водной системой: здесь высадили шелковицы для лиссабонского производства шёлка, а над деревьями проходят последние арки акведука. После камня, высоты и тёмной воды это естественный финал — скамейка, киоск и метро Rato в десяти минутах ходьбы.",
+            "galleryFiles": [
+                "File:Jardim das Amoreiras (Lisboa) 06.jpg",
+                "File:Jardim das Amoreiras (Lisboa) 08.jpg",
+                "File:Jardim das Amoreiras (Lisboa) 07.jpg",
+                "File:Jardim das Amoreiras (Lisboa) Painel de azulejos 02.jpg"
             ],
+            "galleryCategories": ["Jardim das Amoreiras"],
+            "galleryKeywords": ["jardim", "amoreiras", "aqueduto", "lisboa"],
             "sourceLabel": "Câmara Municipal de Lisboa",
-            "sourceUrl": "https://informacoeseservicos.lisboa.pt/contactos/diretorio-da-cidade/igreja-da-memoria",
-            "mapsQuery": "Igreja+da+Memoria+Lisboa"
-        },
-        {
-            "transit": {
-                "note": "Короткий подъём по Calçada do Galvão выводит к верхней части Ажуды. Дворец можно посмотреть снаружи по пути, не превращая его в отдельное посещение.",
-                "options": [
-                    {
-                        "mode": "walk",
-                        "duration": "10 мин",
-                        "distance": "600 м",
-                        "recommended": true,
-                        "detail": "плавный подъём к саду"
-                    }
-                ]
-            },
-            "name": "Jardim Botânico da Ajuda",
-            "nameRu": "Ботанический сад Ажуды",
-            "coords": [
-                38.7059,
-                -9.1993
-            ],
-            "description": "Первый ботанический сад Португалии расположен на двух террасах. Здесь хороши не только растения, но и сама геометрия сада: лестницы, балюстрады, старые деревья и раскрывающийся между ними Тежу. Вы уже здесь были, поэтому можно пройти любимую часть без обязательства осматривать каждый угол.",
-            "galleryFiles": [
-                "File:Jardim Botânico da Ajuda 2018.jpg",
-                "File:Jardim Botânico da Ajuda - Lisboa - Portugal (51550241023).jpg",
-                "File:Jardim Botânico da Ajuda (37153559614).jpg"
-            ],
-            "galleryCategories": [
-                "Jardim Botânico da Ajuda"
-            ],
-            "galleryKeywords": [
-                "jardim",
-                "botânico",
-                "botanico",
-                "ajuda"
-            ],
-            "sourceLabel": "Jardim Botânico da Ajuda",
-            "sourceUrl": "https://jba.isa.ulisboa.pt/info/horario-jba",
-            "mapsQuery": "Jardim+Botanico+da+Ajuda"
-        },
-        {
-            "transit": {
-                "note": "Переход между садом и Tapada проходит по верхней Ажуде. Это самый длинный городской отрезок; если жарко, сократите его короткой поездкой на такси до Portão do Pólo da Ajuda.",
-                "options": [
-                    {
-                        "mode": "walk",
-                        "duration": "24 мин",
-                        "distance": "1,6 км",
-                        "recommended": true,
-                        "detail": "через верхнюю Ажуду"
-                    },
-                    {
-                        "mode": "taxi",
-                        "duration": "6 мин",
-                        "distance": "2 км",
-                        "detail": "до Portão do Pólo da Ajuda"
-                    }
-                ]
-            },
-            "name": "Tapada da Ajuda — Miradouro",
-            "nameRu": "Тапада-да-Ажуда и смотровая",
-            "coords": [
-                38.7105,
-                -9.1882
-            ],
-            "description": "Бывшие королевские охотничьи угодья сегодня принадлежат агрономическому институту, но пешеходные дорожки открыты городу. Внутри неожиданно тихо: пробковые дубы, поля, учебные сады, старые хозяйственные постройки и вид на мост 25 Апреля. Поднимитесь к геодезическому знаку и смотровой, а затем спускайтесь к Portão Jau.",
-            "galleryFiles": [
-                "File:Primavera na Tapada da Ajuda (53741060964).jpg",
-                "File:Lisbon One - 068 (3467122008).jpg",
-                "File:Tapada da Ajuda.jpg"
-            ],
-            "galleryCategories": [
-                "Tapada da Ajuda",
-                "Instituto Superior de Agronomia"
-            ],
-            "galleryKeywords": [
-                "tapada",
-                "ajuda",
-                "miradouro",
-                "agronomia"
-            ],
-            "sourceLabel": "Instituto Superior de Agronomia",
-            "sourceUrl": "https://www.isa.ulisboa.pt/info/localizacao",
-            "mapsQuery": "Miradouro+Tapada+da+Ajuda"
-        },
-        {
-            "transit": {
-                "note": "Финальный спуск идёт внутри Tapada к Rua Jau. Оттуда можно уехать автобусом или вызвать такси домой.",
-                "options": [
-                    {
-                        "mode": "walk",
-                        "duration": "20 мин",
-                        "distance": "1,3 км",
-                        "recommended": true,
-                        "detail": "по тенистым дорожкам к Portão Jau"
-                    }
-                ]
-            },
-            "name": "Portão Jau",
-            "nameRu": "Ворота Жау",
-            "coords": [
-                38.7045,
-                -9.1838
-            ],
-            "description": "Удобная точка завершения у подножия Tapada. Отсюда уже видны Алкантара и мост, рядом есть кафе и транспорт. Если прогулка пришлась на жаркий день, не добавляйте к ней LX Factory или Белем: лучше оставить ощущение, что маршрут закончился вовремя.",
-            "galleryFiles": [
-                "File:Instituto Superior de Agronomia - Portão da Rua Jau.jpg",
-                "File:Tapada da Ajuda Lisboa.jpg"
-            ],
-            "galleryCategories": [
-                "Tapada da Ajuda",
-                "Rua Jau"
-            ],
-            "galleryKeywords": [
-                "tapada",
-                "jau",
-                "alcântara",
-                "lisboa"
-            ],
-            "sourceLabel": "Google Maps",
-            "sourceUrl": "https://maps.google.com/?q=Port%C3%A3o+Jau+Tapada+da+Ajuda",
-            "mapsQuery": "Portao+Jau+Tapada+da+Ajuda"
+            "sourceUrl": "https://informacoeseservicos.lisboa.pt/contactos/diretorio-da-cidade/jardim-das-amoreiras",
+            "mapsQuery": "Jardim+das+Amoreiras+Lisboa"
         }
     ]
 };
