@@ -6,11 +6,21 @@ import { lisbonCastle } from './routes/lisbon-castle.js';
 import { sesimbraAtlantic } from './routes/sesimbra-atlantic.js';
 import { setubalArrabida } from './routes/setubal-arrabida.js';
 import { penicheBerlengas } from './routes/peniche-berlengas.js';
+import { monsarazAlqueva } from './routes/monsaraz-alqueva.js';
+import { piodaoAcor } from './routes/piodao-acor.js';
+import { serraEstrela } from './routes/serra-estrela.js';
 import { portoRibeira } from './routes/porto-ribeira.js';
 import { portoHistorical } from './routes/porto-historical.js';
 import { portoFoz } from './routes/porto-foz.js';
 
 export const routes = [lisbonHistorical, lisbonBelem, lisbonSintra, lisbonAjuda, lisbonCastle];
-export const getawayRoutes = [sesimbraAtlantic, setubalArrabida, penicheBerlengas];
+export const getawayRoutes = [
+    sesimbraAtlantic,
+    setubalArrabida,
+    penicheBerlengas,
+    monsarazAlqueva,
+    piodaoAcor,
+    serraEstrela,
+];
 export const portoRoutes = [portoRibeira, portoHistorical, portoFoz];
 export const allRoutes = [...routes, ...getawayRoutes, ...portoRoutes];
