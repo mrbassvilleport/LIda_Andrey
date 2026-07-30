@@ -7,6 +7,8 @@ export const TRANSIT_MODES = {
     bus:       { label: 'Автобус',   icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="13" rx="2.5"/><path d="M4 10h16"/><path d="M8 17l-1.5 3M16 17l1.5 3"/><circle cx="8" cy="14" r="0.9" fill="currentColor"/><circle cx="16" cy="14" r="0.9" fill="currentColor"/></svg>' },
     taxi:      { label: 'Такси',     icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14l1.6-4.5a2 2 0 012-1.3h6.8a2 2 0 012 1.3L19 14"/><path d="M4 14h16v4a1 1 0 01-1 1h-1a1 1 0 01-1-1v-1H7v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-4z"/><circle cx="8" cy="17" r="0.8" fill="currentColor"/><circle cx="16" cy="17" r="0.8" fill="currentColor"/><path d="M10 5h4V3h-4z"/></svg>' },
     train:     { label: 'Поезд',     icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 12h14"/><circle cx="9" cy="14.5" r="0.7" fill="currentColor"/><circle cx="15" cy="14.5" r="0.7" fill="currentColor"/><path d="M8 17l-1.5 3M16 17l1.5 3"/><path d="M9 7h6"/></svg>' },
+    ferry:     { label: 'Катер',     icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15h18l-2 4H5z"/><path d="M8 15V8h8v7"/><path d="M12 8V4"/><path d="M2 21c1.2-1 2.8-1 4 0s2.8 1 4 0 2.8-1 4 0 2.8 1 4 0 2.8-1 4 0"/></svg>' },
+    car:       { label: 'На машине', icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14l1.6-4.5a2 2 0 012-1.3h6.8a2 2 0 012 1.3L19 14"/><path d="M4 14h16v4a1 1 0 01-1 1h-1a1 1 0 01-1-1v-1H7v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-4z"/><circle cx="8" cy="17" r="0.8" fill="currentColor"/><circle cx="16" cy="17" r="0.8" fill="currentColor"/></svg>' },
     funicular: { label: 'Фуникулёр', icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L20 4"/><rect x="6" y="12" width="7" height="5" rx="1" transform="rotate(-45 9.5 14.5)"/><path d="M3 21h4M17 7h4"/></svg>' },
     cable:     { label: 'Канатка',   icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l18 3"/><path d="M9 8v3M9 11h4l-1 6h-2z"/></svg>' },
 };
@@ -17,6 +19,8 @@ const GMAPS_TRAVEL_MODE = {
     tram: 'transit',
     bus: 'transit',
     train: 'transit',
+    ferry: 'transit',
+    car: 'driving',
     funicular: 'transit',
     cable: 'transit',
     taxi: 'driving',

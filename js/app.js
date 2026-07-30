@@ -1,4 +1,4 @@
-import { routes, portoRoutes } from '../data/index.js?v=20260727-two-gardens-2';
+import { routes, getawayRoutes, portoRoutes } from '../data/index.js?v=20260730-getaways';
 import { escapeHtml, fetchWithTimeout, readGalleryCache, writeGalleryCache } from './utils.js?v=gallery-cache-v4';
 import { renderTransitConnector } from './transit.js';
 const grid = document.getElementById('routesGrid');
@@ -1267,12 +1267,16 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// ======= Day trips from Lisbon =======
+const getawayGrid = document.getElementById('getawayRoutesGrid');
+mountRouteGrid(getawayGrid, getawayRoutes.filter((route) => route.ready));
+
 // ======= Porto routes =======
 const portoGrid = document.getElementById('portoRoutesGrid');
 mountRouteGrid(portoGrid, portoRoutes.filter((route) => route.ready));
 
 // ======= Deep-link sync (popstate + initial load) =======
-const allRoutes = [...routes, ...portoRoutes];
+const allRoutes = [...routes, ...getawayRoutes, ...portoRoutes];
 
 function routeFromHash() {
     const m = window.location.hash.match(/#route=(\d+)/);
