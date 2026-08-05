@@ -1,6 +1,6 @@
-import { routes, getawayRoutes, portoRoutes } from '../data/index.js?v=20260730-getaways';
+import { routes, getawayRoutes, portoRoutes } from '../data/index.js?v=20260805-route-audit';
 import { escapeHtml, fetchWithTimeout, readGalleryCache, writeGalleryCache } from './utils.js?v=gallery-cache-v4';
-import { renderTransitConnector } from './transit.js';
+import { renderTransitConnector } from './transit.js?v=20260805-car-directions';
 const grid = document.getElementById('routesGrid');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const revealObserver = prefersReducedMotion ? null : new IntersectionObserver((entries) => {

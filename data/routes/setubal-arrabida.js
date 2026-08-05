@@ -1,7 +1,7 @@
 export const setubalArrabida = {
     "id": 10,
     "title": "Сетубал и тихая Аррабида",
-    "subtitle": "Поезд через мост, горы над морем, короткая тропа и вода цвета стекла",
+    "subtitle": "Рыбный рынок, форт над Саду, короткая тропа и прозрачные бухты",
     "duration": "9–10 часов",
     "distance": "~6 км пешком",
     "difficulty": "Средняя (лестницы и солнце)",
@@ -11,64 +11,64 @@ export const setubalArrabida = {
     "ready": true,
     "mapCenter": [38.493, -8.948],
     "mapZoom": 12,
-    "tip": "Из Лиссабона садитесь на Fertagus до Setúbal: от Sete Rios поезд идёт около 50 минут и пересекает мост 25 de Abril. С 4 июня по 15 сентября 2026 года личные машины ограничены на участке между Сетубалом и Фигейриньей, поэтому в августе этот маршрут разумнее делать именно на общественном транспорте. Муниципалитет усилил автобусы на выходных и в июле–августе, но время рейса всё равно проверьте в день поездки. Берите воду, обувь с рифлёной подошвой и не планируйте галопом пройти все пляжи: лучше выбрать купание в Creiro или Portinho и оставить силы на Lapa de Santa Margarida.",
+    "tip": "Из Лиссабона садитесь на Fertagus до Setúbal. Не стройте путь через Figueirinha: в сезоне 2026 дорога от её тоннеля к Creiro закрыта для всего движения, включая пешеходов. После рынка и форта вернитесь к транспортному узлу Setúbal (ITS) и садитесь на 4470 до Praia do Creiro; летом он идёт в обход через Azeitão. Между Creiro, Portinho, Galapos и Galapinhos работает шаттл 4477. Рынок закрыт по понедельникам, а расписание обоих автобусов нужно проверить утром в Carris Metropolitana.",
     "places": [
         {
+            "name": "Mercado do Livramento",
+            "nameRu": "Рынок Ливраменту и утренний Сетубал",
+            "coords": [38.5229, -8.8965],
+            "description": "Начните не с пляжа, а с того, чем живёт Сетубал. В рыбном зале видно улов Саду и Атлантики, на прилавках лежат местные сыры, хлеб и фрукты, а стены покрыты азулежу. Приходите до полудня, возьмите продукты для пляжа или ранний перекус и не планируйте эту поездку на понедельник: рынок открыт со вторника по воскресенье с 07:30 до 14:00.",
+            "galleryCategories": ["Mercado do Livramento"],
+            "galleryKeywords": ["mercado", "livramento", "setubal", "fish market"],
+            "sourceLabel": "Visit Setúbal — Mercado do Livramento",
+            "sourceUrl": "https://visitsetubal.com/compras/mercado-do-livramento-2/",
+            "mapsQuery": "Mercado do Livramento Setúbal"
+        },
+        {
+            "transit": {
+                "note": "До форта проще подняться на такси: пеший путь короткий по карте, но крутой и отнимает силы, которые пригодятся на лестнице к пещере.",
+                "options": [
+                    {
+                        "mode": "taxi",
+                        "duration": "8 мин",
+                        "distance": "3 км",
+                        "recommended": true,
+                        "detail": "от рынка к Forte de São Filipe"
+                    },
+                    {
+                        "mode": "walk",
+                        "duration": "40 мин",
+                        "distance": "2,6 км",
+                        "detail": "крутой подъём; только если не жарко"
+                    }
+                ]
+            },
             "name": "Forte de São Filipe",
             "nameRu": "Форт Сан-Филипе",
             "coords": [38.5109, -8.9006],
-            "description": "Форт над Сетубалом — хорошая первая остановка после поезда. Отсюда видны город, устье Саду и длинная полоса Трои напротив. Не пытайтесь превратить его в большую экскурсию: поднимитесь ради панорамы, выпейте кофе и переключитесь с городского Лиссабона на другой масштаб.",
+            "description": "С террасы форта видны Сетубал, устье Саду и песчаная полоса Трои. Ради интерьеров сюда не нужен долгий визит: двадцати-тридцати минут достаточно для стен, панорамы и кофе. Затем спускайтесь обратно к ITS, потому что прямой путь к пляжам начинается именно от транспортного узла.",
             "galleryCategories": ["Forte de São Filipe (Setúbal)"],
             "galleryKeywords": ["forte", "sao filipe", "setubal", "sado"],
             "sourceLabel": "Visit Setúbal",
-            "sourceUrl": "https://visitsetubal.com/festa-de-caminhadas-na-arrabida-2026-11527/",
+            "sourceUrl": "https://visitsetubal.com/atracoes-e-novidades/miradouros/",
             "mapsQuery": "Forte de São Filipe Setúbal"
         },
         {
             "transit": {
-                "note": "Летом не пытайтесь ехать к пляжам на арендованной машине: ограничения дороги и парковки легко съедают утро. Автобус в сторону Arrábida здесь надёжнее.",
+                "note": "Сначала вернитесь на такси к Setúbal (ITS), затем садитесь на 4470 до Creiro. Линия идёт через Azeitão, потому что прибрежный участок от Figueirinha закрыт.",
                 "options": [
                     {
                         "mode": "bus",
-                        "duration": "35 мин",
-                        "distance": "9 км",
+                        "duration": "1 ч 20 мин",
+                        "distance": "около 35 км",
                         "recommended": true,
-                        "detail": "местный автобус Setúbal → Figueirinha; рейс проверить в Carris Metropolitana"
+                        "detail": "такси до ITS, затем автобус 4470 до Praia do Creiro"
                     },
                     {
                         "mode": "taxi",
-                        "duration": "20 мин",
-                        "distance": "9 км",
-                        "detail": "если автобусный график не подходит"
-                    }
-                ]
-            },
-            "name": "Praia da Figueirinha",
-            "nameRu": "Пляж Фигейринья",
-            "coords": [38.4896, -8.9534],
-            "description": "Фигейринья — самый простой вход в Аррабиду: длинный песок, мелкая вода и вид на зелёный склон, который почти сразу поднимается из моря. Если хочется расслабленного купания без лестниц и камней, оставайтесь здесь дольше. Если тянет к более камерным бухтам, это только начало пути.",
-            "galleryCategories": ["Figueirinha Beach"],
-            "galleryKeywords": ["figueirinha", "beach", "arrabida", "setubal"],
-            "sourceLabel": "Visit Setúbal — Arrábida",
-            "sourceUrl": "https://visitsetubal.com/roteiros/arrabida-e-praias/",
-            "mapsQuery": "Praia da Figueirinha Setúbal"
-        },
-        {
-            "transit": {
-                "note": "Не идите между пляжами по узкой дороге: тени мало, а машины и повороты неприятны. Садитесь на следующий автобус до Creiro или берите короткое такси.",
-                "options": [
-                    {
-                        "mode": "bus",
-                        "duration": "15 мин",
-                        "distance": "5 км",
-                        "recommended": true,
-                        "detail": "в сторону Creiro / Portinho"
-                    },
-                    {
-                        "mode": "taxi",
-                        "duration": "12 мин",
-                        "distance": "5 км",
-                        "detail": "самый гибкий вариант"
+                        "duration": "35–45 мин",
+                        "distance": "около 30 км",
+                        "detail": "напрямую в объезд через Azeitão"
                     }
                 ]
             },
@@ -83,8 +83,8 @@ export const setubalArrabida = {
             ],
             "galleryCategories": ["Praia do Creiro", "Arrábida Natural Park"],
             "galleryKeywords": ["creiro", "anicha", "beach", "arrabida"],
-            "sourceLabel": "Visit Setúbal — Creiro и Portinho",
-            "sourceUrl": "https://visitsetubal.com/praias/praia-do-creiro-e-portinho-da-arrabida/",
+            "sourceLabel": "Муниципалитет Сетубала — доступ к пляжам в 2026 году",
+            "sourceUrl": "https://www.mun-setubal.pt/arrabida-sem-carros/",
             "mapsQuery": "Praia do Creiro Setúbal"
         },
         {
@@ -103,7 +103,7 @@ export const setubalArrabida = {
             "name": "Lapa de Santa Margarida",
             "nameRu": "Пещера Святой Маргариты",
             "coords": [38.4801, -8.9913],
-            "description": "Лестница уводит со склона вниз к морю, в прохладную каменную нишу с маленькой часовней XVII века. Место не большое и не эффектное с первой секунды, зато после яркого пляжа оно работает как смена температуры и ритма. Спуститесь только в обуви, в которой уверенно идёте по ступеням.",
+            "description": "Лестница уводит со склона вниз к морю, в прохладную каменную нишу с маленькой часовней XVII века. Место небольшое и не производит мгновенного эффекта, зато после яркого пляжа здесь резко меняются температура и ритм. Спуститесь только в обуви, в которой уверенно идёте по ступеням.",
             "galleryCategories": ["Lapa de Santa Margarida", "Arrábida Natural Park"],
             "galleryKeywords": ["lapa", "santa margarida", "cave", "arrabida"],
             "sourceLabel": "Visit Setúbal — пешие маршруты",
@@ -126,7 +126,7 @@ export const setubalArrabida = {
             "name": "Portinho da Arrábida",
             "nameRu": "Портинью-да-Аррабида",
             "coords": [38.4788, -8.9973],
-            "description": "В Portinho холм подходит к воде почти вплотную, и от этого бухта выглядит как кусочек Средиземноморья, случайно оказавшийся у Атлантики. Здесь можно закончить прогулку поздним купанием или долгим обедом у моря. Если выбираете только один пляж на весь день, я бы оставил его именно на этот финал.",
+            "description": "В Portinho холм подходит к воде почти вплотную, и от этого бухта выглядит как кусочек Средиземноморья, случайно оказавшийся у Атлантики. Здесь можно закончить прогулку поздним купанием или долгим обедом у моря. Для возвращения садитесь на 4477 до Creiro, затем пересаживайтесь на 4470 до Setúbal (ITS); последний удобный рейс лучше отметить заранее.",
             "galleryFiles": [
                 "File:Portinho da Arrábida by Juntas 11.jpg",
                 "File:PORTINHO DA ARRABIDA 2.jpg",

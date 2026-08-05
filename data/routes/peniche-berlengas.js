@@ -1,7 +1,7 @@
 export const penicheBerlengas = {
     "id": 11,
     "title": "Пенише и остров Берленгаш",
-    "subtitle": "Лодка в океан, крепость на скале, птицы и прозрачная вода",
+    "subtitle": "Океанский переход, морские пещеры, крепость на скале и купание в бухте",
     "duration": "12–13 часов",
     "distance": "~5 км пешком",
     "difficulty": "Средняя (солнце, ветер и лодка)",
@@ -11,36 +11,13 @@ export const penicheBerlengas = {
     "ready": true,
     "mapCenter": [39.387, -9.445],
     "mapZoom": 11,
-    "tip": "Это самый дальний и самый зависящий от погоды маршрут. Сначала доберитесь из Лиссабона ранним междугородним автобусом до Пенише, затем пройдите к порту и сядьте на лодку лицензированного оператора. Переход до Берленги занимает около 30 минут, но волнение океана способно отменить рейс, поэтому не покупайте невозвратные стыковки и обязательно смотрите прогноз утром. Для высадки на остров заранее нужен личный BerlengasPass: доступ к суше ограничен, одновременно разрешено не больше 550 посетителей. На острове мало тени, вода и еда не должны оставаться «на потом».",
+    "tip": "Бронируйте билет с 4–6 часами на Berlenga Grande: при короткой высадке придётся выбирать между крепостью, пещерами и купанием. Для каждого пассажира заранее нужен BerlengasPass; ICNF допускает на остров одновременно не больше 550 человек. Приезжайте в порт минимум за 30 минут и не вставляйте перед катером никаких остановок. Если море отменит рейс, запасной день складывается на материке из Cabo Carvoeiro, Papôa и Baleal. Вода, еда, ветровка, закрытая обувь и защита от солнца нужны с собой.",
     "places": [
         {
-            "name": "Forte de Peniche",
-            "nameRu": "Форт Пенише",
-            "coords": [39.3574, -9.3815],
-            "description": "Если автобус приходит с запасом, начните с форта у воды. Он напоминает, что Пенише — не просто отправная точка к острову: это рыбацкий город и бывшая оборонная линия побережья. Не затягивайте остановку, если у вас есть забронированный катер, но десять минут у стен хорошо настраивают на океанский день.",
-            "galleryCategories": ["Peniche"],
-            "galleryKeywords": ["peniche", "fort", "harbour", "coast"],
-            "sourceLabel": "Visit Portugal — Peniche",
-            "sourceUrl": "https://www.visitportugal.com/en/node/73769/1000",
-            "mapsQuery": "Forte de Peniche"
-        },
-        {
-            "transit": {
-                "note": "В порт идите с запасом: оператор обычно просит быть на причале до времени отправления, а не в момент, когда лодка уже отходит.",
-                "options": [
-                    {
-                        "mode": "walk",
-                        "duration": "12 мин",
-                        "distance": "900 м",
-                        "recommended": true,
-                        "detail": "до Porto de Peniche"
-                    }
-                ]
-            },
             "name": "Porto de Peniche",
             "nameRu": "Порт Пенише и посадка на катер",
             "coords": [39.3555, -9.3805],
-            "description": "Здесь заканчивается обычная логистика и начинается остров. Подтвердите билет у своего оператора, держите BerlengasPass офлайн и уберите из рук всё, что не хочется ловить на палубе. Ветер в гавани часто кажется терпимым, но в открытом море лодку может хорошо качать.",
+            "description": "Начинайте прямо в порту. Подтвердите билет у оператора, держите BerlengasPass офлайн и уточните время обратного рейса до посадки. Большой паром идёт около 40–45 минут, скоростной катер быстрее, но сильнее чувствует волну. Если вас укачивает, место ближе к корме и средство от морской болезни важнее любой материковой достопримечательности.",
             "galleryCategories": ["Port of Peniche"],
             "galleryKeywords": ["port", "peniche", "boat", "berlengas"],
             "sourceLabel": "BerlengasPass — правила доступа",
@@ -49,31 +26,54 @@ export const penicheBerlengas = {
         },
         {
             "transit": {
-                "note": "На Берленгу ходят только лицензированные операторы. Море решает всё: при отмене не пытайтесь «найти лодку любой ценой», а оставьте Пенише для запасного дня.",
+                "note": "На Берленгу ходят лицензированные операторы. Время зависит от типа судна и моря; при отмене не ищите случайную лодку, а переходите к запасному плану по Пенише.",
                 "options": [
                     {
                         "mode": "ferry",
-                        "duration": "30 мин",
+                        "duration": "30–45 мин",
                         "distance": "10 км",
                         "recommended": true,
-                        "detail": "катер Peniche → Berlenga Grande; билет и BerlengasPass заранее"
+                        "detail": "Peniche → Berlenga Grande; билет и BerlengasPass заранее"
                     }
                 ]
             },
             "name": "Praia do Carreiro do Mosteiro",
-            "nameRu": "Бухта Каррейру-ду-Моштейру",
+            "nameRu": "Гавань Берленги и Каррейру-ду-Моштейру",
             "coords": [39.4116, -9.5077],
-            "description": "Катер приходит в маленькую естественную гавань с прозрачной водой и белыми домами на скале. Не ныряйте сразу после качки: сначала пройдитесь, почувствуйте ветер и найдите место, где оставить вещи. В спокойную погоду сюда приятно вернуться на купание перед обратной лодкой.",
+            "description": "Катер входит в естественную гавань под белыми домами рыбацкого квартала. Сразу найдите причал маленьких экскурсионных лодок и узнайте ближайшее отправление к пещерам; расписание меняется вместе с морем. Сам пляж пока оставьте на потом: перед обратным рейсом он работает гораздо лучше, чем в первые минуты после качки.",
+            "galleryCategories": ["Berlengas"],
+            "galleryKeywords": ["berlenga", "carreiro", "mosteiro", "harbour"],
+            "sourceLabel": "ICNF — природный резерват",
+            "sourceUrl": "https://www.icnf.pt/conservacao/rnapareasprotegidas/reservasnaturais/rnberlengas",
+            "mapsQuery": "Praia do Carreiro do Mosteiro Berlenga"
+        },
+        {
+            "transit": {
+                "note": "Маленькая лодка показывает ту часть острова, которой не видно с тропы. Экскурсию бронируют у причала или вместе с основным билетом; она проходит только при подходящем море.",
+                "options": [
+                    {
+                        "mode": "ferry",
+                        "duration": "30 мин",
+                        "distance": "вокруг южных скал",
+                        "recommended": true,
+                        "detail": "стеклянное дно, Gruta Azul и природный тоннель Furado Grande"
+                    }
+                ]
+            },
+            "name": "Grutas da Berlenga e Furado Grande",
+            "nameRu": "Морские пещеры и тоннель Фураду-Гранди",
+            "coords": [39.4116, -9.5077],
+            "description": "С воды открываются Gruta Azul, узкий природный тоннель Furado Grande и скалы, которые с островной тропы выглядят обычной стеной. Полчаса на маленькой лодке дают Берленге больше, чем отдельный крюк к маяку. Если море неспокойно и экскурсии отменены, не рискуйте и сразу переходите к пешей части.",
             "galleryFiles": [
                 "File:2026-06-21 Berlengas 01.jpg",
                 "File:2026-06-21 Berlengas 02.jpg",
                 "File:2026-06-21 Berlengas 03.jpg"
             ],
             "galleryCategories": ["Berlengas"],
-            "galleryKeywords": ["berlenga", "carreiro", "mosteiro", "beach"],
-            "sourceLabel": "ICNF — природный резерват",
-            "sourceUrl": "https://www.icnf.pt/conservacao/rnapareasprotegidas/reservasnaturais/rnberlengas",
-            "mapsQuery": "Praia do Carreiro do Mosteiro Berlenga"
+            "galleryKeywords": ["berlenga", "cave", "furado grande", "boat"],
+            "sourceLabel": "Viamar — варианты посещения Берленги",
+            "sourceUrl": "https://viamar-berlenga.com/en/pacotes.html",
+            "mapsQuery": "Furado Grande Berlenga"
         },
         {
             "transit": {
@@ -105,31 +105,31 @@ export const penicheBerlengas = {
         },
         {
             "transit": {
-                "note": "Возвращайтесь к главной тропе и выбирайте темп по времени обратного катера. Если ветер усилился, лучше не уходить далеко к самым открытым краям острова.",
+                "note": "От крепости поднимитесь обратно к главной тропе и спускайтесь в гавань. Маяк останется в стороне: отдельный крюк к нему слабее пещер и отнимает запас перед обратным катером.",
                 "options": [
                     {
                         "mode": "walk",
-                        "duration": "45 мин",
-                        "distance": "2,1 км",
+                        "duration": "40 мин",
+                        "distance": "1,9 км",
                         "recommended": true,
-                        "detail": "обратная тропа через верх острова"
+                        "detail": "обратно к гавани и пляжу"
                     }
                 ]
             },
-            "name": "Farol Duque de Bragança",
-            "nameRu": "Маяк Дуки-ди-Браганса",
-            "coords": [39.4152, -9.5165],
-            "description": "Маяк — самая тихая точка маршрута. Дома и пристань остаются далеко внизу, вокруг только низкая растительность, птицы и горизонт. Дальше можно идти ещё, но я бы оставил запас сил для спуска, купания в бухте и возвращения без нервов.",
+            "name": "Praia do Carreiro do Mosteiro",
+            "nameRu": "Купание перед обратным катером",
+            "coords": [39.4116, -9.5077],
+            "description": "Финальный час оставьте без программы. В спокойную погоду вода в маленькой бухте прозрачная и защищённая, но пляж тесный, поэтому не раскладывайте вещи на полдня. Следите за временем посадки и выходите из воды заранее: подъём к причалу короткий, а ждать опоздавших оператор не обязан.",
             "galleryFiles": [
                 "File:2026-06-21 Berlengas 07.jpg",
                 "File:2026-06-21 Berlengas 08.jpg",
                 "File:2026-06-21 Berlengas 09.jpg"
             ],
             "galleryCategories": ["Berlengas"],
-            "galleryKeywords": ["duque de braganca", "lighthouse", "berlenga", "island"],
-            "sourceLabel": "Visit Portugal — Berlengas",
-            "sourceUrl": "https://www.visitportugal.com/en/node/156072",
-            "mapsQuery": "Farol Duque de Bragança Berlenga"
+            "galleryKeywords": ["carreiro do mosteiro", "beach", "berlenga", "swimming"],
+            "sourceLabel": "ICNF — природный резерват",
+            "sourceUrl": "https://www.icnf.pt/conservacao/rnapareasprotegidas/reservasnaturais/rnberlengas",
+            "mapsQuery": "Praia do Carreiro do Mosteiro Berlenga"
         }
     ]
 };

@@ -3,7 +3,7 @@ export const sesimbraAtlantic = {
     "title": "Сезимбра, Кабу-Эшпишел и Меко",
     "subtitle": "Бухта для купания, старый замок, следы динозавров и вечерний океан",
     "duration": "9–10 часов",
-    "distance": "~6 км пешком",
+    "distance": "~5 км пешком",
     "difficulty": "Средняя (ветер и холмы)",
     "category": "Sea, cliffs & dinosaurs",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Baiasesimbra.jpg?width=1920",
@@ -11,13 +11,40 @@ export const sesimbraAtlantic = {
     "ready": true,
     "mapCenter": [38.438, -9.151],
     "mapZoom": 11,
-    "tip": "Это хороший день, если хочется и моря, и настоящего края суши, но маршрут лучше собирать на машине. До самой Сезимбры удобно доехать из Лиссабона от Sete Rios на Carris Metropolitana 3721, а вот между замком, Cabo Espichel и Меко общественный транспорт редкий и съест слишком много времени. В августе начинайте с раннего автобуса или выезжайте на машине до 09:00: в бухте ещё можно спокойно поплавать, а на мысе уже к полудню бывает сильный ветер. Возьмите воду, закрытую обувь для тропы у Pedra da Mua и купальник: Меко красив, но океан там заметно суровее, чем в Сезимбре.",
+    "tip": "Этот маршрут имеет смысл на машине: автобус 3721 довезёт до Сезимбры, но не соберёт в один день замок, Cabo Espichel и Меко. Выезжайте из Лиссабона около 08:00 и сначала поднимайтесь к замку, пока не жарко. Затем оставьте машину у набережной, пройдите форт, пообедайте рыбой и искупайтесь; перед дорогой к мысу придётся вернуться к парковке. На Pedra da Mua нужны закрытая обувь и запас времени: следы находятся на наклонной плите и лучше читаются с обозначенных точек, а не у самого края. Меко оставлен на закат; для купания спокойная бухта Сезимбры безопаснее открытого океана.",
     "places": [
         {
+            "name": "Castelo de Sesimbra",
+            "nameRu": "Замок Сезимбры",
+            "coords": [38.4438, -9.1151],
+            "description": "Начните со стен над городом, пока солнце ещё не добралось до склона. Отсюда сразу видны бухта Сезимбры, лесистая Аррабида и линия будущего пути к Cabo Espichel. Сам замок небольшой; сорока минут хватит на стены, церковь и панораму без попытки сделать из остановки большой музейный визит.",
+            "galleryFiles": [
+                "File:Castelo de Sesimbra antes do restauro. Edição comemorativa. 15 anos de Obras Públicas.jpg",
+                "File:Castelo de Sesimbra depois do restauro. Edição comemorativa. 15 anos de Obras Públicas.jpg"
+            ],
+            "galleryCategories": ["Castelo de Sesimbra"],
+            "galleryKeywords": ["castle", "sesimbra", "view", "walls"],
+            "sourceLabel": "Visit Portugal — Sesimbra",
+            "sourceUrl": "https://www.visitportugal.com/en/node/132946",
+            "mapsQuery": "Castelo de Sesimbra"
+        },
+        {
+            "transit": {
+                "note": "Спуститесь на машине к набережной и оставьте её на одной из городских парковок: следующая часть проходит пешком вдоль воды.",
+                "options": [
+                    {
+                        "mode": "car",
+                        "duration": "8 мин",
+                        "distance": "3 км",
+                        "recommended": true,
+                        "detail": "от замка к набережной Сезимбры"
+                    }
+                ]
+            },
             "name": "Forte de Santiago de Sesimbra",
-            "nameRu": "Форт Сантьягу и гавань Сезимбры",
+            "nameRu": "Форт Сантьягу, гавань и старый центр",
             "coords": [38.4437, -9.1016],
-            "description": "Начните у форта и рыбацкой гавани. Здесь легко понять, почему город спустился с холма к воде: бухта закрыта от океанской волны, а лодки всё ещё приходят прямо к набережной. Это место для кофе, первого взгляда на море и короткой прогулки без программы-минимума.",
+            "description": "Форт связывает рыбацкую гавань с небольшим старым центром. Пройдите внутренний двор и набережную, затем пообедайте здесь же: свежая рыба и choco frito дают Сезимбре больше характера, чем ещё один обзорный пункт. На всю остановку вместе с обедом разумно оставить полтора часа.",
             "galleryFiles": [
                 "File:Baiasesimbra.jpg",
                 "File:Panorámica Sesimbra - panoramio.jpg",
@@ -31,7 +58,7 @@ export const sesimbraAtlantic = {
         },
         {
             "transit": {
-                "note": "Вдоль воды идти приятнее, чем ехать: море всё время остаётся рядом, а подъёмов пока нет.",
+                "note": "До пляжа идите по набережной. Машина остаётся у центра; после купания вернитесь к ней тем же путём перед выездом на мыс.",
                 "options": [
                     {
                         "mode": "walk",
@@ -45,7 +72,7 @@ export const sesimbraAtlantic = {
             "name": "Praia da Califórnia",
             "nameRu": "Пляж Калифорния",
             "coords": [38.4394, -9.1084],
-            "description": "Главный городской пляж Сезимбры лежит в защищённой южной бухте. В спокойный день это тот редкий случай, когда купание не приходится откладывать «на потом»: оставьте час, поплавайте и не пытайтесь сразу уехать к мысу. Дальше вода и ветер будут совсем другими.",
+            "description": "Для купания выбирайте защищённую бухту Сезимбры, а не Меко. Здесь вода обычно спокойнее, пляж охраняется в сезон, а час у моря не ломает остальную логистику. После плавания вернитесь по набережной к машине; впереди открытый мыс без тени и сильный ветер.",
             "galleryCategories": ["Beaches of Sesimbra", "Sesimbra"],
             "galleryKeywords": ["california", "beach", "sesimbra", "sea"],
             "sourceLabel": "Visit Portugal — Sesimbra",
@@ -54,52 +81,19 @@ export const sesimbraAtlantic = {
         },
         {
             "transit": {
-                "note": "К замку можно подняться пешком, но это честный холм под солнцем. Если после купания не хочется тратить силы, берите короткое такси.",
-                "options": [
-                    {
-                        "mode": "walk",
-                        "duration": "30 мин",
-                        "distance": "1,8 км",
-                        "recommended": true,
-                        "detail": "подъём по старым улицам"
-                    },
-                    {
-                        "mode": "taxi",
-                        "duration": "7 мин",
-                        "distance": "2,5 км",
-                        "detail": "удобный вариант после пляжа"
-                    }
-                ]
-            },
-            "name": "Castelo de Sesimbra",
-            "nameRu": "Замок Сезимбры",
-            "coords": [38.4438, -9.1151],
-            "description": "От стен видна вся логика дня: бухта, город, лесистая Серра-да-Аррабида и линия океана. Замок стоит не ради большого музейного обхода, а ради этой паузы над городом. Поднимитесь на стены, оглядитесь и оставьте себе немного времени просто посидеть в тени.",
-            "galleryFiles": [
-                "File:Castelo de Sesimbra antes do restauro. Edição comemorativa. 15 anos de Obras Públicas.jpg",
-                "File:Castelo de Sesimbra depois do restauro. Edição comemorativa. 15 anos de Obras Públicas.jpg"
-            ],
-            "galleryCategories": ["Castelo de Sesimbra"],
-            "galleryKeywords": ["castle", "sesimbra", "view", "walls"],
-            "sourceLabel": "Visit Portugal — Sesimbra",
-            "sourceUrl": "https://www.visitportugal.com/en/node/132946",
-            "mapsQuery": "Castelo de Sesimbra"
-        },
-        {
-            "transit": {
-                "note": "Эта часть маршрута рассчитана на машину или такси. Автобус до Cabo Espichel есть не на каждом удобном для прогулки рейсе, поэтому перед поездкой его лучше проверить отдельно в планировщике Carris Metropolitana.",
+                "note": "Вернитесь по набережной к парковке и только затем выезжайте на Cabo Espichel. Общественный транспорт до мыса редкий, поэтому весь маршрут рассчитан на машину.",
                 "options": [
                     {
                         "mode": "car",
-                        "duration": "25 мин",
-                        "distance": "18 км",
+                        "duration": "30 мин",
+                        "distance": "20 км",
                         "recommended": true,
                         "detail": "через Zambujal и EN379"
                     },
                     {
                         "mode": "taxi",
-                        "duration": "25 мин",
-                        "distance": "18 км",
+                        "duration": "30 мин",
+                        "distance": "20 км",
                         "detail": "дороже, но без привязки к редкому автобусу"
                     }
                 ]
@@ -120,33 +114,33 @@ export const sesimbraAtlantic = {
                 "options": [
                     {
                         "mode": "walk",
-                        "duration": "10 мин",
-                        "distance": "650 м",
+                        "duration": "20 мин",
+                        "distance": "1,3 км",
                         "recommended": true,
-                        "detail": "по тропе к Pedra da Mua"
+                        "detail": "по грунтовой тропе к обозначенной точке обзора"
                     }
                 ]
             },
             "name": "Pegadas da Pedra da Mua",
             "nameRu": "Следы динозавров у Pedra da Mua",
-            "coords": [38.4157, -9.2112],
+            "coords": [38.4203, -9.2175],
             "description": "На наклонённой скале у мыса различимы цепочки следов динозавров. Лучше смотреть на них не как на аттракцион, а как на странную деталь очень старого берега: вы стоите над океаном, а отпечатки ведут по камню туда, где когда-то была совсем другая земля. Не спускайтесь по скользким участкам ради фотографии.",
             "galleryCategories": ["Cabo Espichel", "Dinosaur footprints in Portugal"],
             "galleryKeywords": ["pedra da mua", "dinosaur", "footprints", "sesimbra"],
-            "sourceLabel": "Visit Portugal — Sesimbra",
-            "sourceUrl": "https://www.visitportugal.com/en/node/132946",
+            "sourceLabel": "Natural.pt — Monumento Natural da Pedra da Mua",
+            "sourceUrl": "https://natural.pt/protected-areas/monumento-natural-pedra-mua?locale=en",
             "mapsQuery": "Pegadas da Pedra da Mua"
         },
         {
             "transit": {
-                "note": "Меко оставлен на финал. После него уже не нужно никуда торопиться: можно искупаться, поужинать или просто посмотреть, как темнеет над океаном.",
+                "note": "Сначала вернитесь по тропе к машине у святилища, затем езжайте через Azóia и Alfarim. Меко оставлен на финал, после него уже не нужно никуда торопиться.",
                 "options": [
                     {
                         "mode": "car",
-                        "duration": "20 мин",
-                        "distance": "16 км",
+                        "duration": "40 мин",
+                        "distance": "1,3 км пешком + 16 км на машине",
                         "recommended": true,
-                        "detail": "через Azóia и Alfarim"
+                        "detail": "возврат к парковке, затем через Azóia и Alfarim"
                     }
                 ]
             },
