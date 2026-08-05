@@ -1,3 +1,200 @@
+.route-groups {
+            display: grid;
+            gap: 1.1rem;
+        }
+
+        .route-group {
+            overflow: clip;
+            border: 1px solid rgba(10, 22, 40, 0.1);
+            border-radius: 1.5rem;
+            background: rgba(255, 255, 255, 0.52);
+            box-shadow: 0 18px 48px rgba(10, 22, 40, 0.04);
+            transition:
+                border-color 0.35s ease,
+                background-color 0.35s ease,
+                box-shadow 0.35s ease;
+        }
+
+        .route-group[open] {
+            border-color: rgba(184, 149, 62, 0.28);
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 26px 64px rgba(10, 22, 40, 0.07);
+        }
+
+        .route-group-summary {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 1.5rem;
+            min-height: 9rem;
+            padding: 1.75rem 2rem;
+            cursor: pointer;
+            list-style: none;
+            color: var(--navy);
+            transition: background-color 0.3s ease;
+        }
+
+        .route-group-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .route-group-summary:hover {
+            background: rgba(184, 149, 62, 0.055);
+        }
+
+        .route-group-summary:focus-visible {
+            outline: 2px solid rgba(184, 149, 62, 0.78);
+            outline-offset: -4px;
+            border-radius: 1.35rem;
+        }
+
+        .route-group-copy {
+            display: grid;
+            min-width: 0;
+        }
+
+        .route-group-eyebrow {
+            margin-bottom: 0.55rem;
+            color: var(--gold);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+        .route-group-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            font-weight: 700;
+            line-height: 0.98;
+            letter-spacing: -0.025em;
+        }
+
+        .route-group-description {
+            max-width: 46rem;
+            margin-top: 0.75rem;
+            color: rgba(10, 22, 40, 0.58);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.65;
+        }
+
+        .route-group-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .route-group-count {
+            color: rgba(10, 22, 40, 0.42);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .route-group-toggle {
+            width: 3rem;
+            height: 3rem;
+            border: 1px solid rgba(10, 22, 40, 0.12);
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            background: rgba(245, 240, 232, 0.72);
+            transition:
+                transform 0.4s var(--ease-swift),
+                border-color 0.3s ease,
+                background-color 0.3s ease;
+        }
+
+        .route-group-toggle svg {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .route-group[open] .route-group-toggle {
+            transform: rotate(180deg);
+            border-color: rgba(184, 149, 62, 0.4);
+            background: rgba(184, 149, 62, 0.1);
+        }
+
+        .route-group-panel {
+            padding: 2rem;
+            border-top: 1px solid rgba(10, 22, 40, 0.08);
+            animation: routeGroupOpen 0.5s var(--ease-soft) both;
+        }
+
+        .route-group-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 2.5rem 2rem;
+        }
+
+        @keyframes routeGroupOpen {
+            from {
+                opacity: 0;
+                transform: translate3d(0, -10px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .route-group-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 639px) {
+            .route-groups {
+                gap: 0.85rem;
+            }
+
+            .route-group {
+                border-radius: 1.15rem;
+            }
+
+            .route-group-summary {
+                min-height: 0;
+                gap: 0.8rem;
+                padding: 1.25rem;
+            }
+
+            .route-group-title {
+                font-size: 2rem;
+            }
+
+            .route-group-description {
+                font-size: 0.8rem;
+                line-height: 1.55;
+            }
+
+            .route-group-count {
+                display: none;
+            }
+
+            .route-group-toggle {
+                width: 2.55rem;
+                height: 2.55rem;
+            }
+
+            .route-group-panel {
+                padding: 1.35rem 1.25rem 1.75rem;
+            }
+
+            .route-group-grid {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 2.25rem;
+            }
+        }
+
 .route-card {
             opacity: 0;
             transform: translate3d(0, 38px, 0);

@@ -5,13 +5,13 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta name="theme-color" content="#0a1628"/>
 <meta name="referrer" content="origin"/>
-<meta name="description" content="Персональные маршруты по Лиссабону, Белему и Синтре для Лиды и Андрея — с картами, галереями и советами по темпу прогулки."/>
+<meta name="description" content="Проверенные маршруты по Лиссабону и Португалии для Лиды и Андрея — городские прогулки, поездки на машине, динозавры, карты и практические советы."/>
 <title>Португалия — Маршруты для Лиды и Андрея</title>
 
 <!-- Open Graph / Twitter -->
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Португалия — Маршруты для Лиды и Андрея"/>
-<meta property="og:description" content="Рукописи путешествий по Лиссабону и Синтре — выбирайте, что по душе."/>
+<meta property="og:description" content="Маршруты по Лиссабону и Португалии: прогулки, поездки на машине, океан, старые города и следы динозавров."/>
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/1/1d/The_rooftops_of_Lisbon.jpg"/>
 <meta property="og:locale" content="ru_RU"/>
 <meta name="twitter:card" content="summary_large_image"/>
@@ -40,6 +40,7 @@
 
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
+    if (window.tailwind) {
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -65,6 +66,7 @@
                 }
             }
         }
+    }
     </script>
 <link rel="stylesheet" href="css/base.css"/>
 <link rel="stylesheet" href="css/layout.css"/>
@@ -83,7 +85,7 @@
 <span class="italic font-normal text-[#b8953e]">Маршруты</span>
 </h1>
 <p class="hero-reveal hero-delay-3 hero-subtitle text-lg md:text-xl leading-relaxed mb-10 md:mb-14 max-w-xl font-light">
-                    Рукописи путешествий по Лиссабону, Синтре и Порту — выбирайте, что по душе.
+                    Рукописи путешествий по Лиссабону и Португалии — от городских прогулок до поездок к океану и следам динозавров.
                 </p>
 <a class="hero-reveal hero-delay-4 hero-cta group inline-flex w-full sm:w-auto items-center justify-center gap-3 bg-[#b8953e] text-[#0a1628] px-8 py-4 rounded-full font-bold text-sm tracking-wide transition-all duration-500" href="#routes">
                     Смотреть маршруты
@@ -111,6 +113,8 @@
 <p class="text-lg text-on-surface-variant max-w-2xl leading-relaxed">Только приятные прогулки, хорошие места и темп, в котором можно и город посмотреть, и не устать раньше обеда.</p>
 </div>
 
+<div class="route-groups" id="routeGroups" aria-label="Группы маршрутов"></div>
+<noscript>
 <!-- ── Лиссабон ── -->
 <div class="section-reveal is-visible mb-10 md:mb-14">
 <div class="flex items-center gap-5">
@@ -261,6 +265,7 @@
 </div>
 </div>
 </div>
+</noscript>
 
 </div>
 </section>
@@ -299,5 +304,5 @@
 <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/The_rooftops_of_Lisbon.jpg" alt="" aria-hidden="true" style="display:none" onerror="document.body.classList.add('hero-fallback')" />
 
 <!-- ═══════════════ SCRIPT ═══════════════ -->
-<script type="module" src="js/app.js?v=20260805-route-audit"></script>
+<script type="module" src="js/app.js?v=20260805-dinosaurs"></script>
 </body></html>

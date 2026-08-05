@@ -1,158 +1,145 @@
 export const sesimbraAtlantic = {
     "id": 9,
-    "title": "Сезимбра, Кабу-Эшпишел и Меко",
-    "subtitle": "Бухта для купания, старый замок, следы динозавров и вечерний океан",
+    "title": "Сезимбра и Кабу-Эшпишел: три стоянки динозавров",
+    "subtitle": "Следы завроподов и тероподов, рыбацкая бухта и вечерний океан",
     "duration": "9–10 часов",
-    "distance": "~5 км пешком",
-    "difficulty": "Средняя (ветер и холмы)",
-    "category": "Sea, cliffs & dinosaurs",
+    "distance": "~5,5 км пешком + около 135 км на машине",
+    "difficulty": "Средняя (ветер, солнце и каменистые тропы)",
+    "category": "Cliffs & dinosaur tracks",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Baiasesimbra.jpg?width=1920",
     "imageFallback": "https://commons.wikimedia.org/wiki/Special:FilePath/Panor%C3%A1mica%20Sesimbra%20-%20panoramio.jpg?width=1920",
     "ready": true,
     "mapCenter": [38.438, -9.151],
     "mapZoom": 11,
-    "tip": "Этот маршрут имеет смысл на машине: автобус 3721 довезёт до Сезимбры, но не соберёт в один день замок, Cabo Espichel и Меко. Выезжайте из Лиссабона около 08:00 и сначала поднимайтесь к замку, пока не жарко. Затем оставьте машину у набережной, пройдите форт, пообедайте рыбой и искупайтесь; перед дорогой к мысу придётся вернуться к парковке. На Pedra da Mua нужны закрытая обувь и запас времени: следы находятся на наклонной плите и лучше читаются с обозначенных точек, а не у самого края. Меко оставлен на закат; для купания спокойная бухта Сезимбры безопаснее открытого океана.",
+    "tip": "Маршрут рассчитан на машину и сухую погоду. Выезжайте из Лиссабона около 08:00 и первым делом смотрите Pedreira do Avelino: это самый простой и безопасный доступ к настоящим следам. У Cabo Espichel не спускайтесь на наклонную плиту Pedra da Mua — цепочки завроподов лучше рассматривать с противоположной стороны бухты, от Lagosteiros; пригодится бинокль или камера с зумом. Сами следы Lagosteiros лежат на плато и относятся к более молодому, нижнемеловому слою. Держитесь маркированной PR2, не подходите к краю обрыва и отмените этот участок при тумане, дожде или сильном ветре. Если день затянулся, пропустите Меко и возвращайтесь прямо в Лиссабон.",
     "places": [
         {
             "name": "Castelo de Sesimbra",
             "nameRu": "Замок Сезимбры",
             "coords": [38.4438, -9.1151],
-            "description": "Начните со стен над городом, пока солнце ещё не добралось до склона. Отсюда сразу видны бухта Сезимбры, лесистая Аррабида и линия будущего пути к Cabo Espichel. Сам замок небольшой; сорока минут хватит на стены, церковь и панораму без попытки сделать из остановки большой музейный визит.",
-            "galleryFiles": [
-                "File:Castelo de Sesimbra antes do restauro. Edição comemorativa. 15 anos de Obras Públicas.jpg",
-                "File:Castelo de Sesimbra depois do restauro. Edição comemorativa. 15 anos de Obras Públicas.jpg"
-            ],
+            "description": "Начните со стен над городом, пока солнце ещё не добралось до склона. Отсюда видны бухта Сезимбры, лесистая Аррабида и направление будущего пути к Cabo Espichel. Сам замок небольшой: сорока минут хватит на стены, церковь и панораму. Не задерживайтесь в музее надолго — главные геологические остановки впереди.",
             "galleryCategories": ["Castelo de Sesimbra"],
             "galleryKeywords": ["castle", "sesimbra", "view", "walls"],
             "sourceLabel": "Visit Portugal — Sesimbra",
             "sourceUrl": "https://www.visitportugal.com/en/node/132946",
-            "mapsQuery": "Castelo de Sesimbra"
+            "mapsQuery": "Castelo+de+Sesimbra"
         },
         {
             "transit": {
-                "note": "Спуститесь на машине к набережной и оставьте её на одной из городских парковок: следующая часть проходит пешком вдоль воды.",
+                "note": "От замка до Pedreira do Avelino всего несколько минут. Навигатор должен вести к оборудованному памятнику у Zambujal, а не к действующей каменоломне.",
                 "options": [
                     {
                         "mode": "car",
-                        "duration": "8 мин",
-                        "distance": "3 км",
+                        "duration": "6–8 мин",
+                        "distance": "около 3 км",
                         "recommended": true,
-                        "detail": "от замка к набережной Сезимбры"
+                        "detail": "к ограждённой площадке Monumento Natural"
+                    }
+                ]
+            },
+            "name": "Monumento Natural da Pedreira do Avelino",
+            "nameRu": "Следы завроподов в Pedreira do Avelino",
+            "coords": [38.453983, -9.123317],
+            "description": "Это лучший вводный пункт маршрута: короткий подход, ограждение и панель помогают увидеть несколько дорожек завроподов на небольшой известняковой плите. Обратите внимание на повторяющийся рисунок передних и задних отпечатков, а затем отойдите к краю площадки — вся цепочка читается лучше с расстояния. Следы относятся к верхней юре. Вход свободный, на остановку достаточно 30–40 минут.",
+            "galleryFiles": ["File:Trilhas da Pedreira do Avelino.jpg"],
+            "galleryCategories": ["Monumento Natural da Pedreira do Avelino"],
+            "galleryKeywords": ["pedreira avelino", "sauropod tracks", "zambujal sesimbra"],
+            "sourceLabel": "Natural.pt — Pedreira do Avelino",
+            "sourceUrl": "https://natural.pt/protected-areas/monumento-natural-pedreira-avelino?locale=en",
+            "mapsQuery": "Monumento+Natural+da+Pedreira+do+Avelino"
+        },
+        {
+            "transit": {
+                "note": "Спускайтесь в город и оставьте машину на одной из парковок у набережной. Форт, старый центр и обед дальше идут пешком.",
+                "options": [
+                    {
+                        "mode": "car",
+                        "duration": "12–15 мин",
+                        "distance": "около 6 км",
+                        "recommended": true,
+                        "detail": "через Zambujal к набережной Сезимбры"
                     }
                 ]
             },
             "name": "Forte de Santiago de Sesimbra",
-            "nameRu": "Форт Сантьягу, гавань и старый центр",
+            "nameRu": "Форт Сантьягу, гавань и обед",
             "coords": [38.4437, -9.1016],
-            "description": "Форт связывает рыбацкую гавань с небольшим старым центром. Пройдите внутренний двор и набережную, затем пообедайте здесь же: свежая рыба и choco frito дают Сезимбре больше характера, чем ещё один обзорный пункт. На всю остановку вместе с обедом разумно оставить полтора часа.",
-            "galleryFiles": [
-                "File:Baiasesimbra.jpg",
-                "File:Panorámica Sesimbra - panoramio.jpg",
-                "File:DSC 0003 (53492669221).jpg"
-            ],
+            "description": "Пройдите внутренний двор форта, посмотрите на рабочую рыбацкую гавань и сделайте короткий круг по старому центру. Обедайте здесь же: свежая рыба или choco frito лучше вписываются в день, чем отдельная гастрономическая остановка. Вместе с обедом оставьте 1,5 часа. Купание возможно в защищённой бухте, но тогда сократите финал на Меко.",
+            "galleryFiles": ["File:Baiasesimbra.jpg"],
             "galleryCategories": ["Sesimbra"],
             "galleryKeywords": ["sesimbra", "bay", "harbour", "fort"],
             "sourceLabel": "Visit Portugal — Sesimbra",
             "sourceUrl": "https://www.visitportugal.com/en/node/132946",
-            "mapsQuery": "Forte de Santiago Sesimbra"
+            "mapsQuery": "Forte+de+Santiago+Sesimbra"
         },
         {
             "transit": {
-                "note": "До пляжа идите по набережной. Машина остаётся у центра; после купания вернитесь к ней тем же путём перед выездом на мыс.",
-                "options": [
-                    {
-                        "mode": "walk",
-                        "duration": "10 мин",
-                        "distance": "700 м",
-                        "recommended": true,
-                        "detail": "по Avenida 25 de Abril"
-                    }
-                ]
-            },
-            "name": "Praia da Califórnia",
-            "nameRu": "Пляж Калифорния",
-            "coords": [38.4394, -9.1084],
-            "description": "Для купания выбирайте защищённую бухту Сезимбры, а не Меко. Здесь вода обычно спокойнее, пляж охраняется в сезон, а час у моря не ломает остальную логистику. После плавания вернитесь по набережной к машине; впереди открытый мыс без тени и сильный ветер.",
-            "galleryCategories": ["Beaches of Sesimbra", "Sesimbra"],
-            "galleryKeywords": ["california", "beach", "sesimbra", "sea"],
-            "sourceLabel": "Visit Portugal — Sesimbra",
-            "sourceUrl": "https://www.visitportugal.com/en/node/132946",
-            "mapsQuery": "Praia da California Sesimbra"
-        },
-        {
-            "transit": {
-                "note": "Вернитесь по набережной к парковке и только затем выезжайте на Cabo Espichel. Общественный транспорт до мыса редкий, поэтому весь маршрут рассчитан на машину.",
+                "note": "Вернитесь к машине и езжайте через Zambujal и Azóia. Общественный транспорт до мыса редкий, поэтому весь день рассчитан на автомобиль.",
                 "options": [
                     {
                         "mode": "car",
-                        "duration": "30 мин",
-                        "distance": "20 км",
+                        "duration": "30–35 мин",
+                        "distance": "около 21 км",
                         "recommended": true,
-                        "detail": "через Zambujal и EN379"
-                    },
-                    {
-                        "mode": "taxi",
-                        "duration": "30 мин",
-                        "distance": "20 км",
-                        "detail": "дороже, но без привязки к редкому автобусу"
+                        "detail": "по EN379 к парковке Cabo Espichel"
                     }
                 ]
             },
             "name": "Santuário de Nossa Senhora do Cabo Espichel",
             "nameRu": "Святилище на Кабу-Эшпишел",
             "coords": [38.4151, -9.2088],
-            "description": "Здесь нет курортной набережной, только огромная площадь, длинные корпуса бывших паломнических гостиниц и обрыв в сторону Атлантики. Церковь стоит спиной к морю, будто люди, которые строили это место, не хотели спорить с ветром. Святилище открыто ежедневно с 09:30 до 18:00, но даже без интерьера сюда стоит приехать ради пространства.",
+            "description": "Сначала осмотрите сам ансамбль: огромную площадь, церковь, длинные корпуса бывших паломнических гостиниц и маленькую Ermida da Memória у края плато. Пространство здесь важнее интерьеров. На святилище оставьте 45 минут, затем проверьте ветер и состояние тропы PR2 перед выходом к Lagosteiros.",
             "galleryCategories": ["Cabo Espichel"],
-            "galleryKeywords": ["cabo", "espichel", "sanctuary", "cliffs"],
+            "galleryKeywords": ["cabo espichel", "sanctuary", "cliffs", "ermida memoria"],
             "sourceLabel": "Visit Portugal — Cabo Espichel",
             "sourceUrl": "https://www.visitportugal.com/en/content/santuario-de-nossa-senhora-do-cabo-espichel",
-            "mapsQuery": "Santuário de Nossa Senhora do Cabo Espichel"
+            "mapsQuery": "Santuario+de+Nossa+Senhora+do+Cabo+Espichel"
         },
         {
             "transit": {
-                "note": "К следам ведёт короткая тропа по открытому мысу. В сильный ветер держитесь подальше от края обрыва.",
+                "note": "От парковки идите по маркированной PR2 на север, по плато. Не пытайтесь срезать путь вниз к бухте и не выходите на край скалы.",
                 "options": [
                     {
                         "mode": "walk",
-                        "duration": "20 мин",
-                        "distance": "1,3 км",
+                        "duration": "25–30 мин в одну сторону",
+                        "distance": "около 1,5 км в одну сторону",
                         "recommended": true,
-                        "detail": "по грунтовой тропе к обозначенной точке обзора"
+                        "detail": "по PR2 к площадке Lagosteiros и обратно тем же путём"
                     }
                 ]
             },
-            "name": "Pegadas da Pedra da Mua",
-            "nameRu": "Следы динозавров у Pedra da Mua",
-            "coords": [38.4203, -9.2175],
-            "description": "На наклонённой скале у мыса различимы цепочки следов динозавров. Лучше смотреть на них не как на аттракцион, а как на странную деталь очень старого берега: вы стоите над океаном, а отпечатки ведут по камню туда, где когда-то была совсем другая земля. Не спускайтесь по скользким участкам ради фотографии.",
-            "galleryCategories": ["Cabo Espichel", "Dinosaur footprints in Portugal"],
-            "galleryKeywords": ["pedra da mua", "dinosaur", "footprints", "sesimbra"],
-            "sourceLabel": "Natural.pt — Monumento Natural da Pedra da Mua",
-            "sourceUrl": "https://natural.pt/protected-areas/monumento-natural-pedra-mua?locale=en",
-            "mapsQuery": "Pegadas da Pedra da Mua"
+            "name": "Jazida dos Lagosteiros",
+            "nameRu": "Lagosteiros и вид на следы Pedra da Mua",
+            "coords": [38.425722, -9.216333],
+            "description": "На плато Lagosteiros ищите крупные округлые отпечатки травоядных орнитопод и трёхпалые следы небольших теропод. Этому слою около 130–133 миллионов лет. Затем повернитесь к противоположной стороне бухты: на наклонной морской скале видны более старые, верхнеюрские цепочки завроподов Pedra da Mua. Именно отсюда их безопаснее всего рассматривать; спуск к плите не нужен. На площадку, чтение панелей и обратный путь заложите 1,5 часа.",
+            "galleryCategories": ["Monumento Natural dos Lagosteiros", "Monumento Natural da Pedra da Mua"],
+            "galleryKeywords": ["lagosteiros dinosaur footprints", "pedra da mua", "cabo espichel"],
+            "sourceLabel": "Natural.pt — Lagosteiros",
+            "sourceUrl": "https://natural.pt/protected-areas/parque-natural-arrabida/geosites/lagosteiros?locale=en",
+            "mapsQuery": "Pegadas+de+Dinossauros+Lagosteiros"
         },
         {
             "transit": {
-                "note": "Сначала вернитесь по тропе к машине у святилища, затем езжайте через Azóia и Alfarim. Меко оставлен на финал, после него уже не нужно никуда торопиться.",
+                "note": "Вернитесь к машине у святилища. Если осталось время и силы, завершите день на Меко; иначе отсюда разумнее ехать прямо в Лиссабон.",
                 "options": [
                     {
                         "mode": "car",
-                        "duration": "40 мин",
-                        "distance": "1,3 км пешком + 16 км на машине",
+                        "duration": "30–35 мин",
+                        "distance": "около 17 км",
                         "recommended": true,
-                        "detail": "возврат к парковке, затем через Azóia и Alfarim"
+                        "detail": "через Azóia и Alfarim к Praia do Meco"
                     }
                 ]
             },
             "name": "Praia do Meco",
             "nameRu": "Пляж Меко",
             "coords": [38.4744, -9.1825],
-            "description": "Меко — противоположность утренней бухте Сезимбры. Пляж широкий, вода открыта океану, волна и течение здесь бывают серьёзными. Купайтесь только в зоне с флагами и не спорьте с океаном. Если море не располагает, всё равно останьтесь на закат: у этого берега очень длинный горизонт.",
+            "description": "Меко — необязательный финал: широкая полоса песка, открытый горизонт и час без новых объектов. Океан здесь серьёзнее защищённой бухты Сезимбры, поэтому купайтесь только в зоне с флагами и при работающих спасателях. В ветреный или зимний день просто пройдите вдоль берега и отправляйтесь домой до темноты.",
             "galleryCategories": ["Meco Beach"],
             "galleryKeywords": ["meco", "beach", "alfarim", "ocean"],
-            "sourceLabel": "Google Maps",
+            "sourceLabel": "Google Maps — Praia do Meco",
             "sourceUrl": "https://maps.google.com/?q=Praia+do+Meco",
-            "mapsQuery": "Praia do Meco"
+            "mapsQuery": "Praia+do+Meco"
         }
     ]
 };

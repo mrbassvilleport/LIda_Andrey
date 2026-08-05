@@ -1,7 +1,6 @@
-import { routes, getawayRoutes, portoRoutes } from '../data/index.js?v=20260805-route-audit';
+import { allRoutes, routeGroups } from '../data/index.js?v=20260805-dinosaurs';
 import { escapeHtml, fetchWithTimeout, readGalleryCache, writeGalleryCache } from './utils.js?v=gallery-cache-v4';
 import { renderTransitConnector } from './transit.js?v=20260805-car-directions';
-const grid = document.getElementById('routesGrid');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const revealObserver = prefersReducedMotion ? null : new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -413,7 +412,73 @@ function mountRouteGrid(gridNode, routeList) {
     });
 }
 
-mountRouteGrid(grid, routes.filter((route) => route.ready));
+function routeCountLabel(count) {
+    const mod10 = count % 10;
+    const mod100 = count % 100;
+
+    if (mod10 === 1 && mod100 !== 11) return `${count} маршрут`;
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return `${count} маршрута`;
+    return `${count} маршрутов`;
+}
+
+function mountRouteGroups(root, groups) {
+    if (!root) return;
+
+    const fragment = document.createDocumentFragment();
+    const pendingGrids = [];
+
+    groups.forEach((group) => {
+        const readyRoutes = group.routes.filter((route) => route.ready);
+        const details = document.createElement('details');
+        details.className = 'route-group section-reveal is-visible';
+        details.dataset.routeGroup = group.id;
+        details.open = Boolean(group.open);
+        details.innerHTML = `
+            <summary class="route-group-summary">
+                <span class="route-group-copy">
+                    <span class="route-group-eyebrow">${escapeHtml(group.eyebrow)}</span>
+                    <span class="route-group-title">${escapeHtml(group.title)}</span>
+                    <span class="route-group-description">${escapeHtml(group.description)}</span>
+                </span>
+                <span class="route-group-meta">
+                    <span class="route-group-count">${escapeHtml(routeCountLabel(readyRoutes.length))}</span>
+                    <span class="route-group-toggle" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </span>
+                </span>
+            </summary>
+            <div class="route-group-panel">
+                <div class="route-group-grid" data-route-grid></div>
+            </div>
+        `;
+
+        fragment.appendChild(details);
+        pendingGrids.push({ details, readyRoutes });
+    });
+
+    root.replaceChildren(fragment);
+
+    pendingGrids.forEach(({ details, readyRoutes }) => {
+        mountRouteGrid(details.querySelector('[data-route-grid]'), readyRoutes);
+
+        const revealCards = () => {
+            details.querySelectorAll('.route-card').forEach((card) => {
+                revealObserver?.unobserve(card);
+                card.classList.add('is-visible');
+            });
+        };
+
+        details.addEventListener('toggle', () => {
+            if (details.open) requestAnimationFrame(revealCards);
+        });
+
+        if (details.open) requestAnimationFrame(revealCards);
+    });
+}
+
+mountRouteGroups(document.getElementById('routeGroups'), routeGroups);
 
 const galleryPhotoCache = new Map();
 
@@ -1267,16 +1332,13 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// ======= Day trips from Lisbon =======
-const getawayGrid = document.getElementById('getawayRoutesGrid');
-mountRouteGrid(getawayGrid, getawayRoutes.filter((route) => route.ready));
-
-// ======= Porto routes =======
-const portoGrid = document.getElementById('portoRoutesGrid');
-mountRouteGrid(portoGrid, portoRoutes.filter((route) => route.ready));
-
 // ======= Deep-link sync (popstate + initial load) =======
-const allRoutes = [...routes, ...getawayRoutes, ...portoRoutes];
+
+function revealRouteGroup(routeId) {
+    const group = routeGroups.find((candidate) => candidate.routes.some((route) => route.id === routeId));
+    const details = group && document.querySelector(`[data-route-group="${group.id}"]`);
+    if (details) details.open = true;
+}
 
 function routeFromHash() {
     const m = window.location.hash.match(/#route=(\d+)/);
@@ -1286,14 +1348,20 @@ function routeFromHash() {
 
 window.addEventListener('popstate', () => {
     const r = routeFromHash();
-    if (r) openRoute(r, { skipHash: true });
+    if (r) {
+        revealRouteGroup(r.id);
+        openRoute(r, { skipHash: true });
+    }
     else if (!panel.classList.contains('translate-y-full')) closeRoute({ skipHash: true });
 });
 
 // Open initial route from hash after a short delay so UI is ready
 window.addEventListener('load', () => {
     const r = routeFromHash();
-    if (r) setTimeout(() => openRoute(r, { skipHash: true }), 200);
+    if (r) {
+        revealRouteGroup(r.id);
+        setTimeout(() => openRoute(r, { skipHash: true }), 200);
+    }
 });
 
 // ======= Pause decorative animations when off-screen =======
